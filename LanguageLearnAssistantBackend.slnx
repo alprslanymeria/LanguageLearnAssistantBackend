@@ -1,1 +1,17 @@
-<Solution />
+<Solution>
+  <Folder Name="/Solution Items/">
+    <File Path="notes.txt" />
+  </Folder>
+  <Folder Name="/src/" />
+  <Folder Name="/src/API/">
+    <Project Path="src/API/App.API/App.API.csproj" Id="d279ff1e-9a9b-41e3-9a95-ed0e227860f2" />
+  </Folder>
+  <Folder Name="/src/core/">
+    <Project Path="src/core/App.Application/App.Application.csproj" Id="11bd5eae-941d-480a-befe-d493eb3ad225" />
+    <Project Path="src/core/App.Domain/App.Domain.csproj" Id="c9851049-9f66-4702-8b92-c1d14c8da89f" />
+  </Folder>
+  <Folder Name="/src/infastructure/">
+    <Project Path="src/infastructure/App.Persistence/App.Persistence.csproj" Id="39246ed3-f386-40c2-a158-a0b370c4b881" />
+  </Folder>
+  <Folder Name="/test/" />
+</Solution>

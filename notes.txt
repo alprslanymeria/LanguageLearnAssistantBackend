@@ -1,0 +1,33 @@
+﻿# Clean Architecture Temel Prensiplere sahip olmalıdır:
+	 # Dependency Inversion
+		# High level modül low level modüle direkt bağlı olmayacak. Arada interface, abstract class olabilir.
+		# Soyutlamalar detaylar üzerine gerçekleşmeyecek.
+			# GetProductsFromCache ❌
+			# GetProducts ✅
+	 # Inversion Of Control
+		# Low level modül High level modül içerisine "new" anahtar kelimesi ile değil CTOR , METHOD veya PROPERTY injection ile gelebilir.
+	 # Single Responsibility
+		# 
+		# Bir component değişmesi için bir nedene sahip olmalıdır.
+		# Event Based Architecture, Observer Design Pattern, MediatR Design Pattern ile SRP'a uygun hale gelebiliriz.
+	 # Persistence Ignorance
+		# "Şimdilik bilmen gerekmeyen şeyi bilme, bağımlılık yaratma"
+	 # Separation Of Concern
+		# Kodlar ilgi alanlarına göre birbirlerinden ayrılır. Hepsinin üstünde bir prensiptir.
+
+# N-Layer architecture problems:
+	# Service katmanı SRP prensibini ihlal eder. Çünkü deüişmesi için kendisi dışında birden fazla neden olabilir. e.g Repository Layer
+	# Bu sebeple infastructure logic'i (repository layer, cache layer, queue layer) en üste taşırsak bu problemi ortadan kaldırıyoruz.
+		# Burada infastructure katmanları service layer'ı referans alacak. Bu sefer ise service katmanı repository layer'ı referans
+		  almadığı için kodlarını kullanamayacak. Burada devreye inversion of control prensibi devreye girer. İnterface'ler service 
+		  katmanında yazılır implemantasyonları ise ilgili katmanda tanımlanır.
+
+
+# Clean Architecture'da flow yukarıdan aşağıya doğrudur.
+	# User Interfaces - Infastucture - Persistence
+		# Interface implementations, Data Access, Bus, Cache, File Write/Read, API, MVC Pages, Middlewares, Filters
+	# Application
+		# Business Codes, Interfaces
+	# Domain
+		# Entities, Interfaces, Exceptions
+
