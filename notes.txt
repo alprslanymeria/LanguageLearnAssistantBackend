@@ -31,3 +31,8 @@
 	# Domain
 		# Entities, Interfaces, Exceptions
 
+
+
+# TODO
+	# Önce entity'ler içerisindeki User problemi çözülür. ✅
+	# Identity API ile üyelik sistemi eklenir. ✅

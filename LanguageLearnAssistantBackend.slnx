@@ -12,6 +12,7 @@
   </Folder>
   <Folder Name="/src/infastructure/">
     <Project Path="src/infastructure/App.Persistence/App.Persistence.csproj" Id="39246ed3-f386-40c2-a158-a0b370c4b881" />
+    <Project Path="src/infastructure/App.Shared/App.Shared.csproj" Id="76d63b56-3f8e-4e67-9016-1f12f4aafacc" />
   </Folder>
   <Folder Name="/test/" />
 </Solution>
