@@ -28,11 +28,67 @@
 		# Interface implementations, Data Access, Bus, Cache, File Write/Read, API, MVC Pages, Middlewares, Filters
 	# Application
 		# Business Codes, Interfaces
+		# Application 
 	# Domain
 		# Entities, Interfaces, Exceptions
 
+
+# SOURCES
+	- https://github.com/jasontaylordev/CleanArchitecture/tree/main
+		- Bu proje ile clean architecture best practice'lerini görebiliriz.
 
 
 # TODO
 	# Önce entity'ler içerisindeki User problemi çözülür. ✅
 	# Identity API ile üyelik sistemi eklenir. ✅
+	# DTO nesneleri oluşturulur.
+	# FluentValidation ve Mapster library'leri application katmanda yüklenir.
+	# Her bir DTO (request) nesnesi için fluent validation ile kurallar yazılır.
+	  # Entity'lere ait ayrı ayrı klasörler application içerisinde Features klasörü altında olacak. 
+	      # Burada o entity için gerekli dto'lar ve validation kuralları yazılır. Ayrıca Service interface'i , implemantasyonu ve mapping
+		    profile'ı burada bulunur.
+	# Her bir entity için gerekli repository interface'leri yazılır.
+	  # Bu repository'ler application projesi altında Contracts / persistence içerisine yazılır. Çünkü veritabanı ile alakalıdır.
+	# Kendi özel yazdığım exception'lar domain katmanında olacakken exception handler'lar başka yerde olacak.
+	# MediatR + CQRS Pattern bu projeye implement edilir.
+		# AYRI BİR BRANCH İÇERİSİNDE BU PROJELER TAMAMLANDIKTAN SONRA
+
+
+	domain
+	- entitites ✅
+	- events --> İhtiyaç duyuldukça buraya yazılacak
+	- exceptions  --> İhtiyaç duyuldukça buraya yazılacak
+	- options --> ✅
+
+	application
+	- repository contracts --> Contracts/Persistence  --> İhtiyaç duyuldukça buraya yazılacak
+	- service extension --> içi doldurulacak
+	- application assembly --> ✅
+	- service result ✅
+	- Features
+		- DTO Files
+		- Validators
+		- Mapping Files
+		- repository service interface and implementation
+
+	persistence
+	- AppDbContext ✅
+	- Entity configuration files ✅
+	- repository interface implementation 
+	- repository extension
+	- interceptors
+	- migrations
+	- persistence assembly ✅
+	- IGenericRepository implementation ✅
+	- UnitOfWork implementation ✅
+
+	
+	API
+	- ExceptionHandlers
+	- Extensions
+	- Filters
+	- Program.cs
+		- JWT Bearer authentication ✅
+		- Services --> eklenecek
+		- Repositories --> eklenecek
+		- MapsterConfiguration ✅

@@ -1,5 +1,5 @@
 ﻿using App.Domain.Options;
-using App.Shared;
+using App.Infrastructure.Security;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 
 namespace App.API.Extensions;

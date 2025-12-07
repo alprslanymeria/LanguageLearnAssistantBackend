@@ -1,8 +1,12 @@
-﻿namespace App.Domain.Entities;
+﻿using App.Domain.Entities.FlashcardEntities;
+using App.Domain.Entities.ListeningEntities;
+using App.Domain.Entities.ReadingEntities;
+using App.Domain.Entities.WritingEntities;
 
-public class Practice
+namespace App.Domain.Entities;
+
+public class Practice : BaseEntity<int>
 {
-    public int Id { get; set; }
     public int LanguageId { get; set; }
     public string Name { get; set; } = default!;
 
@@ -10,8 +14,8 @@ public class Practice
     public required Language Language { get; set; } // FOR LanguageId
 
     // REFERANS VERDİKLERİ (CHILD'LARI)
-    public ICollection<Flashcard.Flashcard> Flashcards { get; set; } = [];
-    public ICollection<Listening.Listening> Listenings { get; set; } = [];
-    public ICollection<Writing.Writing> Writings { get; set; } = [];
-    public ICollection<Reading.Reading> Readings { get; set; } = [];
+    public ICollection<Flashcard> Flashcards { get; set; } = [];
+    public ICollection<Listening> Listenings { get; set; } = [];
+    public ICollection<Writing> Writings { get; set; } = [];
+    public ICollection<Reading> Readings { get; set; } = [];
 }

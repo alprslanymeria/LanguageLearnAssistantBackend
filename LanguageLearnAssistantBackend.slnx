@@ -11,8 +11,8 @@
     <Project Path="src/core/App.Domain/App.Domain.csproj" Id="c9851049-9f66-4702-8b92-c1d14c8da89f" />
   </Folder>
   <Folder Name="/src/infastructure/">
+    <Project Path="src/infastructure/App.Infrastructure/App.Infrastructure.csproj" Id="97e88b44-9f96-4bcf-82be-afdf10adc554" />
     <Project Path="src/infastructure/App.Persistence/App.Persistence.csproj" Id="39246ed3-f386-40c2-a158-a0b370c4b881" />
-    <Project Path="src/infastructure/App.Shared/App.Shared.csproj" Id="76d63b56-3f8e-4e67-9016-1f12f4aafacc" />
   </Folder>
   <Folder Name="/test/" />
 </Solution>
