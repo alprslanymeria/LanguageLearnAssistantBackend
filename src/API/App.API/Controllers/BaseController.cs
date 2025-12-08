@@ -36,7 +36,15 @@ public class BaseController : ControllerBase
     /// </summary>
     protected IActionResult HandleCreateResult<T>(ServiceResult<T> result) where T : class
     {
-        return result.IsSuccess ? Created(result.UrlAsCreated!, result) : BadRequest(result);
+        if (result.IsSuccess)
+        {
+            if (string.IsNullOrEmpty(result.UrlAsCreated))
+            {
+                return BadRequest(new { ErrorMessage = new[] { "UrlAsCreated is missing for Create operation" } });
+            }
+            return Created(result.UrlAsCreated, result);
+        }
+        return BadRequest(result);
     }
 
     /// <summary>
