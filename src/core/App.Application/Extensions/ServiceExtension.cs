@@ -1,4 +1,5 @@
-﻿using FluentValidation;
+﻿using App.Application.Features.Languages.Services;
+using FluentValidation;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace App.Application.Extensions;
@@ -9,6 +10,9 @@ public static class ServiceExtension
     {
         // FLUENT VALIDATION
         services.AddValidatorsFromAssembly(typeof(ApplicationAssembly).Assembly);
+
+        // SERVICES
+        services.AddScoped<ILanguageService, LanguageService>();
 
         return services;
     }
