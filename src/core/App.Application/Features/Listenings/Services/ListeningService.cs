@@ -33,21 +33,21 @@ public class ListeningService : IListeningService
     {
         var listenings = _listeningRepository.GetAll().ToList();
         var listeningDtos = _objectMapper.Map<List<ListeningDto>>(listenings);
-        return ServiceResult<List<ListeningDto>>.Success(listeningDtos);
+        return await Task.FromResult(ServiceResult<List<ListeningDto>>.Success(listeningDtos));
     }
 
     public async Task<ServiceResult<List<ListeningDto>>> GetByUserIdAsync(string userId)
     {
         var listenings = _listeningRepository.Where(x => x.UserId == userId).ToList();
         var listeningDtos = _objectMapper.Map<List<ListeningDto>>(listenings);
-        return ServiceResult<List<ListeningDto>>.Success(listeningDtos);
+        return await Task.FromResult(ServiceResult<List<ListeningDto>>.Success(listeningDtos));
     }
 
     public async Task<ServiceResult<List<ListeningDto>>> GetByPracticeIdAsync(int practiceId)
     {
         var listenings = _listeningRepository.Where(x => x.PracticeId == practiceId).ToList();
         var listeningDtos = _objectMapper.Map<List<ListeningDto>>(listenings);
-        return ServiceResult<List<ListeningDto>>.Success(listeningDtos);
+        return await Task.FromResult(ServiceResult<List<ListeningDto>>.Success(listeningDtos));
     }
 
     public async Task<ServiceResult<ListeningDto>> GetByIdAsync(int id)

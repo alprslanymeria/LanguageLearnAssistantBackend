@@ -29,14 +29,14 @@ public class PracticeService : IPracticeService
     {
         var practices = _practiceRepository.GetAll().ToList();
         var practiceDtos = _objectMapper.Map<List<PracticeDto>>(practices);
-        return ServiceResult<List<PracticeDto>>.Success(practiceDtos);
+        return await Task.FromResult(ServiceResult<List<PracticeDto>>.Success(practiceDtos));
     }
 
     public async Task<ServiceResult<List<PracticeDto>>> GetByLanguageIdAsync(int languageId)
     {
         var practices = _practiceRepository.Where(p => p.LanguageId == languageId).ToList();
         var practiceDtos = _objectMapper.Map<List<PracticeDto>>(practices);
-        return ServiceResult<List<PracticeDto>>.Success(practiceDtos);
+        return await Task.FromResult(ServiceResult<List<PracticeDto>>.Success(practiceDtos));
     }
 
     public async Task<ServiceResult<PracticeDto>> GetByIdAsync(int id)

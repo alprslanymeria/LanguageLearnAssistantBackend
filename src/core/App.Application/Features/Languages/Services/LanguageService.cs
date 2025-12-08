@@ -26,7 +26,7 @@ public class LanguageService : ILanguageService
     {
         var languages = _languageRepository.GetAll().ToList();
         var languageDtos = _objectMapper.Map<List<LanguageDto>>(languages);
-        return ServiceResult<List<LanguageDto>>.Success(languageDtos);
+        return await Task.FromResult(ServiceResult<List<LanguageDto>>.Success(languageDtos));
     }
 
     public async Task<ServiceResult<LanguageDto>> GetByIdAsync(int id)

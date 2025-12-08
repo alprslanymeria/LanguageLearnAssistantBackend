@@ -33,21 +33,21 @@ public class WritingService : IWritingService
     {
         var writings = _writingRepository.GetAll().ToList();
         var writingDtos = _objectMapper.Map<List<WritingDto>>(writings);
-        return ServiceResult<List<WritingDto>>.Success(writingDtos);
+        return await Task.FromResult(ServiceResult<List<WritingDto>>.Success(writingDtos));
     }
 
     public async Task<ServiceResult<List<WritingDto>>> GetByUserIdAsync(string userId)
     {
         var writings = _writingRepository.Where(x => x.UserId == userId).ToList();
         var writingDtos = _objectMapper.Map<List<WritingDto>>(writings);
-        return ServiceResult<List<WritingDto>>.Success(writingDtos);
+        return await Task.FromResult(ServiceResult<List<WritingDto>>.Success(writingDtos));
     }
 
     public async Task<ServiceResult<List<WritingDto>>> GetByPracticeIdAsync(int practiceId)
     {
         var writings = _writingRepository.Where(x => x.PracticeId == practiceId).ToList();
         var writingDtos = _objectMapper.Map<List<WritingDto>>(writings);
-        return ServiceResult<List<WritingDto>>.Success(writingDtos);
+        return await Task.FromResult(ServiceResult<List<WritingDto>>.Success(writingDtos));
     }
 
     public async Task<ServiceResult<WritingDto>> GetByIdAsync(int id)

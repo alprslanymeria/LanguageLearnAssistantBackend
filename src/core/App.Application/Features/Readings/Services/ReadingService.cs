@@ -33,21 +33,21 @@ public class ReadingService : IReadingService
     {
         var readings = _readingRepository.GetAll().ToList();
         var readingDtos = _objectMapper.Map<List<ReadingDto>>(readings);
-        return ServiceResult<List<ReadingDto>>.Success(readingDtos);
+        return await Task.FromResult(ServiceResult<List<ReadingDto>>.Success(readingDtos));
     }
 
     public async Task<ServiceResult<List<ReadingDto>>> GetByUserIdAsync(string userId)
     {
         var readings = _readingRepository.Where(x => x.UserId == userId).ToList();
         var readingDtos = _objectMapper.Map<List<ReadingDto>>(readings);
-        return ServiceResult<List<ReadingDto>>.Success(readingDtos);
+        return await Task.FromResult(ServiceResult<List<ReadingDto>>.Success(readingDtos));
     }
 
     public async Task<ServiceResult<List<ReadingDto>>> GetByPracticeIdAsync(int practiceId)
     {
         var readings = _readingRepository.Where(x => x.PracticeId == practiceId).ToList();
         var readingDtos = _objectMapper.Map<List<ReadingDto>>(readings);
-        return ServiceResult<List<ReadingDto>>.Success(readingDtos);
+        return await Task.FromResult(ServiceResult<List<ReadingDto>>.Success(readingDtos));
     }
 
     public async Task<ServiceResult<ReadingDto>> GetByIdAsync(int id)

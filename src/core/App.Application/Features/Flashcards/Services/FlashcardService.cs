@@ -33,21 +33,21 @@ public class FlashcardService : IFlashcardService
     {
         var flashcards = _flashcardRepository.GetAll().ToList();
         var flashcardDtos = _objectMapper.Map<List<FlashcardDto>>(flashcards);
-        return ServiceResult<List<FlashcardDto>>.Success(flashcardDtos);
+        return await Task.FromResult(ServiceResult<List<FlashcardDto>>.Success(flashcardDtos));
     }
 
     public async Task<ServiceResult<List<FlashcardDto>>> GetByUserIdAsync(string userId)
     {
         var flashcards = _flashcardRepository.Where(x => x.UserId == userId).ToList();
         var flashcardDtos = _objectMapper.Map<List<FlashcardDto>>(flashcards);
-        return ServiceResult<List<FlashcardDto>>.Success(flashcardDtos);
+        return await Task.FromResult(ServiceResult<List<FlashcardDto>>.Success(flashcardDtos));
     }
 
     public async Task<ServiceResult<List<FlashcardDto>>> GetByPracticeIdAsync(int practiceId)
     {
         var flashcards = _flashcardRepository.Where(x => x.PracticeId == practiceId).ToList();
         var flashcardDtos = _objectMapper.Map<List<FlashcardDto>>(flashcards);
-        return ServiceResult<List<FlashcardDto>>.Success(flashcardDtos);
+        return await Task.FromResult(ServiceResult<List<FlashcardDto>>.Success(flashcardDtos));
     }
 
     public async Task<ServiceResult<FlashcardDto>> GetByIdAsync(int id)
