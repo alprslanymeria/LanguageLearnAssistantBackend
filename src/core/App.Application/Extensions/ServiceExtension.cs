@@ -1,4 +1,5 @@
 ﻿using App.Application.Features.Languages.Services;
+using App.Application.Features.Practices.Services;
 using FluentValidation;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -13,6 +14,7 @@ public static class ServiceExtension
 
         // SERVICES
         services.AddScoped<ILanguageService, LanguageService>();
+        services.AddScoped<IPracticeService, PracticeService>();
 
         return services;
     }
