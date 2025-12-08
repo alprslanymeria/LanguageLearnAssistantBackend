@@ -1,4 +1,5 @@
 ﻿using App.Application.Contracts.Persistence;
+using App.Persistence.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -25,6 +26,8 @@ public static class RepositoryExtension
         services.AddScoped<IUnitOfWork, UnitOfWork>();
         services.AddScoped(typeof(IGenericRepository<,>), typeof(GenericRepository<,>));
 
+        // SPECIFIC REPOSITORIES
+        services.AddScoped<ILanguageRepository, LanguageRepository>();
 
         return services;
     }

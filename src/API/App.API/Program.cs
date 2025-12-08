@@ -17,7 +17,7 @@ builder.Services
     .AddCustomTokenAuth(builder.Configuration)
     .AddServices()
     .AddRepositories(builder.Configuration)
-    .AddMapster();
+    .AddMapster(null, typeof(App.Application.ApplicationAssembly).Assembly);
 
 // EXCEPTION HANDLERS
 builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
