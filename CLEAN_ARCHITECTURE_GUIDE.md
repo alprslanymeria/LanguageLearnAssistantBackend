@@ -149,7 +149,9 @@ public record CompareLanguageIdResponse
 #### Validation
 
 - `CompareLanguageIdRequestValidator`: Validates that UserId is not empty and LanguageId is greater than 0
-- Automatic validation using FluentValidation with auto-validation middleware
+- Automatic validation using FluentValidation with auto-validation middleware configured in Program.cs
+- The middleware automatically validates all [FromBody] parameters against their FluentValidation rules before the action executes
+- No need for manual validation in controllers
 
 #### Service Implementation
 
