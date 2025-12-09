@@ -1,14 +1,18 @@
 using App.API.ExceptionHandlers;
 using App.API.Extensions;
 using App.API.Filters;
+using App.API.Middlewares;
 using App.Application.Extensions;
 using App.Infrastructure.Mapping;
+using App.Infrastructure.OpenTelemetry;
 using App.Persistence.Extensions;
 using Microsoft.AspNetCore.Mvc;
 using SharpGrip.FluentValidation.AutoValidation.Mvc.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
+// OPEN TELEMETRY
+builder.AddOpenTelemetryLog();
 
 // SERVICES
 builder.Services.AddControllers();
@@ -43,6 +47,8 @@ if (app.Environment.IsDevelopment())
 // MIDDLEWARES
 app.UseExceptionHandler(x => { });
 app.UseHttpsRedirection();
+//app.UseOpenTelemetryPrometheusScrapingEndpoint();
+app.UseMiddleware<RequestAndResponseActivityMiddleware>();
 app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();

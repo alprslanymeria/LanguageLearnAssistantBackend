@@ -52,6 +52,12 @@
 	# Kendi özel yazdığım exception'lar domain katmanında olacakken exception handler'lar başka yerde olacak.
 	# MediatR + CQRS Pattern bu projeye implement edilir.
 		# AYRI BİR BRANCH İÇERİSİNDE BU PROJELER TAMAMLANDIKTAN SONRA
+	# ŞUAN İÇİN OPENTELEMETRY SADECE MANUEL OLARAK EKLENECEK. BURADAKİ API ENDPOINTLER YAZILDIKTAN VE NEXT.JS
+	  TARAFI TAMAMLANDIKTAN SONRA DOCKER İLE AUTO INSTRUMENTATION EKLENECEK.
+		# TRACE --> Jaeger
+		# METRICS --> Prometheus
+		# LOGS --> Elasticsearch
+	# REDIS İLE CACHING ALTYAPISI EKLENECEK.
 
 
 	domain
@@ -92,3 +98,42 @@
 		- Services --> eklenecek
 		- Repositories --> eklenecek
 		- MapsterConfiguration ✅
+
+
+
+
+
+
+# OPENTELEMETRY
+	# OpenTelemetry ile birlikte tracing, metrics ve logging verilerini toplayabiliyoruz.
+	# İlgili kaynaklar
+		# https://github.com/open-telemetry/opentelemetry-dotnet
+		# https://github.com/open-telemetry/opentelemetry-dotnet-contrib
+		# https://github.com/open-telemetry/opentelemetry-dotnet-instrumentation --> Automatic Instrumentation
+	
+
+	API PROJESİ İÇERİSİNDE APPSETTING.DEVELOPMENT İÇERİSİNE OPENTELEMETRY RESOURCE BİLGİLERİ EKLENECEK.
+	Domain projesi içerisine OpenTelemetryConstantOption eklenecek.
+	INFRASTRUCTURE İÇERİSİNDE ACTIVITY SOURCE PROVIDER TANIMLANACAK.
+	API PROJESİ İÇERİSİNDE PROGRAM.CS İÇERİSİNDE 
+
+
+	ASP NET CORE INSTRUMENTATION
+	# API VEYA MVC UYGULAMAMIZA GELEN REQUEST VE RESPONSE'LARI OTOMATIK OLARAK TRACE ETMEMİZE OLANAK SAĞLAR.
+	10. adım --> sadece /api ile başlayan route'ları trace etmek için
+	12. adım --> request response'a dönene kadar fırlayan hataları trace data içerisinde görmek için
+	18. adım --> activity'lere tag nasıl eklenir örneği
+	22. adım --> Request ve response body'lerini var olan aktiviteye eklemek için middleware yazılır.
+		# BİZE GELEN REQUEST'LERİ VE BİZİM YAZDIĞIMIZ RESPONSE'LARI TRACE OLARAK BODY'E EKLER.
+
+
+	EF CORE INSTRUMENTATION
+	# UYGULAMAMIZIN VERİTABANINA YAPMIŞ OLDUĞU TRANSACTION'LARI TRACE DATA OLARAK ELE ALMAMIZA OLANAK SAĞLAR.
+
+	HTTP INSTRUMENTATION
+	# MVC VEYA API UYGULAMAMIZDAN BAŞKA EXTERNAL API'LERE YAPMIŞ OLDUĞUMUZ REQUEST'LERI TRACE ETMEMIZE OLANAK SAĞLAR.
+		# HTTP CLIENT INSTRUMENTATION BİZİM GÖNDERDİĞİMİZ REQUEST'LERİ VE BİZE GELEN RESPONSE'LARI TRACE OLARAK BODY'E EKLER.
+
+
+	REDIS INSTRUMENTATION
+	# API'MİZDEN REDIS'E YAPMIŞ OLDUĞUMUZ İSTEKLERİN TRACE EDİLMESİNİ SAĞLAR.
