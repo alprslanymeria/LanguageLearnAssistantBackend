@@ -14,14 +14,14 @@ public class RedisCacheService : ICacheService
         _database = connectionMultiplexer.GetDatabase(database);
     }
 
-    public async Task SetAsync<T>(string key, T value, TimeSpan? expiration = null, CancellationToken cancellationToken = default)
+    public async Task SetAsync<T>(string key, T value, TimeSpan? expiration = null)
     {
         ArgumentException.ThrowIfNullOrEmpty(key);
         var payload = JsonSerializer.Serialize(value);
         await _database.StringSetAsync(key, payload, expiration).ConfigureAwait(false);
     }
 
-    public async Task<T?> GetAsync<T>(string key, CancellationToken cancellationToken = default)
+    public async Task<T?> GetAsync<T>(string key)
     {
         ArgumentException.ThrowIfNullOrEmpty(key);
         var result = await _database.StringGetAsync(key).ConfigureAwait(false);
@@ -31,10 +31,17 @@ public class RedisCacheService : ICacheService
             return default;
         }
 
-        return JsonSerializer.Deserialize<T>(result!);
+        try
+        {
+            return JsonSerializer.Deserialize<T>(result!);
+        }
+        catch (JsonException)
+        {
+            return default;
+        }
     }
 
-    public async Task RemoveAsync(string key, CancellationToken cancellationToken = default)
+    public async Task RemoveAsync(string key)
     {
         ArgumentException.ThrowIfNullOrEmpty(key);
         await _database.KeyDeleteAsync(key).ConfigureAwait(false);
