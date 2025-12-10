@@ -3,6 +3,7 @@ using App.API.Extensions;
 using App.API.Filters;
 using App.API.Middlewares;
 using App.Application.Extensions;
+using App.Infrastructure.Caching;
 using App.Infrastructure.Mapping;
 using App.Infrastructure.OpenTelemetry;
 using App.Persistence.Extensions;
@@ -21,6 +22,7 @@ builder.Services
     .AddCustomTokenAuth(builder.Configuration)
     .AddServices()
     .AddRepositories(builder.Configuration)
+    .AddRedisCaching(builder.Configuration)
     .AddMapster();
 
 // EXCEPTION HANDLERS
