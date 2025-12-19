@@ -1,4 +1,4 @@
-﻿using App.Application.Contracts.Infrastructure;
+﻿using App.Application.Contracts.Infrastructure.Mapping;
 using MapsterMapper;
 
 namespace App.Infrastructure.Mapping;

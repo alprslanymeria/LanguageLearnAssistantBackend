@@ -36,6 +36,8 @@
 # SOURCES
 	- https://github.com/jasontaylordev/CleanArchitecture/tree/main
 		- Bu proje ile clean architecture best practice'lerini görebiliriz.
+	- https://medium.com/@roshanj100/implementing-redis-caching-in-clean-architecture-with-net-8-and-mediatr-600bc2e07ac5
+		- Redis caching'in clean architecture ile nasıl entegre edileceğini anlatıyor.
 
 
 # TODO
@@ -102,7 +104,7 @@
 
 
 
-
+_____________________________________________________________________________________________________________________
 
 # OPENTELEMETRY
 	# OpenTelemetry ile birlikte tracing, metrics ve logging verilerini toplayabiliyoruz.
@@ -137,3 +139,64 @@
 
 	REDIS INSTRUMENTATION
 	# API'MİZDEN REDIS'E YAPMIŞ OLDUĞUMUZ İSTEKLERİN TRACE EDİLMESİNİ SAĞLAR.
+
+
+	# COPILOT'A BİR KODUN ARASINDAKİ İLİŞKİYİ # İLE DOSYALARI EKLEYİP "MERMAID DIAGRAM" ÇİZMESİNİ İSTEYEREK ANLATTIRABİLİRİZ.
+	# ÖZELLİKLE OPEN SOURCE INFRASTRUCTURE SAĞLAYAN PROJELER İÇİN BU ÇOK KULLANIŞLI OLABİLİR.
+
+
+	___________________________________________________________________________________________________________________________________________
+
+	# EVENT BASED INVALIDATION
+
+		# CacheEventConsumer --> Cache invalidation işlemlerini merkezi hale getirir.
+				# Events
+					# EntityInsertedEvent		(+) App.Domain.Events									(+)
+					# EntityUpdatedEvent		(+) App.Domain.Events									(+)
+					# EntityDeletedEvent		(+) App.Domain.Events									(+)
+
+	# RESET INVALIDATION
+		# IScheduledTask						(+) App.Application.Contracts.Infrastructure.Tasks		(+)
+		# ClearCacheTask						(+) App.Infrastructure.Caching							(+)
+
+
+	# REDIS DISTRIBUTED CACHING
+		# IRedisConnectionWrapper																		(+)
+		# RedisConnectionWrapper																		(+)
+		# RedisCacheManager																				(+)
+
+
+	# LOCKER MECHANISM
+		# ILocker								(+) App.Application.Contracts.Infrastructure.Caching	(+)
+		# DistributedCacheLocker				(+) App.Infrastructure.Caching							(+)
+		# MemoryCacheLocker					    (+) App.Infrastructure.Caching							(+)
+
+
+	# CACHE MANAGERS
+		# IShortTermCacheManager				(+) App.Application.Contracts.Infrastructure.Caching	(+)
+			# PerRequestCacheManager			(+) App.Infrastructure.Caching							(+)
+		# IStaticCacheManager					(+) App.Application.Contracts.Infrastructure.Caching	(+)
+			# MemoryCacheManager				(+) App.Infrastructure.Caching							(+)
+			# DistributedCacheManager			(+) App.Infrastructure.Caching							(+)
+			# SynchronizedCacheManager			(-) şu an gerek yok
+
+
+	# CACHE KEY GENERATOR
+		# ICacheKey								(+) App.Application.Contracts.Infrastructure.Caching	(+)
+		# CacheKey								(+) App.Infrastructure.Caching							(+)	
+		# ICacheKeyFactory						(+) App.Application.Contracts.Infrastructure.Caching	(+)
+		# CacheKeyFactory						(+) App.Infrastructure.Caching							(+)
+		# ICacheKeyService						(+) App.Application.Contracts.Infrastructure.Caching	(+)
+		# CacheKeyService						(+) App.Infrastructure.Caching							(+)
+		# ICacheKeyManager						(+) App.Application.Contracts.Infrastructure.Caching	(+)
+		# CacheKeyManager						(+) App.Infrastructure.Caching							(+)
+
+
+	ICacheKeyStore<TValue>						(+) App.Application.Contracts.Infrastructure.Caching	(+)
+	CacheKeyStore								(+) App.Infrastructure.Caching							(+)
+	CacheConfig									(+) App.Domain.Options / appsettings.json				(+)
+	DistributedCacheConfig						(+) App.Domain.Options / appsettings.json				(+)
+	DistributedCacheType						(-) Şu an gerek yok
+	HashHelper									(+) App.Infrastructure.Security							(+)
+
+
