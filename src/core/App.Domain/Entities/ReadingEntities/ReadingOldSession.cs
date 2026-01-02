@@ -1,16 +1,15 @@
 ﻿namespace App.Domain.Entities.ReadingEntities;
 
-public class ReadingOldSession : BaseEntity<string>
+public class ReadingOldSession : AuditableEntity<string>
 {
     public int ReadingId { get; set; }
     public int ReadingBookId { get; set; }
     public decimal Rate { get; set; }
-    public DateTime CreatedAt { get; set; } // DEFAULT NOW DEĞERİ VERİLECEK --> FLUENT API 
 
-    // REFERANS ALDIKLARI (PARENT'LARI)
+    // REFERENCES (PARENTS)
     public required Reading Reading { get; set; } // FOR ReadingId
     public required ReadingBook ReadingBook { get; set; } // FOR ReadingBookId
 
-    // REFERANS VERDİKLERİ (CHILD'LARI)
+    // THE REFERENCES THEY GAVE (THEIR CHILDREN)
     public ICollection<ReadingSessionRow> ReadingSessionRows { get; set; } = [];
 }

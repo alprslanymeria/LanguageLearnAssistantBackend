@@ -1,151 +1,124 @@
-﻿# Clean Architecture Temel Prensiplere sahip olmalıdır:
-	 # Dependency Inversion
-		# High level modül low level modüle direkt bağlı olmayacak. Arada interface, abstract class olabilir.
-		# Soyutlamalar detaylar üzerine gerçekleşmeyecek.
-			# GetProductsFromCache ❌
-			# GetProducts ✅
-	 # Inversion Of Control
-		# Low level modül High level modül içerisine "new" anahtar kelimesi ile değil CTOR , METHOD veya PROPERTY injection ile gelebilir.
-	 # Single Responsibility
-		# 
-		# Bir component değişmesi için bir nedene sahip olmalıdır.
-		# Event Based Architecture, Observer Design Pattern, MediatR Design Pattern ile SRP'a uygun hale gelebiliriz.
-	 # Persistence Ignorance
-		# "Şimdilik bilmen gerekmeyen şeyi bilme, bağımlılık yaratma"
-	 # Separation Of Concern
-		# Kodlar ilgi alanlarına göre birbirlerinden ayrılır. Hepsinin üstünde bir prensiptir.
+﻿NOT: Clean Architecture Temel Prensiplere sahip olmalıdır:
 
-# N-Layer architecture problems:
-	# Service katmanı SRP prensibini ihlal eder. Çünkü deüişmesi için kendisi dışında birden fazla neden olabilir. e.g Repository Layer
-	# Bu sebeple infastructure logic'i (repository layer, cache layer, queue layer) en üste taşırsak bu problemi ortadan kaldırıyoruz.
+		 # DEPENDENCY INVERSION
+			- High level modül low level modüle direkt bağlı olmayacak. Arada interface, abstract class olabilir.
+			- Soyutlamalar detaylar üzerine gerçekleşmeyecek.
+				# GetProductsFromCache ❌
+				# GetProducts ✅
+
+		 # INVERSION OF CONTROL
+			- Low level modül High level modül içerisine "new" anahtar kelimesi ile değil CTOR , METHOD veya PROPERTY injection ile gelebilir.
+
+		 # SINGLE RESPONSIBILITY
+			- Bir component değişmesi için bir nedene sahip olmalıdır.
+			- Event Based Architecture, Observer Design Pattern, MediatR Design Pattern ile SRP'a uygun hale gelebiliriz.
+
+		 # PERSISTENCE IGNORANCE
+			- "Şimdilik bilmen gerekmeyen şeyi bilme, bağımlılık yaratma"
+
+		 # SEPARATION OF CONCERNS
+			- Kodlar ilgi alanlarına göre birbirlerinden ayrılır. Hepsinin üstünde bir prensiptir.
+
+NOT: N-Layer architecture problems:
+
+		# Service katmanı SRP prensibini ihlal eder. Çünkü değişmesi için kendisi dışında birden fazla neden olabilir. e.g Repository Layer
+		# Bu sebeple infastructure logic'i (repository layer, cache layer, queue layer) en üste taşırsak bu problemi ortadan kaldırıyoruz.
 		# Burada infastructure katmanları service layer'ı referans alacak. Bu sefer ise service katmanı repository layer'ı referans
 		  almadığı için kodlarını kullanamayacak. Burada devreye inversion of control prensibi devreye girer. İnterface'ler service 
 		  katmanında yazılır implemantasyonları ise ilgili katmanda tanımlanır.
 
-
-# Clean Architecture'da flow yukarıdan aşağıya doğrudur.
-	# User Interfaces - Infastucture - Persistence
-		# Interface implementations, Data Access, Bus, Cache, File Write/Read, API, MVC Pages, Middlewares, Filters
-	# Application
-		# Business Codes, Interfaces
-		# Application 
-	# Domain
-		# Entities, Interfaces, Exceptions
+NOT: Copilot'a kodlar arasındaki ilişkiyi # ile dosyaları ekleyip "mermaid diagram" çizmesini isteyerek anlattırabiliriz.
+     Özellikle open source infrastructure sağlayan projeler için bu çok kullanışlı olabilir.
 
 
-# SOURCES
+
+NOT: PATTERNS
+
+		# FACTORY PATTERN
+			- ISTEMCI OLUŞTURACAKSAM
+		# DECORATOR PATTERN
+			- BİR NESNEYE ÇALIŞMA ZAMANINDA  DAVRANIŞ EKLEMEK İSTİYORSAM
+			- HER DAVRANIŞ AYNI INTERFACE'İ UYGULAR VE DİĞER SERVİSİ İÇİNDE BARINDIRIR.
+			- BURADA KATMANLI BİR YAPI VARDIR. HER YENİ DAVRANIŞ ÖNCEKİNİ GELİŞTİRİR.
+		# STRATEGY PATTERN
+			- BURADA AYNI HEDEF İÇİN FARKLI ALGORTİMALARIN AYRIMI VARDIR.
+			- FARKLI STRATEGY'LER AYNI INTERFACE'İ UYGULAR.
+			- CONTEXT SINIFI STRATEGY'LERDEN BİRİNİ KULLANIR.
+
+
+__________________________________________________________________________________________________________________________________________________
+SOURCES
 	- https://github.com/jasontaylordev/CleanArchitecture/tree/main
 		- Bu proje ile clean architecture best practice'lerini görebiliriz.
 	- https://medium.com/@roshanj100/implementing-redis-caching-in-clean-architecture-with-net-8-and-mediatr-600bc2e07ac5
 		- Redis caching'in clean architecture ile nasıl entegre edileceğini anlatıyor.
+	- https://github.com/open-telemetry/opentelemetry-dotnet
+	- https://github.com/open-telemetry/opentelemetry-dotnet-contrib
+	- https://github.com/open-telemetry/opentelemetry-dotnet-instrumentation --> Automatic Instrumentation
 
 
-# TODO
-	# Önce entity'ler içerisindeki User problemi çözülür. ✅
-	# Identity API ile üyelik sistemi eklenir. ✅
-	# DTO nesneleri oluşturulur.
-	# FluentValidation ve Mapster library'leri application katmanda yüklenir.
-	# Her bir DTO (request) nesnesi için fluent validation ile kurallar yazılır.
-	  # Entity'lere ait ayrı ayrı klasörler application içerisinde Features klasörü altında olacak. 
-	      # Burada o entity için gerekli dto'lar ve validation kuralları yazılır. Ayrıca Service interface'i , implemantasyonu ve mapping
-		    profile'ı burada bulunur.
-	# Her bir entity için gerekli repository interface'leri yazılır.
-	  # Bu repository'ler application projesi altında Contracts / persistence içerisine yazılır. Çünkü veritabanı ile alakalıdır.
-	# Kendi özel yazdığım exception'lar domain katmanında olacakken exception handler'lar başka yerde olacak.
-	# MediatR + CQRS Pattern bu projeye implement edilir.
-		# AYRI BİR BRANCH İÇERİSİNDE BU PROJELER TAMAMLANDIKTAN SONRA
-	# ŞUAN İÇİN OPENTELEMETRY SADECE MANUEL OLARAK EKLENECEK. BURADAKİ API ENDPOINTLER YAZILDIKTAN VE NEXT.JS
-	  TARAFI TAMAMLANDIKTAN SONRA DOCKER İLE AUTO INSTRUMENTATION EKLENECEK.
-		# TRACE --> Jaeger
-		# METRICS --> Prometheus
-		# LOGS --> Elasticsearch
-	# REDIS İLE CACHING ALTYAPISI EKLENECEK.
+__________________________________________________________________________________________________________________________________________________
+DOMAIN LAYER
+	- Entitites
+	- Events
+	- Exceptions
+	- Options
+	- Domain assembly
 
-
-	domain
-	- entitites ✅
-	- events --> İhtiyaç duyuldukça buraya yazılacak
-	- exceptions  --> İhtiyaç duyuldukça buraya yazılacak
-	- options --> ✅
-
-	application
-	- repository contracts --> Contracts/Persistence  --> İhtiyaç duyuldukça buraya yazılacak
-	- service extension --> içi doldurulacak
-	- application assembly --> ✅
-	- service result ✅
+APPLICATION LAYER
+	- Contracts
 	- Features
 		- DTO Files
 		- Validators
 		- Mapping Files
-		- repository service interface and implementation
+		- Cache Keys
+		- Service interfaces & implementations
+	- Application assembly
 
-	persistence
-	- AppDbContext ✅
-	- Entity configuration files ✅
-	- repository interface implementation 
-	- repository extension
-	- interceptors
-	- migrations
-	- persistence assembly ✅
-	- IGenericRepository implementation ✅
-	- UnitOfWork implementation ✅
-
+INFRASTRUCTURE LAYER
+	# PERSISTENCE
+		- Migrations
+		- Configurations (Entity configurations)
+		- Repositories (Entity specific repository interfaces implementations)
+		- Interceptors
+		- AppDbContext
+		- GenericRepository
+		- UnitOfWork
+		- Persistence assembly
+	# CACHING
+	# OBSERVABILITY
+	# STORAGE
+	# SECURITY
 	
-	API
+PRESENTATION LAYER
 	- ExceptionHandlers
 	- Extensions
 	- Filters
+	- Middlewares
+	- Controllers
 	- Program.cs
-		- JWT Bearer authentication ✅
-		- Services --> eklenecek
-		- Repositories --> eklenecek
-		- MapsterConfiguration ✅
 
 
+__________________________________________________________________________________________________________________________________________________
+
+OPENTELEMETRY
+	# ASP NET CORE INSTRUMENTATION
+		- API VEYA MVC UYGULAMAMIZA GELEN REQUEST VE RESPONSE'LARI OTOMATIK OLARAK TRACE ETMEMİZE OLANAK SAĞLAR.
+
+	# EF CORE INSTRUMENTATION
+		- UYGULAMAMIZIN VERİTABANINA YAPMIŞ OLDUĞU TRANSACTION'LARI TRACE DATA OLARAK ELE ALMAMIZA OLANAK SAĞLAR.
+
+	# HTTP INSTRUMENTATION
+		- MVC VEYA API UYGULAMAMIZDAN BAŞKA EXTERNAL API'LERE YAPMIŞ OLDUĞUMUZ REQUEST'LERI TRACE ETMEMIZE OLANAK SAĞLAR.
+
+	# REDIS INSTRUMENTATION
+		- API'MİZDEN REDIS'E YAPMIŞ OLDUĞUMUZ İSTEKLERİN TRACE EDİLMESİNİ SAĞLAR.
 
 
-_____________________________________________________________________________________________________________________
-
-# OPENTELEMETRY
-	# OpenTelemetry ile birlikte tracing, metrics ve logging verilerini toplayabiliyoruz.
-	# İlgili kaynaklar
-		# https://github.com/open-telemetry/opentelemetry-dotnet
-		# https://github.com/open-telemetry/opentelemetry-dotnet-contrib
-		# https://github.com/open-telemetry/opentelemetry-dotnet-instrumentation --> Automatic Instrumentation
 	
+__________________________________________________________________________________________________________________________________________________
 
-	API PROJESİ İÇERİSİNDE APPSETTING.DEVELOPMENT İÇERİSİNE OPENTELEMETRY RESOURCE BİLGİLERİ EKLENECEK.
-	Domain projesi içerisine OpenTelemetryConstantOption eklenecek.
-	INFRASTRUCTURE İÇERİSİNDE ACTIVITY SOURCE PROVIDER TANIMLANACAK.
-	API PROJESİ İÇERİSİNDE PROGRAM.CS İÇERİSİNDE 
-
-
-	ASP NET CORE INSTRUMENTATION
-	# API VEYA MVC UYGULAMAMIZA GELEN REQUEST VE RESPONSE'LARI OTOMATIK OLARAK TRACE ETMEMİZE OLANAK SAĞLAR.
-	10. adım --> sadece /api ile başlayan route'ları trace etmek için
-	12. adım --> request response'a dönene kadar fırlayan hataları trace data içerisinde görmek için
-	18. adım --> activity'lere tag nasıl eklenir örneği
-	22. adım --> Request ve response body'lerini var olan aktiviteye eklemek için middleware yazılır.
-		# BİZE GELEN REQUEST'LERİ VE BİZİM YAZDIĞIMIZ RESPONSE'LARI TRACE OLARAK BODY'E EKLER.
-
-
-	EF CORE INSTRUMENTATION
-	# UYGULAMAMIZIN VERİTABANINA YAPMIŞ OLDUĞU TRANSACTION'LARI TRACE DATA OLARAK ELE ALMAMIZA OLANAK SAĞLAR.
-
-	HTTP INSTRUMENTATION
-	# MVC VEYA API UYGULAMAMIZDAN BAŞKA EXTERNAL API'LERE YAPMIŞ OLDUĞUMUZ REQUEST'LERI TRACE ETMEMIZE OLANAK SAĞLAR.
-		# HTTP CLIENT INSTRUMENTATION BİZİM GÖNDERDİĞİMİZ REQUEST'LERİ VE BİZE GELEN RESPONSE'LARI TRACE OLARAK BODY'E EKLER.
-
-
-	REDIS INSTRUMENTATION
-	# API'MİZDEN REDIS'E YAPMIŞ OLDUĞUMUZ İSTEKLERİN TRACE EDİLMESİNİ SAĞLAR.
-
-
-	# COPILOT'A BİR KODUN ARASINDAKİ İLİŞKİYİ # İLE DOSYALARI EKLEYİP "MERMAID DIAGRAM" ÇİZMESİNİ İSTEYEREK ANLATTIRABİLİRİZ.
-	# ÖZELLİKLE OPEN SOURCE INFRASTRUCTURE SAĞLAYAN PROJELER İÇİN BU ÇOK KULLANIŞLI OLABİLİR.
-
-
-	___________________________________________________________________________________________________________________________________________
+CACHING INFRASTRUCTURE COMPONENTS
 
 	# EVENT BASED INVALIDATION
 
@@ -199,4 +172,100 @@ ________________________________________________________________________________
 	DistributedCacheType						(-) Şu an gerek yok
 	HashHelper									(+) App.Infrastructure.Security							(+)
 
+___________________________________________________________________________________________________________________________________________________________
 
+STORAGE INFRASTRUCTURE COMPONENTS
+
+	# IStorageProvider							--> STRATEGY
+			# GoogleCloudStorageProvider				--> CONCRETE IMPLEMENTATION
+			# LocalFileStorageProvider					--> CONCRETE IMPLEMENTATION
+
+	# IStorageProviderFactory					--> FACTORY (Config'e göre hangi servisini çalışacağını belirler. Storage içerisinde kullanılır.)
+
+	# IStorageService							--> DECORATOR
+
+____________________________________________________________________________________________________________________________________________________________
+
+TRANSLATE INFRA COMPONENTS
+
+	# ITranslateProvider						--> STRATEGY
+			# GoogleTranslateProvider					--> CONCRETE IMPLEMENTATION
+			# LocalTranslateProvider					--> CONCRETE IMPLEMENTATION
+
+	# ITranslateService							--> DECORATOR
+
+_______________________________________________________________________________________________________________________
+
+CONTROLLERS
+
+- LanguageController
+	GetLanguages										(+) GetLanguages
+
+- PracticeController
+	GetPractices										(+) GetPracticesByLanguage
+
+- ReadingBookController
+	GetReadingBookItemById								(+) GetReadingBookItemById
+	GetAllRBooksWithPaging								(+) GetAllRBooksWithPaging
+	GetReadingBookCreateItems							(+) GetRBookCreateItems
+	DeleteReadingBookItemById							(+) DeleteRBookItemById
+	ReadingBookAdd										(+) ReadingBookAdd
+	ReadingBookUpdate									(+) ReadingBookUpdate	
+
+- WritingBookController
+	GetWritingBookItemById								(+) GetWritingBookItemById
+	GetAllWBooksWithPaging								(+) GetAllWBooksWithPaging
+	GetWritingBookCreateItems							(+) GetWritingBookCreateItems
+	DeleteWritingBookItemById							(+) DeleteWritingBookItemById
+	WritingBookAdd										(+) WritingBookAdd
+	WritingBookUpdate									(+) WritingBookUpdate
+
+- FlashcardCategoryController
+	GetFlashcardCategoryItemById						(+) GetFlashcardCategoryItemById
+	GetAllFCategoriesWithPaging							(+) GetAllFCategoriesWithPaging
+	GetFlashcardCategoryCreateItems						(+) GetFlashcardCategoryCreateItems
+	DeleteFlashcardCategoryItemById						(+) DeleteFlashcardCategoryItemById
+	FlashcardCategoryAdd								(+) FlashcardCategoryAdd
+	FlashcardCategoryUpdate								(+) FlashcardCategoryUpdate
+
+- DeckWordController
+	GetDeckWordItemById									(+) GetDeckWordItemById
+	GetAllDWordsWithPaging								(+) GetAllDWordsWithPaging
+	DeleteDeckWordItemById								(+) DeleteDeckWordItemById
+	DeckWordAdd											(+) DeckWordAdd
+	DeckWordUpdate										(+) DeckWordUpdate
+
+- ReadingOldSessionController
+	GetReadingOldSessions								(+) GetReadingOldSessionsWithPaging
+	SaveReadingOldSession								(+) SaveReadingOldSession
+
+- FlashcardOldSessionController
+	GetFlashcardOldSessions								(+) GetFlashcardOldSessionsWithPaging
+	SaveFlashcardOldSession								(+) SaveFlashcardOldSession
+
+- WritingOldSessionController
+	GetWritingOldSessions								(+) GetWritingOldSessionsWithPaging
+	SaveWritingOldSession								(+) SaveWritingOldSession
+
+- ListeningOldSessionController
+	GetListeningOldSessions								(+) GetListeningOldSessionsWithPaging
+	SaveListeningOldSession								(+) SaveListeningOldSession
+
+- ReadingSessionRowController
+	GetReadingRowsById									(+) GetReadingRowsByIdWithPaging
+	SaveReadingRows										(+) SaveReadingRows
+
+- WritingSessionRowController
+	GetWritingRowsById									(+) GetWritingRowsByIdWithPaging
+	SaveWritingRows										(+) SaveWritingRows
+
+- FlashcardSessionRowController
+	GetFlashcardRowsById								(+) GetFlashcardRowsByIdWithPaging
+	SaveFlashcardRows									(+) SaveFlashcardRows
+
+- ListeningSessionRowController
+	GetListeningRowsById								(+) GetListeningRowsByIdWithPaging
+	SaveListeningRows									(+) SaveListeningRows
+
+
+COMPARE LANGUAGE ID  --> OAUTH SERVER

@@ -3,12 +3,12 @@
 public class ListeningCategory : BaseEntity<int>
 {
     public int ListeningId { get; set; }
-    public string Name { get; set; } = default!;
+    public string Name { get; set; } = null!;
 
-    // REFERANS ALDIKLARI (PARENT'LARI)
+    // REFERENCES (PARENTS)
     public required Listening Listening { get; set; } // FOR ListeningId
 
-    // REFERANS VERDİKLERİ (CHILD'LARI)
+    // THE REFERENCES THEY GAVE (THEIR CHILDREN)
     public ICollection<ListeningOldSession> ListeningOldSessions { get; set; } = [];
     public ICollection<DeckVideo> DeckVideos { get; set; } = [];
 }

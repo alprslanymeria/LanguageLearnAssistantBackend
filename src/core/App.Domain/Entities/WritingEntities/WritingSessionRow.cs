@@ -2,12 +2,12 @@
 
 public class WritingSessionRow : BaseEntity<int>
 {
-    public string WritingOldSessionId { get; set; } = default!;
-    public string SelectedSentence { get; set; } = default!;
-    public string Answer { get; set; } = default!;
-    public string AnswerTranslate { get; set; } = default!;
+    public string WritingOldSessionId { get; set; } = null!;
+    public string SelectedSentence { get; set; } = null!;
+    public string Answer { get; set; } = null!;
+    public string AnswerTranslate { get; set; } = null!;
     public decimal Similarity { get; set; }
 
-    // REFERANS ALDIKLARI (PARENT'LARI)
+    // REFERENCES (PARENTS)
     public required WritingOldSession WritingOldSession { get; set; } // FOR WritingOldSessionId
 }

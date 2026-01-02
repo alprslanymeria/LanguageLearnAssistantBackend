@@ -2,11 +2,11 @@
 
 public class ListeningSessionRow : BaseEntity<int>
 {
-    public string ListeningOldSessionId { get; set; } = default!;
-    public string ListenedSentence { get; set; } = default!;
-    public string Answer { get; set; } = default!;
+    public string ListeningOldSessionId { get; set; } = null!;
+    public string ListenedSentence { get; set; } = null!;
+    public string Answer { get; set; } = null!;
     public decimal Similarity { get; set; }
 
-    // REFERANS ALDIKLARI (PARENT'LARI)
+    // REFERENCES (PARENTS)
     public required ListeningOldSession ListeningOldSession { get; set; } // FOR ListeningOldSessionId
 }

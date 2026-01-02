@@ -2,11 +2,11 @@
 
 public class FlashcardSessionRow : BaseEntity<int>
 {
-    public string FlashcardOldSessionId { get; set; } = default!;
-    public string Question { get; set; } = default!;
-    public string Answer { get; set; } = default!;
-    public Boolean Status { get; set; }
+    public string FlashcardOldSessionId { get; set; } = null!;
+    public string Question { get; set; } = null!;
+    public string Answer { get; set; } = null!;
+    public bool Status { get; set; }
 
-    // REFERANS ALDIKLARI (PARENT'LARI)
+    // REFERENCES (PARENTS)
     public required FlashcardOldSession FlashcardOldSession { get; set; } // FOR FlashcardOldSessionId
 }

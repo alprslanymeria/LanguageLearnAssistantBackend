@@ -3,9 +3,9 @@
 public class DeckWord : BaseEntity<int>
 {
     public int FlashcardCategoryId { get; set; }
-    public string Question { get; set; } = default!;
-    public string Answer { get; set; } = default!;
+    public string Question { get; set; } = null!;
+    public string Answer { get; set; } = null!;
 
-    // REFERANS ALDIKLARI (PARENT'LARI)
+    // REFERENCES (PARENTS)
     public required FlashcardCategory FlashcardCategory { get; set; } // FOR FlashcardCategoryId
 }

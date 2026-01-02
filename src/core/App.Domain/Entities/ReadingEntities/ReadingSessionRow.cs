@@ -2,12 +2,12 @@
 
 public class ReadingSessionRow : BaseEntity<int>
 {
-    public string ReadingOldSessionId { get; set; } = default!;
-    public string SelectedSentence { get; set; } = default!;
-    public string Answer { get; set; } = default!;
-    public string AnswerTranslate { get; set; } = default!;
+    public string ReadingOldSessionId { get; set; } = null!;
+    public string SelectedSentence { get; set; } = null!;
+    public string Answer { get; set; } = null!;
+    public string AnswerTranslate { get; set; } = null!;
     public decimal Similarity { get; set; }
 
-    // REFERANS ALDIKLARI (PARENT'LARI)
+    // REFERENCES (PARENTS)
     public required ReadingOldSession ReadingOldSession { get; set; } // FOR ReadingOldSessionId
 }

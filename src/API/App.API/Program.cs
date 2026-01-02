@@ -3,9 +3,12 @@ using App.API.Extensions;
 using App.API.Filters;
 using App.API.Middlewares;
 using App.Application;
-using App.Application.Contracts.Infrastructure.Caching;
-using App.Domain.Options;
-using App.Infrastructure.Caching;
+using App.Caching;
+using App.Integration.ExternalApi;
+using App.Integration.Mapping;
+using App.Integration.Translation;
+using App.Observability;
+using App.Storage;
 using FluentValidation;
 using Microsoft.AspNetCore.Mvc;
 using SharpGrip.FluentValidation.AutoValidation.Mvc.Extensions;
@@ -13,35 +16,24 @@ using SharpGrip.FluentValidation.AutoValidation.Mvc.Extensions;
 var builder = WebApplication.CreateBuilder(args);
 
 // OPEN TELEMETRY
-builder.AddOpenTelemetryLog();
-
-// OPTIONS PATTERN
-builder.Services.Configure<DistributedCacheConfig>(builder.Configuration.GetSection("DistributedCacheConfig"));
-builder.Services.Configure<CacheConfig>(builder.Configuration.GetSection("CacheConfig"));
+builder.AddOpenTelemetryLogExt();
 
 // SERVICES
 builder.Services.AddControllers();
 builder.Services.AddOpenApi();
 builder.Services
-    .AddOpenTelemetryExtension(builder.Configuration)
-    .AddCustomTokenAuth(builder.Configuration)
-    .AddRepositories(builder.Configuration)
-    .AddMapster();
-
-// CACHING SERVICES
-builder.Services.AddTransient(typeof(ICacheKeyStore<>), typeof(CacheKeyStore<>));
-builder.Services.AddSingleton<ICacheKeyFactory, CacheKeyFactory>(); // --> FACTORY TO CREATE CACHE KEYS
-builder.Services.AddSingleton<ICacheKeyManager, CacheKeyManager>();
-    // LOCKER
-    builder.Services.AddSingleton<ILocker, DistributedCacheLocker>();
-    // SHORT TERM
-    builder.Services.AddScoped<IShortTermCacheManager, PerRequestCacheManager>();
-    // REDIS
-    builder.Services.AddSingleton<IRedisConnectionWrapper, RedisConnectionWrapper>();
-    builder.Services.AddScoped<IStaticCacheManager, RedisCacheManager>();
-    builder.Services.AddSingleton<ICacheKeyService, RedisCacheManager>();
-
-
+    .AddPersistenceServicesExt(builder.Configuration)
+    .AddOpenTelemetryServicesExt(builder.Configuration)
+    .AddCachingServicesExt(builder.Configuration)
+    .AddStorageServicesExt()
+    .AddMappingServicesExt()
+    .AddCustomTokenAuthExt(builder.Configuration)
+    .AddOptionsPatternExt(builder.Configuration)
+    .AddApplicationServicesExt()
+    .AddExternalApiServicesExt(builder.Configuration)
+    .AddTranslationServicesExt(builder.Configuration)
+    .AddApiVersioningExt()
+    .AddRateLimitingExt();
 
 // EXCEPTION HANDLERS
 builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
@@ -68,7 +60,7 @@ if (app.Environment.IsDevelopment())
 // MIDDLEWARES
 app.UseExceptionHandler(x => { });
 app.UseHttpsRedirection();
-//app.UseOpenTelemetryPrometheusScrapingEndpoint();
+app.UseRateLimiter();
 app.UseMiddleware<RequestAndResponseActivityMiddleware>();
 app.UseAuthentication();
 app.UseAuthorization();

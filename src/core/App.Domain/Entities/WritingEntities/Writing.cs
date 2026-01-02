@@ -2,16 +2,16 @@
 
 public class Writing : BaseEntity<int>
 {
-    public string UserId { get; set; } = default!;
+    public string UserId { get; set; } = null!;
     public int LanguageId { get; set; }
     public int PracticeId { get; set; }
 
-    // REFERANS ALDIKLARI (PARENT'LARI)
+    // REFERENCES (PARENTS)
     public required Language Language { get; set; } // FOR LanguageId
     public required Practice Practice { get; set; } // FOR PracticeId
 
 
-    // REFERANS VERDİKLERİ (CHILD'LARI)
-    public ICollection<WritingBook> WritingBooks = [];
-    public ICollection<WritingOldSession> WritingOldSessions = [];
+    // THE REFERENCES THEY GAVE (THEIR CHILDREN)
+    public ICollection<WritingBook> WritingBooks { get; set; } = [];
+    public ICollection<WritingOldSession> WritingOldSessions { get; set; } = [];
 }

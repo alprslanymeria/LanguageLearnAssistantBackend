@@ -3,12 +3,12 @@
 public class FlashcardCategory : BaseEntity<int>
 {
     public int FlashcardId { get; set; }
-    public string Name { get; set; } = default!;
+    public string Name { get; set; } = null!;
 
-    // REFERANS ALDIKLARI (PARENT'LARI)
+    // REFERENCES (PARENTS)
     public required Flashcard Flashcard { get; set; } // FOR FlashcardId
 
-    // REFERANS VERDİKLERİ (CHILD'LARI)
+    // THE REFERENCES THEY GAVE (THEIR CHILDREN)
     public ICollection<FlashcardOldSession> FlashcardOldSessions { get; set; } = [];
     public ICollection<DeckWord> DeckWords { get; set; } = [];
 }

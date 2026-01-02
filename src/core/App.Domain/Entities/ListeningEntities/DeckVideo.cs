@@ -3,9 +3,9 @@
 public class DeckVideo : BaseEntity<int>
 {
     public int ListeningCategoryId { get; set; }
-    public string Correct { get; set; } = default!;
-    public string SourceUrl { get; set; } = default!;
+    public string Correct { get; set; } = null!;
+    public string SourceUrl { get; set; } = null!;
 
-    // REFERANS ALDIKLARI (PARENT'LARI)
+    // REFERENCES (PARENTS)
     public required ListeningCategory ListeningCategory { get; set; } // FOR ListeningCategoryId
 }

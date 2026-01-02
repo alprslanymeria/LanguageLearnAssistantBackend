@@ -5,15 +5,17 @@ using App.Domain.Entities.WritingEntities;
 
 namespace App.Domain.Entities;
 
+// LANGUAGES AND PRACTICES DEFINED AS A ONE -TO-MANY RELATIONSHIP BUT IN USAGE THEY ACT LIKE MANY-TO-MANY. IT'S MY DECISION.
+
 public class Practice : BaseEntity<int>
 {
     public int LanguageId { get; set; }
-    public string Name { get; set; } = default!;
+    public string Name { get; set; } = null!;
 
-    // REFERANS ALDIKLARI (PARENT'LARI)
+    // REFERENCES (PARENTS)
     public required Language Language { get; set; } // FOR LanguageId
 
-    // REFERANS VERDİKLERİ (CHILD'LARI)
+    // THE REFERENCES THEY GAVE (THEIR CHILDREN)
     public ICollection<Flashcard> Flashcards { get; set; } = [];
     public ICollection<Listening> Listenings { get; set; } = [];
     public ICollection<Writing> Writings { get; set; } = [];

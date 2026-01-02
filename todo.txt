@@ -1,0 +1,9 @@
+1- (+) Cache decorator içerisinde invalidation işlemlerinin gerçekleştirildiğinden emin ol.
+2- (+) Translate controller içerisinde oauth server'a istek göndereceksin.
+3- (+) Dependency injection işlemleri presentation katmanında olmak zorunda değil. Kendi projeleri içine taşı
+4- (+) Shared projesi ayrı klasör içine taşınır, sadece infra projeleri referans alır.
+5- (+) Bir adet ef core interceptor yazılır created at değerleri otomatik verilir.
+	FlashcardOldSession
+	ListeningOldSession
+	ReadingOldSession
+	WritingOldSession

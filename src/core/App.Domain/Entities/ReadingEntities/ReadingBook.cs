@@ -3,14 +3,14 @@
 public class ReadingBook : BaseEntity<int>
 {
     public int ReadingId { get; set; }
-    public string Name { get; set; } = default!;
-    public string ImageUrl { get; set; } = default!;
-    public string LeftColor { get; set; } = default!;
-    public string SourceUrl { get; set; } = default!;
+    public string Name { get; set; } = null!;
+    public string ImageUrl { get; set; } = null!;
+    public string LeftColor { get; set; } = null!;
+    public string SourceUrl { get; set; } = null!;
 
-    // REFERANS ALDIKLARI (PARENT'LARI)
+    // REFERENCES (PARENTS)
     public required Reading Reading { get; set; } // FOR ReadingId
 
-    // REFERANS VERDİKLERİ (CHILD'LARI)
+    // THE REFERENCES THEY GAVE (THEIR CHILDREN)
     public ICollection<ReadingOldSession> ReadingOldSessions { get; set; } = [];
 }
