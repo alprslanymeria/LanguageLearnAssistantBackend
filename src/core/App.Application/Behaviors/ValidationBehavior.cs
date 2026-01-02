@@ -43,7 +43,7 @@ public class ValidationBehavior<TRequest, TResponse>(
                 typeof(TRequest).Name,
                 string.Join(", ", errorMessages));
 
-            // RETURN A SERVICERRESULT WITH VALIDATION ERRORS
+            // RETURN A SERVICERESULT WITH VALIDATION ERRORS
             var resultType = typeof(TResponse);
             if (resultType.IsGenericType && resultType.GetGenericTypeDefinition() == typeof(Common.ServiceResult<>))
             {
