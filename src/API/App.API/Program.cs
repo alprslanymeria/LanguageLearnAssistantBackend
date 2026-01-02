@@ -3,6 +3,7 @@ using App.API.Extensions;
 using App.API.Filters;
 using App.API.Middlewares;
 using App.Application;
+using App.Application.Extensions;
 using App.Caching;
 using App.Integration.ExternalApi;
 using App.Integration.Mapping;
@@ -29,6 +30,7 @@ builder.Services
     .AddMappingServicesExt()
     .AddCustomTokenAuthExt(builder.Configuration)
     .AddOptionsPatternExt(builder.Configuration)
+    .AddApplicationServices() // MEDIATR AND CQRS PATTERN
     .AddApplicationServicesExt()
     .AddExternalApiServicesExt(builder.Configuration)
     .AddTranslationServicesExt(builder.Configuration)
