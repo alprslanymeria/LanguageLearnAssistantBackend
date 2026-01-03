@@ -1,4 +1,4 @@
-﻿NOT: Clean Architecture Temel Prensiplere sahip olmalıdır:
+NOT: Clean Architecture Temel Prensiplere sahip olmalıdır:
 
 		 # DEPENDENCY INVERSION
 			- High level modül low level modüle direkt bağlı olmayacak. Arada interface, abstract class olabilir.
@@ -193,6 +193,29 @@ TRANSLATE INFRA COMPONENTS
 			# LocalTranslateProvider					--> CONCRETE IMPLEMENTATION
 
 	# ITranslateService							--> DECORATOR
+
+
+___________________________________________________________________________________________________________________________________________________________
+
+MEDIATR AND CQRS IMPLEMENTATION
+
+- MediatR iki tür request vardır:
+    - IRequest<QUERY RETURN VALUE> : FOR QUERY 
+        - IRequestHandler<QUERY , QUERY RETURN VALUE>
+
+    - IRequest   : FOR COMMANDS
+        - IRequestHandler<COMMAND>
+
+- Query ve Command'ların record ile tanımlanmasının sebepleri:
+    - immutable olmaları
+    - davranış değil veri taşımaları,
+    - değer ile karşılaştırma yapılması (class'lar ise referans ile karşılaştırma yapar)
+
+- IPipelineBehavior : Command veya Query handler'ına girmeden önce veya çıktıktan sonra çalışır.
+    - Örnek: Validation, Logging, Caching, Transaction, Performance, Authorization vb.
+    - next()                 : bir sonraki behavior veya handler
+    - next()’ten önceki kod  : handler’dan önce çalışır
+    - next()’ten sonraki kod : handler’dan sonra çalışır
 
 _______________________________________________________________________________________________________________________
 

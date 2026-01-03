@@ -82,4 +82,8 @@
     <ProjectReference Include="..\..\infastructure\App.Storage\App.Storage.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Filters\" />
+  </ItemGroup>
+
 </Project>

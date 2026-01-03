@@ -1,5 +1,6 @@
 <Solution>
   <Folder Name="/Solution Items/">
+    <File Path="gitSenaryo.txt" />
     <File Path="notes.txt" />
     <File Path="todo.txt" />
   </Folder>

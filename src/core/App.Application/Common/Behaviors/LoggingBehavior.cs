@@ -8,17 +8,15 @@ namespace App.Application.Common.Behaviors;
 /// LOGGING BEHAVIOR FOR MEDIATR PIPELINE.
 /// LOGS REQUEST/RESPONSE INFORMATION AND EXECUTION TIME.
 /// </summary>
-/// <typeparam name="TRequest">THE TYPE OF REQUEST.</typeparam>
-/// <typeparam name="TResponse">THE TYPE OF RESPONSE.</typeparam>
-public class LoggingBehavior<TRequest, TResponse>(
-    ILogger<LoggingBehavior<TRequest, TResponse>> logger
-    ) : IPipelineBehavior<TRequest, TResponse>
-    where TRequest : notnull
+public class LoggingBehavior<TRequest, TResponse>( ILogger<LoggingBehavior<TRequest, TResponse>> logger ) : IPipelineBehavior<TRequest, TResponse> where TRequest : notnull
 {
     public async Task<TResponse> Handle(
+
         TRequest request, 
         RequestHandlerDelegate<TResponse> next, 
-        CancellationToken cancellationToken)
+        CancellationToken cancellationToken
+
+        )
     {
         var requestName = typeof(TRequest).Name;
         
@@ -28,14 +26,11 @@ public class LoggingBehavior<TRequest, TResponse>(
         
         try
         {
-            var response = await next();
+            var response = await next(cancellationToken);
             
             stopwatch.Stop();
             
-            logger.LogInformation(
-                "HANDLED {RequestName} IN {ElapsedMilliseconds}MS", 
-                requestName, 
-                stopwatch.ElapsedMilliseconds);
+            logger.LogInformation("HANDLED {RequestName} IN {ElapsedMilliseconds}MS", requestName, stopwatch.ElapsedMilliseconds);
             
             return response;
         }
@@ -43,11 +38,7 @@ public class LoggingBehavior<TRequest, TResponse>(
         {
             stopwatch.Stop();
             
-            logger.LogError(
-                ex, 
-                "ERROR HANDLING {RequestName} AFTER {ElapsedMilliseconds}MS", 
-                requestName, 
-                stopwatch.ElapsedMilliseconds);
+            logger.LogError(ex, "ERROR HANDLING {RequestName} AFTER {ElapsedMilliseconds}MS", requestName, stopwatch.ElapsedMilliseconds);
             
             throw;
         }

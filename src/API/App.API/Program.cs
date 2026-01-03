@@ -1,6 +1,5 @@
 using App.API.ExceptionHandlers;
 using App.API.Extensions;
-using App.API.Filters;
 using App.API.Middlewares;
 using App.Application;
 using App.Application.Common.Behaviors;
@@ -11,8 +10,6 @@ using App.Integration.Translation;
 using App.Observability;
 using App.Storage;
 using FluentValidation;
-using Microsoft.AspNetCore.Mvc;
-using SharpGrip.FluentValidation.AutoValidation.Mvc.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -48,15 +45,7 @@ builder.Services.AddMediatR(cfg =>
 builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
 
 // FLUENT VALIDATION
-builder.Services.Configure<ApiBehaviorOptions>(options =>
-{
-    options.SuppressModelStateInvalidFilter = true;
-})
-    .AddFluentValidationAutoValidation(cfg =>
-    {
-        cfg.OverrideDefaultResultFactoryWith<FluentValidationFilter>();
-    })
-    .AddValidatorsFromAssembly(typeof(ApplicationAssembly).Assembly);
+builder.Services.AddValidatorsFromAssembly(typeof(ApplicationAssembly).Assembly);
 
 
 var app = builder.Build();

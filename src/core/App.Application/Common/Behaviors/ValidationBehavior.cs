@@ -5,23 +5,22 @@ namespace App.Application.Common.Behaviors;
 
 /// <summary>
 /// VALIDATION BEHAVIOR FOR MEDIATR PIPELINE.
-/// AUTOMATICALLY VALIDATES REQUESTS USING FLUENTVALIDATION BEFORE HANDLER EXECUTION.
+/// AUTOMATICALLY VALIDATES REQUESTS USING FLUENT VALIDATION BEFORE HANDLER EXECUTION.
 /// </summary>
-/// <typeparam name="TRequest">THE TYPE OF REQUEST.</typeparam>
-/// <typeparam name="TResponse">THE TYPE OF RESPONSE.</typeparam>
-public class ValidationBehavior<TRequest, TResponse>(
-    IEnumerable<IValidator<TRequest>> validators
-    ) : IPipelineBehavior<TRequest, TResponse>
-    where TRequest : notnull
+public class ValidationBehavior<TRequest, TResponse>( IEnumerable<IValidator<TRequest>> validators ) : IPipelineBehavior<TRequest, TResponse> where TRequest : notnull
 {
     public async Task<TResponse> Handle(
+
         TRequest request, 
         RequestHandlerDelegate<TResponse> next, 
-        CancellationToken cancellationToken)
+        CancellationToken cancellationToken
+
+        )
     {
+        // FAST FAIL
         if (!validators.Any())
         {
-            return await next();
+            return await next(cancellationToken);
         }
 
         var context = new ValidationContext<TRequest>(request);
@@ -31,14 +30,15 @@ public class ValidationBehavior<TRequest, TResponse>(
 
         var failures = validationResults
             .SelectMany(r => r.Errors)
-            .Where(f => f is not null)
+            .Where(e => e is not null)
+            .Select(e => e.ErrorMessage)
             .ToList();
 
         if (failures.Count > 0)
         {
-            throw new ValidationException(failures);
+            return (TResponse)(object)ServiceResult.Fail(failures);
         }
 
-        return await next();
+        return await next(cancellationToken);
     }
 }

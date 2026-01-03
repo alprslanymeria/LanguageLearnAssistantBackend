@@ -1,0 +1,6 @@
+1- Mevcut geliştirmelerini tamamladın ve local ve remote repo'lara push ettikten sonra geliştirmeler yapmaya devam ettin.
+Bu değişiklikleri yeni branch'e aktarmak istiyorsan:
+    - git checkout -b <branch name>
+    - git add .
+    - git commit -m "<commit mesajı>"
+    - git push -u origin <branch name>

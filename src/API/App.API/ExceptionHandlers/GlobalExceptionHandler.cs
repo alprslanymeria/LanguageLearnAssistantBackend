@@ -1,4 +1,4 @@
-﻿using App.Application.Common;
+using App.Application.Common;
 using Microsoft.AspNetCore.Diagnostics;
 using System.Net;
 
@@ -16,7 +16,7 @@ public class GlobalExceptionHandler : IExceptionHandler
 
         return true;
 
-        // return true;  --> Bu hatayı ben ele aldım ve ilgili response modeli ben geri döneceğim.
-        // return false; --> Bu hatayı ele aldım, gerekli operasyonlarımı yaptım. Bundan sonraki yolculuğuna devam etsin.
+        // return true;  --> I'VE HANDLED THIS ERROR AND I WILL RETURN THE RELEVANT RESPONSE MODEL.
+        // return false; --> I'VE HANDLED THIS ERROR, PERFORMED THE NECESSARY OPERATIONS. LET IT CONTINUE ON ITS JOURNEY.
     }
 }
