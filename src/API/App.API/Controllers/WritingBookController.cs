@@ -1,9 +1,14 @@
 using System.Security.Claims;
 using App.API.Adapters;
 using App.Application.Common;
-using App.Application.Features.WritingBooks;
-using App.Application.Features.WritingBooks.Dtos;
+using App.Application.Features.WritingBooks.Commands.CreateWritingBook;
+using App.Application.Features.WritingBooks.Commands.DeleteWBookItemById;
+using App.Application.Features.WritingBooks.Commands.UpdateWritingBook;
+using App.Application.Features.WritingBooks.Queries.GetAllWBooksWithPaging;
+using App.Application.Features.WritingBooks.Queries.GetWBookCreateItems;
+using App.Application.Features.WritingBooks.Queries.GetWritingBookById;
 using Asp.Versioning;
+using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -12,7 +17,7 @@ namespace App.API.Controllers;
 [Route("api/v{version:apiVersion}/[controller]")]
 [ApiVersion("1.0")]
 [Authorize]
-public class WritingBookController(IWritingBookService writingBookService) : BaseController
+public class WritingBookController(ISender sender) : BaseController
 {
     private string UserId => User.FindFirstValue(ClaimTypes.NameIdentifier) ?? string.Empty;
 
@@ -22,17 +27,15 @@ public class WritingBookController(IWritingBookService writingBookService) : Bas
     /// </summary>
     [HttpGet("{id:int}")]
     public async Task<IActionResult> GetWritingBookItemById(int id) 
-        => ActionResultInstance(await writingBookService.GetWritingBookItemByIdAsync(id));
-
+        => ActionResultInstance(await sender.Send(new GetWritingBookByIdQuery(id)));
 
     /// <summary>
     /// RETRIEVES ALL WRITING BOOKS WITH PAGING.
-    /// /api/v1.0/WritingBook?PageNumber=1&PageSize=10
+    /// /api/v1.0/WritingBook?Page=1&PageSize=10
     /// </summary>
     [HttpGet]
     public async Task<IActionResult> GetAllWBooksWithPaging([FromQuery] PagedRequest request)
-        => ActionResultInstance(await writingBookService.GetAllWBooksWithPagingAsync(UserId, request));
-
+        => ActionResultInstance(await sender.Send(new GetAllWBooksWithPagingQuery(UserId, request.Page, request.PageSize)));
 
     /// <summary>
     /// RETRIEVES CREATE ITEMS FOR DROPDOWN SELECTIONS.
@@ -40,7 +43,7 @@ public class WritingBookController(IWritingBookService writingBookService) : Bas
     /// </summary>
     [HttpGet("create-items")]
     public async Task<IActionResult> GetWBookCreateItems([FromQuery] string language, string practice)
-        => ActionResultInstance(await writingBookService.GetWBookCreateItemsAsync(UserId, language, practice));
+        => ActionResultInstance(await sender.Send(new GetWBookCreateItemsQuery(UserId, language, practice)));
 
     /// <summary>
     /// DELETES A WRITING BOOK BY ID.
@@ -48,7 +51,7 @@ public class WritingBookController(IWritingBookService writingBookService) : Bas
     /// </summary>
     [HttpDelete("{id:int}")]
     public async Task<IActionResult> DeleteWBookItemById(int id)
-        => ActionResultInstance(await writingBookService.DeleteWBookItemByIdAsync(id));
+        => ActionResultInstance(await sender.Send(new DeleteWBookItemByIdCommand(id)));
 
     /// <summary>
     /// CREATES A NEW WRITING BOOK WITH FILE UPLOAD.
@@ -57,19 +60,21 @@ public class WritingBookController(IWritingBookService writingBookService) : Bas
     [HttpPost]
     [Consumes("multipart/form-data")]
     public async Task<IActionResult> WritingBookAdd(
-        
-        [FromForm] CreateWritingBookRequest request,
+        [FromForm] int writingId,
+        [FromForm] string name,
+        [FromForm] int languageId,
         [FromForm] IFormFile imageFile, 
         [FromForm] IFormFile sourceFile)
     {
-        var requestWithExtra = request with
-        {
-            UserId = UserId,
-            ImageFile = new FormFileUploadAdapter(imageFile),
-            SourceFile = new FormFileUploadAdapter(sourceFile)
-        };
-        
-        return ActionResultInstance(await writingBookService.WritingBookAddAsync(requestWithExtra));
+        var command = new CreateWritingBookCommand(
+            writingId,
+            name,
+            new FormFileUploadAdapter(imageFile),
+            new FormFileUploadAdapter(sourceFile),
+            UserId,
+            languageId);
+
+        return ActionResultInstance(await sender.Send(command));
     }
 
     /// <summary>
@@ -79,18 +84,22 @@ public class WritingBookController(IWritingBookService writingBookService) : Bas
     [HttpPut]
     [Consumes("multipart/form-data")]
     public async Task<IActionResult> WritingBookUpdate(
-
-        [FromForm] UpdateWritingBookRequest request,
-        [FromForm] IFormFile imageFile,
-        [FromForm] IFormFile sourceFile)
+        [FromForm] int id,
+        [FromForm] int writingId,
+        [FromForm] string name,
+        [FromForm] int languageId,
+        [FromForm] IFormFile? imageFile,
+        [FromForm] IFormFile? sourceFile)
     {
-        var requestWithExtra = request with
-        {
-            UserId = UserId,
-            ImageFile = new FormFileUploadAdapter(imageFile),
-            SourceFile = new FormFileUploadAdapter(sourceFile)
-        };
-        
-        return ActionResultInstance(await writingBookService.WritingBookUpdateAsync(requestWithExtra));
+        var command = new UpdateWritingBookCommand(
+            id,
+            writingId,
+            name,
+            imageFile is not null ? new FormFileUploadAdapter(imageFile) : null,
+            sourceFile is not null ? new FormFileUploadAdapter(sourceFile) : null,
+            UserId,
+            languageId);
+
+        return ActionResultInstance(await sender.Send(command));
     }
 }

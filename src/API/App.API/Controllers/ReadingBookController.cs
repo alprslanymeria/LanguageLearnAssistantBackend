@@ -1,9 +1,14 @@
 using System.Security.Claims;
 using App.API.Adapters;
 using App.Application.Common;
-using App.Application.Features.ReadingBooks;
-using App.Application.Features.ReadingBooks.Dtos;
+using App.Application.Features.ReadingBooks.Commands.CreateReadingBook;
+using App.Application.Features.ReadingBooks.Commands.DeleteRBookItemById;
+using App.Application.Features.ReadingBooks.Commands.UpdateReadingBook;
+using App.Application.Features.ReadingBooks.Queries.GetAllRBooksWithPaging;
+using App.Application.Features.ReadingBooks.Queries.GetRBookCreateItems;
+using App.Application.Features.ReadingBooks.Queries.GetReadingBookById;
 using Asp.Versioning;
+using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -12,7 +17,7 @@ namespace App.API.Controllers;
 [Route("api/v{version:apiVersion}/[controller]")]
 [ApiVersion("1.0")]
 [Authorize]
-public class ReadingBookController(IReadingBookService readingBookService) : BaseController
+public class ReadingBookController(ISender sender) : BaseController
 {
     private string UserId => User.FindFirstValue(ClaimTypes.NameIdentifier) ?? string.Empty;
 
@@ -22,16 +27,15 @@ public class ReadingBookController(IReadingBookService readingBookService) : Bas
     /// </summary>
     [HttpGet("{id:int:min(1)}")]
     public async Task<IActionResult> GetReadingBookItemById(int id) 
-        => ActionResultInstance(await readingBookService.GetReadingBookItemByIdAsync(id));
-
+        => ActionResultInstance(await sender.Send(new GetReadingBookByIdQuery(id)));
 
     /// <summary>
     /// RETRIEVES ALL READING BOOKS WITH PAGING.
-    /// /api/v1.0/ReadingBook?PageNumber=1&PageSize=10
+    /// /api/v1.0/ReadingBook?Page=1&PageSize=10
     /// </summary>
     [HttpGet]
     public async Task<IActionResult> GetAllRBooksWithPaging([FromQuery] PagedRequest request) 
-        => ActionResultInstance(await readingBookService.GetAllRBooksWithPagingAsync(UserId, request));
+        => ActionResultInstance(await sender.Send(new GetAllRBooksWithPagingQuery(UserId, request.Page, request.PageSize)));
 
     /// <summary>
     /// RETRIEVES CREATE ITEMS FOR DROPDOWN SELECTIONS.
@@ -39,8 +43,7 @@ public class ReadingBookController(IReadingBookService readingBookService) : Bas
     /// </summary>
     [HttpGet("create-items")]
     public async Task<IActionResult> GetRBookCreateItems([FromQuery] string language, string practice) 
-        => ActionResultInstance(await readingBookService.GetRBookCreateItemsAsync(UserId, language, practice));
-
+        => ActionResultInstance(await sender.Send(new GetRBookCreateItemsQuery(UserId, language, practice)));
 
     /// <summary>
     /// DELETES A READING BOOK BY ID.
@@ -48,8 +51,7 @@ public class ReadingBookController(IReadingBookService readingBookService) : Bas
     /// </summary>
     [HttpDelete("{id:int}")]
     public async Task<IActionResult> DeleteRBookItemById(int id) 
-        => ActionResultInstance(await readingBookService.DeleteRBookItemByIdAsync(id));
-
+        => ActionResultInstance(await sender.Send(new DeleteRBookItemByIdCommand(id)));
 
     /// <summary>
     /// CREATES A NEW READING BOOK WITH FILE UPLOAD.
@@ -58,19 +60,21 @@ public class ReadingBookController(IReadingBookService readingBookService) : Bas
     [HttpPost]
     [Consumes("multipart/form-data")]
     public async Task<IActionResult> ReadingBookAdd(
-
-        [FromForm] CreateReadingBookRequest request,
+        [FromForm] int readingId,
+        [FromForm] string name,
+        [FromForm] int languageId,
         [FromForm] IFormFile imageFile,
         [FromForm] IFormFile sourceFile)
     {
-        var requestWithExtra = request with
-        {
-            UserId = UserId,
-            ImageFile = new FormFileUploadAdapter(imageFile),
-            SourceFile = new FormFileUploadAdapter(sourceFile)
-        };
-        
-        return ActionResultInstance(await readingBookService.ReadingBookAddAsync(requestWithExtra));
+        var command = new CreateReadingBookCommand(
+            readingId,
+            name,
+            new FormFileUploadAdapter(imageFile),
+            new FormFileUploadAdapter(sourceFile),
+            UserId,
+            languageId);
+
+        return ActionResultInstance(await sender.Send(command));
     }
 
     /// <summary>
@@ -80,18 +84,22 @@ public class ReadingBookController(IReadingBookService readingBookService) : Bas
     [HttpPut]
     [Consumes("multipart/form-data")]
     public async Task<IActionResult> ReadingBookUpdate(
-
-        [FromForm] UpdateReadingBookRequest request,
-        [FromForm] IFormFile imageFile,
-        [FromForm] IFormFile sourceFile)
+        [FromForm] int id,
+        [FromForm] int readingId,
+        [FromForm] string name,
+        [FromForm] int languageId,
+        [FromForm] IFormFile? imageFile,
+        [FromForm] IFormFile? sourceFile)
     {
-        var requestWithExtra = request with
-        {
-            UserId = UserId,
-            ImageFile = new FormFileUploadAdapter(imageFile),
-            SourceFile = new FormFileUploadAdapter(sourceFile)
-        };
-        
-        return ActionResultInstance(await readingBookService.ReadingBookUpdateAsync(requestWithExtra));
+        var command = new UpdateReadingBookCommand(
+            id,
+            readingId,
+            name,
+            imageFile is not null ? new FormFileUploadAdapter(imageFile) : null,
+            sourceFile is not null ? new FormFileUploadAdapter(sourceFile) : null,
+            UserId,
+            languageId);
+
+        return ActionResultInstance(await sender.Send(command));
     }
 }

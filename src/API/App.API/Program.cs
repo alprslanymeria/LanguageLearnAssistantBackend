@@ -3,6 +3,7 @@ using App.API.Extensions;
 using App.API.Filters;
 using App.API.Middlewares;
 using App.Application;
+using App.Application.Common.Behaviors;
 using App.Caching;
 using App.Integration.ExternalApi;
 using App.Integration.Mapping;
@@ -34,6 +35,14 @@ builder.Services
     .AddTranslationServicesExt(builder.Configuration)
     .AddApiVersioningExt()
     .AddRateLimitingExt();
+
+// MEDIATR WITH PIPELINE BEHAVIORS
+builder.Services.AddMediatR(cfg =>
+{
+    cfg.RegisterServicesFromAssembly(typeof(ApplicationAssembly).Assembly);
+    cfg.AddOpenBehavior(typeof(LoggingBehavior<,>));
+    cfg.AddOpenBehavior(typeof(ValidationBehavior<,>));
+});
 
 // EXCEPTION HANDLERS
 builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
