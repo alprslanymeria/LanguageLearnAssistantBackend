@@ -1,10 +1,11 @@
-﻿using App.Application.Contracts.Infrastructure.Storage;
+using App.Application.Contracts.Infrastructure.Storage;
 using App.Storage.aws;
 using App.Storage.google;
 using App.Storage.local;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace App.Storage;
+
 public static class StorageExtension
 {
     public static IServiceCollection AddStorageServicesExt(this IServiceCollection services)

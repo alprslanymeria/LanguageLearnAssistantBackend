@@ -1,8 +1,10 @@
 using System.Security.Claims;
 using App.Application.Common;
-using App.Application.Features.WritingOldSessions;
+using App.Application.Features.WritingOldSessions.Commands.CreateWOS;
 using App.Application.Features.WritingOldSessions.Dtos;
+using App.Application.Features.WritingOldSessions.Queries.GetWOSWithPaging;
 using Asp.Versioning;
+using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -11,7 +13,7 @@ namespace App.API.Controllers;
 [Route("api/v{version:apiVersion}/[controller]")]
 [ApiVersion("1.0")]
 [Authorize]
-public class WritingOldSessionController(IWritingOldSessionService writingOldSessionService) : BaseController
+public class WritingOldSessionController(ISender sender) : BaseController
 {
     private string UserId => User.FindFirstValue(ClaimTypes.NameIdentifier) ?? string.Empty;
 
@@ -21,7 +23,7 @@ public class WritingOldSessionController(IWritingOldSessionService writingOldSes
     /// </summary>
     [HttpGet]
     public async Task<IActionResult> GetWritingOldSessionsWithPaging([FromQuery] PagedRequest request) 
-        => ActionResultInstance(await writingOldSessionService.GetWritingOldSessionsWithPagingAsync(UserId, request));
+        => ActionResultInstance(await sender.Send(new GetWOSWithPagingQuery(UserId, request)));
 
 
     /// <summary>
@@ -30,6 +32,6 @@ public class WritingOldSessionController(IWritingOldSessionService writingOldSes
     /// </summary>
     [HttpPost]
     public async Task<IActionResult> SaveWritingOldSession([FromBody] SaveWritingOldSessionRequest request) 
-        => ActionResultInstance(await writingOldSessionService.SaveWritingOldSessionAsync(request));
-    
+        => ActionResultInstance(await sender.Send(new CreateWOSCommand(request)));
+
 }

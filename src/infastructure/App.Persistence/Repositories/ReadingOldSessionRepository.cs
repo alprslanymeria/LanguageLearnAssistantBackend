@@ -7,12 +7,12 @@ namespace App.Persistence.Repositories;
 /// <summary>
 /// REPOSITORY IMPLEMENTATION FOR READING OLD SESSION ENTITY.
 /// </summary>
-public class ReadingOldSessionRepository(AppDbContext context) : GenericRepository<ReadingOldSession, string>(context), IReadingOldSessionRepository
+public class ReadingOldSessionRepository(AppDbContext context) : IReadingOldSessionRepository
 {
     
     public async Task<(List<ReadingOldSession> items, int totalCount)> GetReadingOldSessionsWithPagingAsync(string userId, int page, int pageSize)
     {
-        var query = Context.ReadingOldSessions
+        var query = context.ReadingOldSessions
             .AsNoTracking()
             .Where(ros => ros.Reading.UserId == userId);
 
@@ -25,5 +25,25 @@ public class ReadingOldSessionRepository(AppDbContext context) : GenericReposito
             .ToListAsync();
 
         return (items, totalCount);
+    }
+
+    public async Task CreateAsync(ReadingOldSession entity) => await context.ReadingOldSessions.AddAsync(entity);
+
+    public Task<ReadingOldSession?> GetByIdAsync(string id) =>
+        context.ReadingOldSessions
+            .AsNoTracking()
+            .FirstOrDefaultAsync(ros => ros.Id == id);
+
+    public ReadingOldSession Update(ReadingOldSession entity)
+    {
+        context.ReadingOldSessions.Update(entity);
+
+        return entity;
+    }
+
+    public void Delete(ReadingOldSession entity)
+    {
+        context.ReadingOldSessions
+            .Remove(entity);
     }
 }

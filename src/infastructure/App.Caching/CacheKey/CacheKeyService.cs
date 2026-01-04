@@ -1,4 +1,4 @@
-﻿using System.Globalization;
+using System.Globalization;
 using System.Text;
 using App.Application.Contracts.Infrastructure.Caching;
 using App.Domain.Entities;

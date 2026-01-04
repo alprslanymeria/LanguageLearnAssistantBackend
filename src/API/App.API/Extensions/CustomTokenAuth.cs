@@ -1,4 +1,4 @@
-﻿using App.Domain.Options;
+using App.Domain.Options;
 using App.Security;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 

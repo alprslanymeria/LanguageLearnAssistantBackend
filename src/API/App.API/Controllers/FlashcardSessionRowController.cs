@@ -1,7 +1,9 @@
 using App.Application.Common;
-using App.Application.Features.FlashcardSessionRows;
+using App.Application.Features.FlashcardSessionRows.Commands.CreateFRows;
 using App.Application.Features.FlashcardSessionRows.Dtos;
+using App.Application.Features.FlashcardSessionRows.Queries.GetFRowsByIdWithPaging;
 using Asp.Versioning;
+using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -10,7 +12,7 @@ namespace App.API.Controllers;
 [Route("api/v{version:apiVersion}/[controller]")]
 [ApiVersion("1.0")]
 [Authorize]
-public class FlashcardSessionRowController(IFlashcardSessionRowService flashcardSessionRowService) : BaseController
+public class FlashcardSessionRowController(ISender sender) : BaseController
 {
     /// <summary>
     /// RETRIEVES ALL FLASHCARD ROWS BY SESSION ID.
@@ -18,7 +20,7 @@ public class FlashcardSessionRowController(IFlashcardSessionRowService flashcard
     /// </summary>
     [HttpGet("{oldSessionId}")]
     public async Task<IActionResult> GetFlashcardRowsByIdWithPaging([FromQuery] PagedRequest request, string oldSessionId) 
-        => ActionResultInstance(await flashcardSessionRowService.GetFlashcardRowsByIdWithPagingAsync(request, oldSessionId));
+        => ActionResultInstance(await sender.Send(new GetFRowsByIdWithPagingQuery(request, oldSessionId)));
 
 
     /// <summary>
@@ -27,6 +29,6 @@ public class FlashcardSessionRowController(IFlashcardSessionRowService flashcard
     /// </summary>
     [HttpPost]
     public async Task<IActionResult> SaveFlashcardRows([FromBody] SaveFlashcardRowsRequest request) 
-        => ActionResultInstance(await flashcardSessionRowService.SaveFlashcardRowsAsync(request));
-    
+        => ActionResultInstance(await sender.Send(new CreateFRowsCommand(request)));
+
 }

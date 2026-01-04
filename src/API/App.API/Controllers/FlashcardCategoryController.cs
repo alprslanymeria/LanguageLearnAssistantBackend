@@ -3,6 +3,7 @@ using App.Application.Common;
 using App.Application.Features.FlashcardCategories.Commands.CreateFlashcardCategory;
 using App.Application.Features.FlashcardCategories.Commands.DeleteFCategoryItemById;
 using App.Application.Features.FlashcardCategories.Commands.UpdateFlashcardCategory;
+using App.Application.Features.FlashcardCategories.Dtos;
 using App.Application.Features.FlashcardCategories.Queries.GetAllFCategoriesWithPaging;
 using App.Application.Features.FlashcardCategories.Queries.GetFCategoryCreateItems;
 using App.Application.Features.FlashcardCategories.Queries.GetFlashcardCategoryById;
@@ -34,7 +35,7 @@ public class FlashcardCategoryController(ISender sender) : BaseController
     /// </summary>
     [HttpGet]
     public async Task<IActionResult> GetAllFCategoriesWithPaging([FromQuery] PagedRequest request) 
-        => ActionResultInstance(await sender.Send(new GetAllFCategoriesWithPagingQuery(UserId, request.Page, request.PageSize)));
+        => ActionResultInstance(await sender.Send(new GetAllFCategoriesWithPagingQuery(UserId, request)));
 
     /// <summary>
     /// RETRIEVES CREATE ITEMS FOR DROPDOWN SELECTIONS.
@@ -57,43 +58,16 @@ public class FlashcardCategoryController(ISender sender) : BaseController
     /// /api/v1.0/FlashcardCategory + JSON BODY
     /// </summary>
     [HttpPost]
-    public async Task<IActionResult> FlashcardCategoryAdd(
-        [FromBody] CreateFlashcardCategoryRequest request)
-    {
-        var command = new CreateFlashcardCategoryCommand(
-            request.FlashcardId,
-            request.Name,
-            UserId,
-            request.LanguageId);
-
-        return ActionResultInstance(await sender.Send(command));
-    }
+    public async Task<IActionResult> FlashcardCategoryAdd([FromBody] CreateFlashcardCategoryRequest request)
+        => ActionResultInstance(await sender.Send(new CreateFlashcardCategoryCommand(request)));
+    
 
     /// <summary>
     /// UPDATES AN EXISTING FLASHCARD CATEGORY.
     /// /api/v1.0/FlashcardCategory + JSON BODY
     /// </summary>
     [HttpPut]
-    public async Task<IActionResult> FlashcardCategoryUpdate(
-        [FromBody] UpdateFlashcardCategoryRequest request)
-    {
-        var command = new UpdateFlashcardCategoryCommand(
-            request.Id,
-            request.FlashcardId,
-            request.Name,
-            UserId,
-            request.LanguageId);
-
-        return ActionResultInstance(await sender.Send(command));
-    }
+    public async Task<IActionResult> FlashcardCategoryUpdate([FromBody] UpdateFlashcardCategoryRequest request)
+        => ActionResultInstance(await sender.Send(new UpdateFlashcardCategoryCommand(request)));
+    
 }
-
-/// <summary>
-/// REQUEST DTO FOR CREATING A FLASHCARD CATEGORY FROM API.
-/// </summary>
-public record CreateFlashcardCategoryRequest(int FlashcardId, string Name, int LanguageId);
-
-/// <summary>
-/// REQUEST DTO FOR UPDATING A FLASHCARD CATEGORY FROM API.
-/// </summary>
-public record UpdateFlashcardCategoryRequest(int Id, int FlashcardId, string Name, int LanguageId);

@@ -1,4 +1,4 @@
-﻿using App.Domain.Entities.ListeningEntities;
+using App.Domain.Entities.ListeningEntities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 

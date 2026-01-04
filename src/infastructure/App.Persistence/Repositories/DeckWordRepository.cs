@@ -7,11 +7,11 @@ namespace App.Persistence.Repositories;
 /// <summary>
 /// REPOSITORY IMPLEMENTATION FOR DECK WORD ENTITY.
 /// </summary>
-public class DeckWordRepository(AppDbContext context) : GenericRepository<DeckWord, int>(context), IDeckWordRepository
+public class DeckWordRepository(AppDbContext context) : IDeckWordRepository
 {
     public async Task<DeckWord?> GetDeckWordItemByIdAsync(int id)
     {
-        return await Context.DeckWords
+        return await context.DeckWords
             .AsNoTracking()
             .Include(dw => dw.FlashcardCategory)
                 .ThenInclude(fc => fc.Flashcard)
@@ -21,7 +21,7 @@ public class DeckWordRepository(AppDbContext context) : GenericRepository<DeckWo
 
     public async Task<(List<DeckWord> Items, int TotalCount)> GetAllDWordsWithPagingAsync(int categoryId, int page, int pageSize)
     {
-        var query = Context.DeckWords
+        var query = context.DeckWords
             .AsNoTracking()
             .Where(dw => dw.FlashcardCategoryId == categoryId);
 
@@ -36,4 +36,23 @@ public class DeckWordRepository(AppDbContext context) : GenericRepository<DeckWo
         return (items, totalCount);
     }
 
+    public async Task CreateAsync(DeckWord entity) => await context.DeckWords.AddAsync(entity);
+
+    public Task<DeckWord?> GetByIdAsync(int id) =>
+        context.DeckWords
+            .AsNoTracking()
+            .FirstOrDefaultAsync(dw => dw.Id == id);
+
+    public DeckWord Update(DeckWord entity)
+    {
+        context.DeckWords.Update(entity);
+
+        return entity;
+    }
+
+    public void Delete(DeckWord entity)
+    {
+        context.DeckWords
+            .Remove(entity);
+    }
 }

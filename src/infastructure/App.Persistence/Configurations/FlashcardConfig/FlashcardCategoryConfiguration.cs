@@ -1,4 +1,4 @@
-﻿using App.Domain.Entities.FlashcardEntities;
+using App.Domain.Entities.FlashcardEntities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 

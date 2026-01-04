@@ -1,17 +1,19 @@
+using System.Security.Claims;
 using App.Application.Common;
-using App.Application.Features.ListeningOldSessions;
+using App.Application.Features.ListeningOldSessions.Commands.CreateLOS;
 using App.Application.Features.ListeningOldSessions.Dtos;
+using App.Application.Features.ListeningOldSessions.Queries.GetLOSWithPaging;
+using Asp.Versioning;
+using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System.Security.Claims;
-using Asp.Versioning;
 
 namespace App.API.Controllers;
 
 [Route("api/v{version:apiVersion}/[controller]")]
 [ApiVersion("1.0")]
 [Authorize]
-public class ListeningOldSessionController(IListeningOldSessionService listeningOldSessionService) : BaseController
+public class ListeningOldSessionController(ISender sender) : BaseController
 {
     private string UserId => User.FindFirstValue(ClaimTypes.NameIdentifier) ?? string.Empty;
 
@@ -21,7 +23,7 @@ public class ListeningOldSessionController(IListeningOldSessionService listening
     /// </summary>
     [HttpGet]
     public async Task<IActionResult> GetListeningOldSessionsWithPaging([FromQuery] PagedRequest request) 
-        => ActionResultInstance(await listeningOldSessionService.GetListeningOldSessionsWithPagingAsync(UserId, request));
+        => ActionResultInstance(await sender.Send(new GetLOSWithPagingQuery(UserId, request)));
 
 
     /// <summary>
@@ -30,5 +32,5 @@ public class ListeningOldSessionController(IListeningOldSessionService listening
     /// </summary>
     [HttpPost]
     public async Task<IActionResult> SaveListeningOldSession([FromBody] SaveListeningOldSessionRequest request)
-        => ActionResultInstance(await listeningOldSessionService.SaveListeningOldSessionAsync(request));
+        => ActionResultInstance(await sender.Send(new CreateLOSCommand(request)));
 }

@@ -1,4 +1,4 @@
-﻿using App.Application.Contracts.Infrastructure.Caching;
+using App.Application.Contracts.Infrastructure.Caching;
 using App.Domain.Options.Caching;
 using Microsoft.Extensions.Options;
 

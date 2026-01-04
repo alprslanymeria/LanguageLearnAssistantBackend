@@ -2,6 +2,7 @@ using App.Application.Common;
 using App.Application.Features.DeckWords.Commands.CreateDeckWord;
 using App.Application.Features.DeckWords.Commands.DeleteDWordItemById;
 using App.Application.Features.DeckWords.Commands.UpdateDeckWord;
+using App.Application.Features.DeckWords.Dtos;
 using App.Application.Features.DeckWords.Queries.GetAllDWordsWithPaging;
 using App.Application.Features.DeckWords.Queries.GetDeckWordById;
 using Asp.Versioning;
@@ -30,7 +31,7 @@ public class DeckWordController(ISender sender) : BaseController
     /// </summary>
     [HttpGet("category/{categoryId:int}")]
     public async Task<IActionResult> GetAllDWordsWithPaging(int categoryId, [FromQuery] PagedRequest request) 
-        => ActionResultInstance(await sender.Send(new GetAllDWordsWithPagingQuery(categoryId, request.Page, request.PageSize)));
+        => ActionResultInstance(await sender.Send(new GetAllDWordsWithPagingQuery(categoryId, request)));
 
     /// <summary>
     /// DELETES A DECK WORD BY ID.
@@ -45,39 +46,15 @@ public class DeckWordController(ISender sender) : BaseController
     /// /api/v1.0/DeckWord + JSON BODY
     /// </summary>
     [HttpPost]
-    public async Task<IActionResult> DeckWordAdd([FromBody] CreateDeckWordApiRequest request)
-    {
-        var command = new CreateDeckWordCommand(
-            request.FlashcardCategoryId,
-            request.Question,
-            request.Answer);
-
-        return ActionResultInstance(await sender.Send(command));
-    }
+    public async Task<IActionResult> DeckWordAdd([FromBody] CreateDeckWordRequest request)
+        => ActionResultInstance(await sender.Send(new CreateDeckWordCommand(request)));
+    
 
     /// <summary>
     /// UPDATES AN EXISTING DECK WORD.
     /// /api/v1.0/DeckWord + JSON BODY
     /// </summary>
     [HttpPut]
-    public async Task<IActionResult> DeckWordUpdate([FromBody] UpdateDeckWordApiRequest request)
-    {
-        var command = new UpdateDeckWordCommand(
-            request.Id,
-            request.FlashcardCategoryId,
-            request.Question,
-            request.Answer);
-
-        return ActionResultInstance(await sender.Send(command));
-    }
+    public async Task<IActionResult> DeckWordUpdate([FromBody] UpdateDeckWordRequest request)
+        => ActionResultInstance(await sender.Send(new UpdateDeckWordCommand(request)));
 }
-
-/// <summary>
-/// REQUEST DTO FOR CREATING A DECK WORD FROM API.
-/// </summary>
-public record CreateDeckWordApiRequest(int FlashcardCategoryId, string Question, string Answer);
-
-/// <summary>
-/// REQUEST DTO FOR UPDATING A DECK WORD FROM API.
-/// </summary>
-public record UpdateDeckWordApiRequest(int Id, int FlashcardCategoryId, string Question, string Answer);

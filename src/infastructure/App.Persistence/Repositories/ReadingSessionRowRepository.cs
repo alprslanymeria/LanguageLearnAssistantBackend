@@ -7,11 +7,11 @@ namespace App.Persistence.Repositories;
 /// <summary>
 /// REPOSITORY IMPLEMENTATION FOR READING SESSION ROW ENTITY.
 /// </summary>
-public class ReadingSessionRowRepository(AppDbContext context) : GenericRepository<ReadingSessionRow, int>(context), IReadingSessionRowRepository
+public class ReadingSessionRowRepository(AppDbContext context) : IReadingSessionRowRepository
 {
     public async Task<(List<ReadingSessionRow> items, int totalCount)> GetReadingRowsByIdWithPagingAsync(string sessionId, int page, int pageSize)
     {
-        var query = Context.ReadingSessionRows
+        var query = context.ReadingSessionRows
             .AsNoTracking()
             .Where(r => r.ReadingOldSessionId == sessionId);
 
@@ -28,6 +28,26 @@ public class ReadingSessionRowRepository(AppDbContext context) : GenericReposito
 
     public async Task CreateRangeAsync(IEnumerable<ReadingSessionRow> rows)
     {
-        await Context.ReadingSessionRows.AddRangeAsync(rows);
+        await context.ReadingSessionRows.AddRangeAsync(rows);
+    }
+
+    public async Task CreateAsync(ReadingSessionRow entity) => await context.ReadingSessionRows.AddAsync(entity);
+
+    public Task<ReadingSessionRow?> GetByIdAsync(int id) =>
+        context.ReadingSessionRows
+            .AsNoTracking()
+            .FirstOrDefaultAsync(rsr => rsr.Id == id);
+
+    public ReadingSessionRow Update(ReadingSessionRow entity)
+    {
+        context.ReadingSessionRows.Update(entity);
+
+        return entity;
+    }
+
+    public void Delete(ReadingSessionRow entity)
+    {
+        context.ReadingSessionRows
+            .Remove(entity);
     }
 }

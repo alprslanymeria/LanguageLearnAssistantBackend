@@ -8,9 +8,9 @@ namespace App.Application.Features.FlashcardCategories.CacheKeys;
 public static class FlashcardCategoryCacheKeys
 {
     public static string Prefix => "flashcardCategory";
-    public static string AllCategoriesKey => $"{Prefix}.all.{{0}}.{{1}}";
-    public static string CategoryByIdKey => $"{Prefix}.id.{{0}}";
-    public static string CreateItemsKey => $"{Prefix}.createItems.{{0}}.{{1}}.{{2}}";
+    private static string AllCategoriesKey => $"{Prefix}.all.{{0}}.{{1}}";
+    private static string CategoryByIdKey => $"{Prefix}.id.{{0}}";
+    private static string CreateItemsKey => $"{Prefix}.createItems.{{0}}.{{1}}.{{2}}";
 
     public static ICacheKey Paged(ICacheKeyFactory factory, int page, int pageSize) =>
         factory.Create(_ => null!, AllCategoriesKey, page, pageSize);

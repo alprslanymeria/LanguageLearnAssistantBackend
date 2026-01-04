@@ -1,9 +1,9 @@
-﻿using System.Net;
+using System.Net;
 using System.Text.Json.Serialization;
 
 namespace App.Application.Common;
 
-public class ServiceResult<T> where T : class
+public class ServiceResult<T>
 {
     public T? Data { get; private set; }
     public List<string>? ErrorMessage { get; init; }

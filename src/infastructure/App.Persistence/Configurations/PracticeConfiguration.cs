@@ -1,11 +1,11 @@
-﻿using App.Domain.Entities;
+using App.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace App.Persistence.Configurations;
 
-// FLASHCARD - LISTENING - WRITING - READING BUNLAR LANGUAGE SİLİNDİĞİNDE SİLİNECEK FAKAT PRACTICE SİLİNDİĞİNDE SİLİNMEYECEK.
-// İKİSİNDEN BİRİNİ TERCİH ETMELİYDİM.
+// FLASHCARD - LISTENING - WRITING - READING BUNLAR LANGUAGE SILINDIGINDE SILINECEK FAKAT PRACTICE SILINDIGINDE SILINMEYECEK.
+// IKISINDEN BIRINI TERCIH ETMELIYDIM.
 public class PracticeConfiguration : IEntityTypeConfiguration<Practice>
 {
     public void Configure(EntityTypeBuilder<Practice> builder)

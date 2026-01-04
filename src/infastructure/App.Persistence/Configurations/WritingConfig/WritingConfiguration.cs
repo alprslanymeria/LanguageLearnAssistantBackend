@@ -1,4 +1,4 @@
-﻿using App.Domain.Entities.WritingEntities;
+using App.Domain.Entities.WritingEntities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 

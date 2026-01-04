@@ -8,7 +8,7 @@ namespace App.API.Controllers;
 public class BaseController : ControllerBase
 {
     [NonAction]
-    public IActionResult ActionResultInstance<T>(ServiceResult<T> response) where T : class
+    public IActionResult ActionResultInstance<T>(ServiceResult<T> response)
     {
         return response.Status switch
         {

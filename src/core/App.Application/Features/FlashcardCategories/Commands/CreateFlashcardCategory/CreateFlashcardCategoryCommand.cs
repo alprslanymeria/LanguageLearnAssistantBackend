@@ -7,9 +7,4 @@ namespace App.Application.Features.FlashcardCategories.Commands.CreateFlashcardC
 /// <summary>
 /// COMMAND FOR CREATING A NEW FLASHCARD CATEGORY.
 /// </summary>
-public record CreateFlashcardCategoryCommand(
-    int FlashcardId,
-    string Name,
-    string UserId,
-    int LanguageId
-    ) : ICommand<ServiceResult<FlashcardCategoryDto>>;
+public record CreateFlashcardCategoryCommand(CreateFlashcardCategoryRequest Request) : ICommand<ServiceResult<int>>;

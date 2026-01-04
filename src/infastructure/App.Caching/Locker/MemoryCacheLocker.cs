@@ -1,4 +1,4 @@
-﻿using App.Application.Contracts.Infrastructure.Caching;
+using App.Application.Contracts.Infrastructure.Caching;
 using Microsoft.Extensions.Caching.Memory;
 
 namespace App.Caching.Locker;
@@ -38,9 +38,9 @@ public class MemoryCacheLocker(
                     await action(tokenSource.Token);
             }
         }
-        catch (OperationCanceledException) 
-        { 
-        
+        catch (OperationCanceledException)
+        {
+
         }
         finally
         {

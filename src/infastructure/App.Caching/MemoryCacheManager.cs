@@ -1,4 +1,4 @@
-﻿using App.Application.Contracts.Infrastructure.Caching;
+using App.Application.Contracts.Infrastructure.Caching;
 using App.Caching.CacheKey;
 using App.Domain.Options.Caching;
 using Microsoft.Extensions.Caching.Memory;
@@ -8,7 +8,7 @@ using Microsoft.Extensions.Primitives;
 namespace App.Caching;
 
 // singleton ICacheKeyManager (localKeyManager)
-// transient ICacheKeyStore , scoped olarak çalışır
+// transient ICacheKeyStore , scoped olarak çalisir
 
 // singleton IMemoryCache (memoryCache)
 

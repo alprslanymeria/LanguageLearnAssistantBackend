@@ -1,12 +1,12 @@
+using System.Net;
 using App.Application.Common;
 using App.Application.Common.CQRS;
+using App.Application.Contracts.Infrastructure.Caching;
 using App.Application.Contracts.Persistence;
 using App.Application.Contracts.Persistence.Repositories;
-using App.Application.Features.FlashcardCategories.Dtos;
-using App.Domain.Entities.FlashcardEntities;
-using MapsterMapper;
+using App.Application.Contracts.Services;
+using App.Application.Features.FlashcardCategories.CacheKeys;
 using Microsoft.Extensions.Logging;
-using System.Net;
 
 namespace App.Application.Features.FlashcardCategories.Commands.UpdateFlashcardCategory;
 
@@ -14,101 +14,68 @@ namespace App.Application.Features.FlashcardCategories.Commands.UpdateFlashcardC
 /// HANDLER FOR UPDATE FLASHCARD CATEGORY COMMAND.
 /// </summary>
 public class UpdateFlashcardCategoryCommandHandler(
+
     IFlashcardCategoryRepository flashcardCategoryRepository,
-    IFlashcardRepository flashcardRepository,
-    ILanguageRepository languageRepository,
-    IPracticeRepository practiceRepository,
     IUnitOfWork unitOfWork,
-    IMapper mapper,
-    ILogger<UpdateFlashcardCategoryCommandHandler> logger
-    ) : ICommandHandler<UpdateFlashcardCategoryCommand, ServiceResult<FlashcardCategoryDto>>
+    ILogger<UpdateFlashcardCategoryCommandHandler> logger,
+    IStaticCacheManager cacheManager,
+    IEntityVerificationService entityVerificationService
+
+    ) : ICommandHandler<UpdateFlashcardCategoryCommand, ServiceResult<int>>
 {
-    public async Task<ServiceResult<FlashcardCategoryDto>> Handle(
+
+    public async Task<ServiceResult<int>> Handle(
+
         UpdateFlashcardCategoryCommand request, 
         CancellationToken cancellationToken)
     {
-        logger.LogInformation("UpdateFlashcardCategoryCommandHandler -> UPDATING FLASHCARD CATEGORY WITH ID: {Id}", request.Id);
+        logger.LogInformation("UpdateFlashcardCategoryCommandHandler -> UPDATING FLASHCARD CATEGORY WITH ID: {Id}", request.Request.Id);
 
         // VERIFY FLASHCARD CATEGORY EXISTS
-        var existingCategory = await flashcardCategoryRepository.GetByIdAsync(request.Id);
+        var existingCategory = await flashcardCategoryRepository.GetByIdAsync(request.Request.Id);
 
+        // FAST FAIL
         if (existingCategory is null)
         {
-            logger.LogWarning("UpdateFlashcardCategoryCommandHandler -> FLASHCARD CATEGORY NOT FOUND WITH ID: {Id}", request.Id);
-            return ServiceResult<FlashcardCategoryDto>.Fail("FLASHCARD CATEGORY NOT FOUND", HttpStatusCode.NotFound);
+            logger.LogWarning("UpdateFlashcardCategoryCommandHandler -> FLASHCARD CATEGORY NOT FOUND WITH ID: {Id}", request.Request.Id);
+            return ServiceResult<int>.Fail("FLASHCARD CATEGORY NOT FOUND", HttpStatusCode.NotFound);
         }
 
         // VERIFY OR CREATE FLASHCARD
-        var flashcardResult = await VerifyOrCreateFlashcardAsync(request.FlashcardId, request.UserId, request.LanguageId);
+        var flashcardResult = await entityVerificationService.VerifyOrCreateFlashcardAsync(
 
+            request.Request.FlashcardId, 
+            request.Request.UserId, 
+            request.Request.LanguageId);
+
+        // FAST FAIL
         if (!flashcardResult.IsSuccess)
         {
-            return ServiceResult<FlashcardCategoryDto>.Fail(flashcardResult.ErrorMessage!, flashcardResult.Status);
+            return ServiceResult<int>.Fail(flashcardResult.ErrorMessage!, flashcardResult.Status);
         }
 
         var flashcard = flashcardResult.Data!;
 
         try
         {
-            // UPDATE FIELDS
+            // UPDATE OTHER FIELDS
             existingCategory.FlashcardId = flashcard.Id;
-            existingCategory.Name = request.Name;
+            existingCategory.Name = request.Request.Name;
 
             flashcardCategoryRepository.Update(existingCategory);
             await unitOfWork.CommitAsync();
 
+            // CACHE INVALIDATION
+            await cacheManager.RemoveByPrefixAsync(FlashcardCategoryCacheKeys.Prefix);
+
             logger.LogInformation("UpdateFlashcardCategoryCommandHandler -> SUCCESSFULLY UPDATED FLASHCARD CATEGORY WITH ID: {Id}", existingCategory.Id);
 
-            var result = mapper.Map<FlashcardCategory, FlashcardCategoryDto>(existingCategory);
-            return ServiceResult<FlashcardCategoryDto>.Success(result);
+            return ServiceResult<int>.Success(existingCategory.Id);
         }
         catch (Exception ex)
         {
             logger.LogError(ex, "UpdateFlashcardCategoryCommandHandler -> ERROR UPDATING FLASHCARD CATEGORY");
-            return ServiceResult<FlashcardCategoryDto>.Fail("ERROR UPDATING FLASHCARD CATEGORY", HttpStatusCode.InternalServerError);
+            return ServiceResult<int>.Fail("ERROR UPDATING FLASHCARD CATEGORY", HttpStatusCode.InternalServerError);
         }
-    }
-
-    private async Task<ServiceResult<Flashcard>> VerifyOrCreateFlashcardAsync(int flashcardId, string userId, int languageId)
-    {
-        var flashcard = await flashcardRepository.GetByIdAsync(flashcardId);
-
-        if (flashcard is not null)
-        {
-            return ServiceResult<Flashcard>.Success(flashcard);
-        }
-
-        logger.LogWarning("UpdateFlashcardCategoryCommandHandler -> FLASHCARD NOT FOUND WITH ID: {FlashcardId}", flashcardId);
-
-        var language = await languageRepository.GetByIdAsync(languageId);
-
-        if (language is null)
-        {
-            logger.LogWarning("UpdateFlashcardCategoryCommandHandler -> LANGUAGE NOT FOUND FOR ID: {LanguageId}", languageId);
-            return ServiceResult<Flashcard>.Fail("LANGUAGE NOT FOUND", HttpStatusCode.NotFound);
-        }
-
-        var practice = await practiceRepository.ExistsByLanguageIdAsync(languageId);
-
-        if (practice is null)
-        {
-            logger.LogWarning("UpdateFlashcardCategoryCommandHandler -> PRACTICE NOT FOUND FOR LANGUAGE ID: {LanguageId}", languageId);
-            return ServiceResult<Flashcard>.Fail("PRACTICE NOT FOUND FOR LANGUAGE", HttpStatusCode.NotFound);
-        }
-
-        flashcard = new Flashcard
-        {
-            UserId = userId,
-            LanguageId = languageId,
-            PracticeId = practice.Id,
-            Language = language,
-            Practice = practice
-        };
-
-        await flashcardRepository.CreateAsync(flashcard);
-
-        logger.LogInformation("UpdateFlashcardCategoryCommandHandler -> NEW FLASHCARD CREATED WITH ID: {FlashcardId}", flashcard.Id);
-
-        return ServiceResult<Flashcard>.Success(flashcard);
     }
 }

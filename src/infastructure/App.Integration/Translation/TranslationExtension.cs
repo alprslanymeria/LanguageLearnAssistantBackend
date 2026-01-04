@@ -1,6 +1,4 @@
 using App.Application.Contracts.Infrastructure.Translation;
-using App.Application.Features.Translation;
-using App.Domain.Options.Storage;
 using App.Domain.Options.Translation;
 using Google.Cloud.Translation.V2;
 using Microsoft.Extensions.Configuration;
@@ -25,9 +23,6 @@ public static class TranslationExtension
 
         services.AddSingleton(_ => TranslationClient.Create());
         services.AddSingleton<ITranslationProvider, GoogleTranslationProvider>();
-
-        // TRANSLATE SERVICE
-        services.AddScoped<ITranslateService, TranslateService>();
 
         return services;
     }

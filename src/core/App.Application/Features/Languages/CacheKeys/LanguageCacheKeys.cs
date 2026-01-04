@@ -8,8 +8,8 @@ namespace App.Application.Features.Languages.CacheKeys;
 public static class LanguageCacheKeys
 {
     public static string Prefix => "language";
-    public static string AllLanguagesKey => $"{Prefix}.all";
-    public static string LanguageByIdKey => $"{Prefix}.id.{{0}}";
+    private static string AllLanguagesKey => $"{Prefix}.all";
+    private static string LanguageByIdKey => $"{Prefix}.id.{{0}}";
 
     public static ICacheKey All(ICacheKeyFactory factory) =>
         factory.Create(_ => null!, AllLanguagesKey);

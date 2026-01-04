@@ -1,4 +1,4 @@
-﻿using App.Domain.Entities.FlashcardEntities;
+using App.Domain.Entities.FlashcardEntities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -10,7 +10,7 @@ public class FlashcardOldSessionConfiguration : BaseOldSessionConfiguration<Flas
     {
         base.Configure(builder);
 
-        // ENTITY SPECIFIC AYARLAR BURADA YAPILABİLİR.
+        // ENTITY SPECIFIC AYARLAR BURADA YAPILABILIR.
 
         // RELATIONS
         builder.HasMany(x => x.FlashcardSessionRows)

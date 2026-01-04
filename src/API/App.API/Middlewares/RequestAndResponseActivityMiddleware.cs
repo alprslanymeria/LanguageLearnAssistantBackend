@@ -1,4 +1,4 @@
-﻿using Microsoft.IO;
+using Microsoft.IO;
 using System.Diagnostics;
 
 namespace App.API.Middlewares;

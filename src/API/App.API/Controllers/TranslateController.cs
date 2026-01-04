@@ -1,7 +1,8 @@
 using System.Security.Claims;
-using App.Application.Features.Translation;
 using App.Application.Features.Translation.Dtos;
+using App.Application.Features.Translation.Queries.TranslateText;
 using Asp.Versioning;
+using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -13,7 +14,7 @@ namespace App.API.Controllers;
 [Route("api/v{version:apiVersion}/[controller]")]
 [ApiVersion("1.0")]
 [Authorize]
-public class TranslateController(ITranslateService translateService) : BaseController
+public class TranslateController(ISender sender) : BaseController
 {
 
     #region UTILS
@@ -51,9 +52,7 @@ public class TranslateController(ITranslateService translateService) : BaseContr
             return Unauthorized();
         }
 
-        var result = await translateService.TranslateTextAsync(request, userId, accessToken, cancellationToken);
+        var result = await sender.Send(new TranslateTextQuery(request, userId, accessToken), cancellationToken);
         return ActionResultInstance(result);
     }
-
-    
 }

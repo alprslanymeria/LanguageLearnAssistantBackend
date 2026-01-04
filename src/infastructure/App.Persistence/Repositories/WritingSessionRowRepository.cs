@@ -7,11 +7,11 @@ namespace App.Persistence.Repositories;
 /// <summary>
 /// REPOSITORY IMPLEMENTATION FOR WRITING SESSION ROW ENTITY.
 /// </summary>
-public class WritingSessionRowRepository(AppDbContext context) : GenericRepository<WritingSessionRow, int>(context), IWritingSessionRowRepository
+public class WritingSessionRowRepository(AppDbContext context) : IWritingSessionRowRepository
 {
     public async Task<(List<WritingSessionRow> items, int totalCount)> GetWritingRowsByIdWithPagingAsync(string sessionId, int page, int pageSize)
     {
-        var query = Context.WritingSessionRows
+        var query = context.WritingSessionRows
             .AsNoTracking()
             .Where(r => r.WritingOldSessionId == sessionId);
 
@@ -28,6 +28,26 @@ public class WritingSessionRowRepository(AppDbContext context) : GenericReposito
 
     public async Task CreateRangeAsync(IEnumerable<WritingSessionRow> rows)
     {
-        await Context.WritingSessionRows.AddRangeAsync(rows);
+        await context.WritingSessionRows.AddRangeAsync(rows);
+    }
+
+    public async Task CreateAsync(WritingSessionRow entity) => await context.WritingSessionRows.AddAsync(entity);
+
+    public Task<WritingSessionRow?> GetByIdAsync(int id) =>
+        context.WritingSessionRows
+            .AsNoTracking()
+            .FirstOrDefaultAsync(wsr => wsr.Id == id);
+
+    public WritingSessionRow Update(WritingSessionRow entity)
+    {
+        context.WritingSessionRows.Update(entity);
+
+        return entity;
+    }
+
+    public void Delete(WritingSessionRow entity)
+    {
+        context.WritingSessionRows
+            .Remove(entity);
     }
 }

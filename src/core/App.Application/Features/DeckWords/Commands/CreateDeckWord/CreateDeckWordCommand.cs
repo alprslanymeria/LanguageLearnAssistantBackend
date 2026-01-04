@@ -7,8 +7,4 @@ namespace App.Application.Features.DeckWords.Commands.CreateDeckWord;
 /// <summary>
 /// COMMAND FOR CREATING A NEW DECK WORD.
 /// </summary>
-public record CreateDeckWordCommand(
-    int FlashcardCategoryId,
-    string Question,
-    string Answer
-    ) : ICommand<ServiceResult<DeckWordDto>>;
+public record CreateDeckWordCommand(CreateDeckWordRequest Request) : ICommand<ServiceResult<int>>;

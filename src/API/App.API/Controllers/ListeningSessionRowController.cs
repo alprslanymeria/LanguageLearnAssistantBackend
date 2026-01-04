@@ -1,7 +1,9 @@
 using App.Application.Common;
-using App.Application.Features.ListeningSessionRows;
+using App.Application.Features.ListeningSessionRows.Commands.CreateLRows;
 using App.Application.Features.ListeningSessionRows.Dtos;
+using App.Application.Features.ListeningSessionRows.Queries.GetLRowsByIdWithPaging;
 using Asp.Versioning;
+using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -10,7 +12,7 @@ namespace App.API.Controllers;
 [Route("api/v{version:apiVersion}/[controller]")]
 [ApiVersion("1.0")]
 [Authorize]
-public class ListeningSessionRowController(IListeningSessionRowService listeningSessionRowService) : BaseController
+public class ListeningSessionRowController(ISender sender) : BaseController
 {
     /// <summary>
     /// RETRIEVES ALL LISTENING ROWS BY SESSION ID.
@@ -18,7 +20,7 @@ public class ListeningSessionRowController(IListeningSessionRowService listening
     /// </summary>
     [HttpGet("{oldSessionId}")]
     public async Task<IActionResult> GetListeningRowsByIdWithPaging([FromQuery] PagedRequest request, string oldSessionId) 
-        => ActionResultInstance(await listeningSessionRowService.GetListeningRowsByIdWithPagingAsync(request, oldSessionId));
+        => ActionResultInstance(await sender.Send(new GetLRowsByIdWithPagingQuery(request, oldSessionId)));
 
 
     /// <summary>
@@ -27,5 +29,5 @@ public class ListeningSessionRowController(IListeningSessionRowService listening
     /// </summary>
     [HttpPost]
     public async Task<IActionResult> SaveListeningRows([FromBody] SaveListeningRowsRequest request) 
-        => ActionResultInstance(await listeningSessionRowService.SaveListeningRowsAsync(request));
+        => ActionResultInstance(await sender.Send(new CreateLRowsCommand(request)));
 }

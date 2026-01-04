@@ -8,9 +8,9 @@ namespace App.Application.Features.Practices.CacheKeys;
 public static class PracticeCacheKeys
 {
     public static string Prefix => "practice";
-    public static string AllPracticesKey => $"{Prefix}.all";
-    public static string PracticeByIdKey => $"{Prefix}.id.{{0}}";
-    public static string PracticesByLanguageKey => $"{Prefix}.language.{{0}}";
+    private static string AllPracticesKey => $"{Prefix}.all";
+    private static string PracticeByIdKey => $"{Prefix}.id.{{0}}";
+    private static string PracticesByLanguageKey => $"{Prefix}.language.{{0}}";
 
     public static ICacheKey All(ICacheKeyFactory factory) =>
         factory.Create(_ => null!, AllPracticesKey);

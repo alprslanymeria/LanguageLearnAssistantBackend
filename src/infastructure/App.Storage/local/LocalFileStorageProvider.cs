@@ -33,8 +33,8 @@ public class LocalFileStorageProvider(
     /// BUILD RELATIVE PATH FROM FILE NAME AND FOLDER
     /// </summary>
     private static string BuildRelativePath(string fileName, string? folderPath)
-        => string.IsNullOrEmpty(folderPath) 
-            ? fileName 
+        => string.IsNullOrEmpty(folderPath)
+            ? fileName
             : Path.Combine(folderPath.Trim('/').Replace('/', Path.DirectorySeparatorChar), fileName);
 
     /// <summary>
@@ -42,7 +42,8 @@ public class LocalFileStorageProvider(
     /// </summary>
     private void ValidateFile(string fileName)
     {
-        if (_config.AllowedExtensions.Length <= 0) return;
+        if (_config.AllowedExtensions.Length <= 0)
+            return;
 
         var extension = Path.GetExtension(fileName).ToLowerInvariant();
 
@@ -184,7 +185,8 @@ public class LocalFileStorageProvider(
 
     public void Dispose()
     {
-        if (_disposed) return;
+        if (_disposed)
+            return;
         _disposed = true;
         GC.SuppressFinalize(this);
     }

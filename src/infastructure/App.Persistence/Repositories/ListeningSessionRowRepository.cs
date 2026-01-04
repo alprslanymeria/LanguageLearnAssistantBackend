@@ -7,11 +7,11 @@ namespace App.Persistence.Repositories;
 /// <summary>
 /// REPOSITORY IMPLEMENTATION FOR LISTENING SESSION ROW ENTITY.
 /// </summary>
-public class ListeningSessionRowRepository(AppDbContext context) : GenericRepository<ListeningSessionRow, int>(context), IListeningSessionRowRepository
+public class ListeningSessionRowRepository(AppDbContext context) : IListeningSessionRowRepository
 {
     public async Task<(List<ListeningSessionRow> items, int totalCount)> GetListeningRowsByIdWithPagingAsync(string sessionId, int page, int pageSize)
     {
-        var query = Context.ListeningSessionRows
+        var query = context.ListeningSessionRows
             .AsNoTracking()
             .Where(l =>l.ListeningOldSessionId == sessionId);
 
@@ -28,6 +28,26 @@ public class ListeningSessionRowRepository(AppDbContext context) : GenericReposi
 
     public async Task CreateRangeAsync(IEnumerable<ListeningSessionRow> rows)
     {
-        await Context.ListeningSessionRows.AddRangeAsync(rows);
+        await context.ListeningSessionRows.AddRangeAsync(rows);
+    }
+
+    public async Task CreateAsync(ListeningSessionRow entity) => await context.ListeningSessionRows.AddAsync(entity);
+
+    public Task<ListeningSessionRow?> GetByIdAsync(int id) =>
+        context.ListeningSessionRows
+            .AsNoTracking()
+            .FirstOrDefaultAsync(lsr => lsr.Id == id);
+
+    public ListeningSessionRow Update(ListeningSessionRow entity)
+    {
+        context.ListeningSessionRows.Update(entity);
+
+        return entity;
+    }
+
+    public void Delete(ListeningSessionRow entity)
+    {
+        context.ListeningSessionRows
+            .Remove(entity);
     }
 }

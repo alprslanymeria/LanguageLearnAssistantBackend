@@ -1,4 +1,4 @@
-﻿using System.Collections.Concurrent;
+using System.Collections.Concurrent;
 using System.Text.Json;
 using App.Application.Contracts.Infrastructure.Caching;
 using App.Caching.CacheKey;
@@ -10,7 +10,7 @@ namespace App.Caching;
 
 
 // singleton ICacheKeyManager (localKeyManager)
-    // transient ICacheKeyStore , scoped olarak çalışır
+    // transient ICacheKeyStore , scoped olarak çalisir
 
 // singleton IDistributedCache (distributedCache)
 // transient ICacheKeyStore (keystore)

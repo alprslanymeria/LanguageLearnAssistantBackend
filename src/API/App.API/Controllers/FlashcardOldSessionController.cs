@@ -1,8 +1,10 @@
 using System.Security.Claims;
 using App.Application.Common;
-using App.Application.Features.FlashcardOldSessions;
+using App.Application.Features.FlashcardOldSessions.Commands.CreateFOS;
 using App.Application.Features.FlashcardOldSessions.Dtos;
+using App.Application.Features.FlashcardOldSessions.Queries.GetFOSWithPaging;
 using Asp.Versioning;
+using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -11,7 +13,7 @@ namespace App.API.Controllers;
 [Route("api/v{version:apiVersion}/[controller]")]
 [ApiVersion("1.0")]
 [Authorize]
-public class FlashcardOldSessionController(IFlashcardOldSessionService flashcardOldSessionService) : BaseController
+public class FlashcardOldSessionController(ISender sender) : BaseController
 {
     private string UserId => User.FindFirstValue(ClaimTypes.NameIdentifier) ?? string.Empty;
 
@@ -21,7 +23,7 @@ public class FlashcardOldSessionController(IFlashcardOldSessionService flashcard
     /// </summary>
     [HttpGet]
     public async Task<IActionResult> GetFlashcardOldSessionsWithPaging([FromQuery] PagedRequest request) 
-        => ActionResultInstance(await flashcardOldSessionService.GetFlashcardOldSessionsWithPagingAsync(UserId, request));
+        => ActionResultInstance(await sender.Send(new GetFOSWithPagingQuery(UserId, request)));
 
 
     /// <summary>
@@ -30,6 +32,6 @@ public class FlashcardOldSessionController(IFlashcardOldSessionService flashcard
     /// </summary>
     [HttpPost]
     public async Task<IActionResult> SaveFlashcardOldSession([FromBody] SaveFlashcardOldSessionRequest request) 
-        => ActionResultInstance(await flashcardOldSessionService.SaveFlashcardOldSessionAsync(request));
-    
+        => ActionResultInstance(await sender.Send(new CreateFOSCommand(request)));
+
 }

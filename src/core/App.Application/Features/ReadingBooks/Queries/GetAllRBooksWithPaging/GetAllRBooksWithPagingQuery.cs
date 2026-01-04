@@ -7,8 +7,4 @@ namespace App.Application.Features.ReadingBooks.Queries.GetAllRBooksWithPaging;
 /// <summary>
 /// QUERY FOR RETRIEVING ALL READING BOOKS WITH PAGING.
 /// </summary>
-public record GetAllRBooksWithPagingQuery(
-    string UserId, 
-    int Page, 
-    int PageSize
-    ) : IQuery<ServiceResult<PagedResult<ReadingBookWithTotalCount>>>;
+public record GetAllRBooksWithPagingQuery(string UserId, PagedRequest Request) : IQuery<ServiceResult<PagedResult<ReadingBookWithTotalCount>>>;

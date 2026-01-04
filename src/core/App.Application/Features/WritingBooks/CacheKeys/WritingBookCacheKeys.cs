@@ -8,9 +8,9 @@ namespace App.Application.Features.WritingBooks.CacheKeys;
 public static class WritingBookCacheKeys
 {
     public static string Prefix => "writingBook";
-    public static string AllBooksKey => $"{Prefix}.all.{{0}}.{{1}}";
-    public static string BookByIdKey => $"{Prefix}.id.{{0}}";
-    public static string CreateItemsKey => $"{Prefix}.createItems.{{0}}.{{1}}.{{2}}";
+    private static string AllBooksKey => $"{Prefix}.all.{{0}}.{{1}}";
+    private static string BookByIdKey => $"{Prefix}.id.{{0}}";
+    private static string CreateItemsKey => $"{Prefix}.createItems.{{0}}.{{1}}.{{2}}";
 
     public static ICacheKey Paged(ICacheKeyFactory factory, int page, int pageSize) =>
         factory.Create(_ => null!, AllBooksKey, page, pageSize);

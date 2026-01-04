@@ -13,11 +13,11 @@ public class GetAllDWordsWithPagingQueryValidator : AbstractValidator<GetAllDWor
             .GreaterThan(0)
             .WithMessage("CATEGORY ID MUST BE GREATER THAN 0");
 
-        RuleFor(x => x.Page)
+        RuleFor(x => x.Request.Page)
             .GreaterThan(0)
             .WithMessage("PAGE MUST BE GREATER THAN 0");
 
-        RuleFor(x => x.PageSize)
+        RuleFor(x => x.Request.PageSize)
             .GreaterThan(0)
             .WithMessage("PAGE SIZE MUST BE GREATER THAN 0")
             .LessThanOrEqualTo(100)

@@ -7,3 +7,25 @@
 	ListeningOldSession
 	ReadingOldSession
 	WritingOldSession
+6- (+) Validation işlemleri mediatr ile metot bazlı ayrılacak.
+7- (+) Generic Repository kaldırılacak
+    - entity  spesifik repository üzerinden devam edilecek. İlerleyen zamanlarda bunlarda cqrs'e uygun şekilde ayrılabilir.
+8- (+) Entity spesifik servisler kaldırılacak
+9- (+) caching decoratorlar düzenlenecek.
+    - Önce mevcut servisler düzenlenecek daha sonra ise bir Caching behavior yazılacak
+    - Commands içlerinde invalidation işlemini gerçekleştir.
+10- (+) CacheKey'ler private yapılacak
+11- (+) HANDLER İÇERİSİNDEK LOG MESAJLARI DÜZELTİLECEK
+12- (+) HANDLER'LAR İÇERİSİNDE KULLANILAN ORTAK METOTLAR BİR YERDE TOPLANACAK TEKRAR ETMEYECEK.
+    - Bu metotlar içinde cache invalidation olabilir mi kontrol et.
+    - VerifyOrCreateFlashcardAsync
+    - VerifyOrCreateReadingAsync
+    - VerifyOrCreateWritingAsync
+    - ExtractLeftSideColorAsync
+    - UploadFileToStorageAsync
+    - DeleteFileFromStorageAsync
+
+13- (+) Command'lar DTO Dönmyecek şekilde düzenlenir. CQRS prensibi bunu gerektirir. Onun yerine ID dönülebilir.
+14- Copilot'tan erişim belirleyicileri uygun şekilde güncellemelerini iste. Sadece aynı projede kullanılıyorsa gereksiz public yapmaya gerek yok
+15- Uygulamada try-catch olan yerlerde özel exception oluşturulacak ve onun handler'ı yazılacak.
+16- Application katmanında handler'lar içerisinde bazı entity'ler new ile oluşturuluyor. Bunlar factory pattern ile oluşturulacak.

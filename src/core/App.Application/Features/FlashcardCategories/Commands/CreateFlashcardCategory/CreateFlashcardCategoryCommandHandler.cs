@@ -1,12 +1,13 @@
+using System.Net;
 using App.Application.Common;
 using App.Application.Common.CQRS;
+using App.Application.Contracts.Infrastructure.Caching;
 using App.Application.Contracts.Persistence;
 using App.Application.Contracts.Persistence.Repositories;
-using App.Application.Features.FlashcardCategories.Dtos;
+using App.Application.Contracts.Services;
+using App.Application.Features.FlashcardCategories.CacheKeys;
 using App.Domain.Entities.FlashcardEntities;
-using MapsterMapper;
 using Microsoft.Extensions.Logging;
-using System.Net;
 
 namespace App.Application.Features.FlashcardCategories.Commands.CreateFlashcardCategory;
 
@@ -14,27 +15,34 @@ namespace App.Application.Features.FlashcardCategories.Commands.CreateFlashcardC
 /// HANDLER FOR CREATE FLASHCARD CATEGORY COMMAND.
 /// </summary>
 public class CreateFlashcardCategoryCommandHandler(
+
     IFlashcardCategoryRepository flashcardCategoryRepository,
-    IFlashcardRepository flashcardRepository,
-    ILanguageRepository languageRepository,
-    IPracticeRepository practiceRepository,
     IUnitOfWork unitOfWork,
-    IMapper mapper,
-    ILogger<CreateFlashcardCategoryCommandHandler> logger
-    ) : ICommandHandler<CreateFlashcardCategoryCommand, ServiceResult<FlashcardCategoryDto>>
+    ILogger<CreateFlashcardCategoryCommandHandler> logger,
+    IStaticCacheManager cacheManager,
+    IEntityVerificationService entityVerificationService
+
+    ) : ICommandHandler<CreateFlashcardCategoryCommand, ServiceResult<int>>
 {
-    public async Task<ServiceResult<FlashcardCategoryDto>> Handle(
+
+    public async Task<ServiceResult<int>> Handle(
+
         CreateFlashcardCategoryCommand request, 
         CancellationToken cancellationToken)
     {
-        logger.LogInformation("CreateFlashcardCategoryCommandHandler -> CREATING NEW FLASHCARD CATEGORY FOR FLASHCARD ID: {FlashcardId}", request.FlashcardId);
+        logger.LogInformation("CreateFlashcardCategoryCommandHandler -> CREATING NEW FLASHCARD CATEGORY FOR FLASHCARD ID: {FlashcardId}", request.Request.FlashcardId);
 
         // VERIFY OR CREATE FLASHCARD
-        var flashcardResult = await VerifyOrCreateFlashcardAsync(request.FlashcardId, request.UserId, request.LanguageId);
+        var flashcardResult = await entityVerificationService.VerifyOrCreateFlashcardAsync(
 
+            request.Request.FlashcardId, 
+            request.Request.UserId, 
+            request.Request.LanguageId);
+
+        // FAST FAIL
         if (!flashcardResult.IsSuccess)
         {
-            return ServiceResult<FlashcardCategoryDto>.Fail(flashcardResult.ErrorMessage!, flashcardResult.Status);
+            return ServiceResult<int>.Fail(flashcardResult.ErrorMessage!, flashcardResult.Status);
         }
 
         var flashcard = flashcardResult.Data!;
@@ -45,66 +53,24 @@ public class CreateFlashcardCategoryCommandHandler(
             var flashcardCategory = new FlashcardCategory
             {
                 FlashcardId = flashcard.Id,
-                Name = request.Name,
+                Name = request.Request.Name,
                 Flashcard = flashcard
             };
 
             await flashcardCategoryRepository.CreateAsync(flashcardCategory);
             await unitOfWork.CommitAsync();
 
-            logger.LogInformation("CreateFlashcardCategoryCommandHandler -> SUCCESSFULLY CREATED FLASHCARD CATEGORY WITH ID: {Id}, NAME: {Name}", 
-                flashcardCategory.Id, flashcardCategory.Name);
+            // CACHE INVALIDATION
+            await cacheManager.RemoveByPrefixAsync(FlashcardCategoryCacheKeys.Prefix);
 
-            var result = mapper.Map<FlashcardCategory, FlashcardCategoryDto>(flashcardCategory);
-            return ServiceResult<FlashcardCategoryDto>.SuccessAsCreated(result, $"/api/FlashcardCategory/{flashcardCategory.Id}");
+            logger.LogInformation("CreateFlashcardCategoryCommandHandler -> SUCCESSFULLY CREATED FLASHCARD CATEGORY WITH ID: {Id}, NAME: {Name}", flashcardCategory.Id, flashcardCategory.Name);
+
+            return ServiceResult<int>.SuccessAsCreated(flashcardCategory.Id, $"/api/FlashcardCategory/{flashcardCategory.Id}");
         }
         catch (Exception ex)
         {
             logger.LogError(ex, "CreateFlashcardCategoryCommandHandler -> ERROR CREATING FLASHCARD CATEGORY");
-            return ServiceResult<FlashcardCategoryDto>.Fail("ERROR CREATING FLASHCARD CATEGORY", HttpStatusCode.InternalServerError);
+            return ServiceResult<int>.Fail("ERROR CREATING FLASHCARD CATEGORY", HttpStatusCode.InternalServerError);
         }
-    }
-
-    private async Task<ServiceResult<Flashcard>> VerifyOrCreateFlashcardAsync(int flashcardId, string userId, int languageId)
-    {
-        var flashcard = await flashcardRepository.GetByIdAsync(flashcardId);
-
-        if (flashcard is not null)
-        {
-            return ServiceResult<Flashcard>.Success(flashcard);
-        }
-
-        logger.LogWarning("CreateFlashcardCategoryCommandHandler -> FLASHCARD NOT FOUND WITH ID: {FlashcardId}", flashcardId);
-
-        var language = await languageRepository.GetByIdAsync(languageId);
-
-        if (language is null)
-        {
-            logger.LogWarning("CreateFlashcardCategoryCommandHandler -> LANGUAGE NOT FOUND FOR ID: {LanguageId}", languageId);
-            return ServiceResult<Flashcard>.Fail("LANGUAGE NOT FOUND", HttpStatusCode.NotFound);
-        }
-
-        var practice = await practiceRepository.ExistsByLanguageIdAsync(languageId);
-
-        if (practice is null)
-        {
-            logger.LogWarning("CreateFlashcardCategoryCommandHandler -> PRACTICE NOT FOUND FOR LANGUAGE ID: {LanguageId}", languageId);
-            return ServiceResult<Flashcard>.Fail("PRACTICE NOT FOUND FOR LANGUAGE", HttpStatusCode.NotFound);
-        }
-
-        flashcard = new Flashcard
-        {
-            UserId = userId,
-            LanguageId = languageId,
-            PracticeId = practice.Id,
-            Language = language,
-            Practice = practice
-        };
-
-        await flashcardRepository.CreateAsync(flashcard);
-
-        logger.LogInformation("CreateFlashcardCategoryCommandHandler -> NEW FLASHCARD CREATED WITH ID: {FlashcardId}", flashcard.Id);
-
-        return ServiceResult<Flashcard>.Success(flashcard);
     }
 }

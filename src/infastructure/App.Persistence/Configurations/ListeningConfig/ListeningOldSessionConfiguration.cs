@@ -1,4 +1,4 @@
-﻿using App.Domain.Entities.ListeningEntities;
+using App.Domain.Entities.ListeningEntities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -10,7 +10,7 @@ public class ListeningOldSessionConfiguration : BaseOldSessionConfiguration<List
     {
         base.Configure(builder);
 
-        // ENTITY SPECIFIC AYARLAR BURADA YAPILABİLİR.
+        // ENTITY SPECIFIC AYARLAR BURADA YAPILABILIR.
 
         // RELATIONS
         builder.HasMany(x => x.ListeningSessionRows)

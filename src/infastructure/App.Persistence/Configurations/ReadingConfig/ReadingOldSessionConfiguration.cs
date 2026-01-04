@@ -1,4 +1,4 @@
-﻿using App.Domain.Entities.ReadingEntities;
+using App.Domain.Entities.ReadingEntities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -10,7 +10,7 @@ public class ReadingOldSessionConfiguration : BaseOldSessionConfiguration<Readin
     {
         base.Configure(builder);
 
-        // ENTITY SPECIFIC AYARLAR BURADA YAPILABİLİR.
+        // ENTITY SPECIFIC AYARLAR BURADA YAPILABILIR.
 
         // RELATIONS
         builder.HasMany(x => x.ReadingSessionRows)

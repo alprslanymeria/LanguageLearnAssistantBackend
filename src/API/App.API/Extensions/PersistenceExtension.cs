@@ -30,9 +30,6 @@ public static class PersistenceExtension
         // UNIT OF WORK
         services.AddScoped<IUnitOfWork, UnitOfWork>();
 
-        // GENERIC REPOSITORY (KEPT FOR BACKWARD COMPATIBILITY)
-        services.AddScoped(typeof(IGenericRepository<,>), typeof(GenericRepository<,>));
-
         // ENTITY-SPECIFIC REPOSITORIES
         services.AddScoped<ILanguageRepository, LanguageRepository>();
         services.AddScoped<IPracticeRepository, PracticeRepository>();

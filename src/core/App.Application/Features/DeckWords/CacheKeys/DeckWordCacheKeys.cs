@@ -8,8 +8,8 @@ namespace App.Application.Features.DeckWords.CacheKeys;
 public static class DeckWordCacheKeys
 {
     public static string Prefix => "deckWord";
-    public static string AllWordsKey => $"{Prefix}.all.{{0}}.{{1}}";
-    public static string WordByIdKey => $"{Prefix}.id.{{0}}";
+    private static string AllWordsKey => $"{Prefix}.all.{{0}}.{{1}}";
+    private static string WordByIdKey => $"{Prefix}.id.{{0}}";
 
     public static ICacheKey Paged(ICacheKeyFactory factory, int page, int pageSize) =>
         factory.Create(_ => null!, AllWordsKey, page, pageSize);

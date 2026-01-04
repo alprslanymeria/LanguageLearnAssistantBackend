@@ -7,12 +7,12 @@ namespace App.Persistence.Repositories;
 /// <summary>
 /// REPOSITORY IMPLEMENTATION FOR LANGUAGE ENTITY.
 /// </summary>
-public class LanguageRepository(AppDbContext context) : GenericRepository<Language, int>(context), ILanguageRepository
+public class LanguageRepository(AppDbContext context) : ILanguageRepository
 {
 
     public async Task<List<Language>> GetLanguagesAsync()
     {
-        return await Context.Languages
+        return await context.Languages
             .AsNoTracking()
             .ToListAsync();
     }
@@ -20,8 +20,28 @@ public class LanguageRepository(AppDbContext context) : GenericRepository<Langua
     // HELPER
     public async Task<Language?> ExistsByNameAsync(string name)
     {
-        return await Context.Languages
+        return await context.Languages
             .AsNoTracking()
             .FirstOrDefaultAsync(l => l.Name == name);
+    }
+
+    public async Task CreateAsync(Language entity) => await context.Languages.AddAsync(entity);
+
+    public Task<Language?> GetByIdAsync(int id) =>
+        context.Languages
+            .AsNoTracking()
+            .FirstOrDefaultAsync(l => l.Id == id);
+
+    public Language Update(Language entity)
+    {
+        context.Languages.Update(entity);
+
+        return entity;
+    }
+
+    public void Delete(Language entity)
+    {
+        context.Languages
+            .Remove(entity);
     }
 }

@@ -1,4 +1,4 @@
-﻿using App.Domain.Options.Caching;
+using App.Domain.Options.Caching;
 using App.Domain.Options.ExternalAPI;
 using App.Domain.Options.Storage;
 using App.Domain.Options.Translation;

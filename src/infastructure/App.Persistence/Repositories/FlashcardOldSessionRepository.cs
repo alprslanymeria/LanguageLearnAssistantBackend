@@ -7,11 +7,11 @@ namespace App.Persistence.Repositories;
 /// <summary>
 /// REPOSITORY IMPLEMENTATION FOR FLASHCARD OLD SESSION ENTITY.
 /// </summary>
-public class FlashcardOldSessionRepository(AppDbContext context) : GenericRepository<FlashcardOldSession, string>(context), IFlashcardOldSessionRepository
+public class FlashcardOldSessionRepository(AppDbContext context) : IFlashcardOldSessionRepository
 {
     public async Task<(List<FlashcardOldSession> items, int totalCount)> GetFlashcardOldSessionsWithPagingAsync(string userId, int page, int pageSize)
     {
-        var query = Context.FlashcardOldSessions
+        var query = context.FlashcardOldSessions
             .AsNoTracking()
             .Where(fos => fos.Flashcard.UserId == userId);
 
@@ -24,5 +24,25 @@ public class FlashcardOldSessionRepository(AppDbContext context) : GenericReposi
             .ToListAsync();
 
         return (items, totalCount);
+    }
+
+    public async Task CreateAsync(FlashcardOldSession entity) => await context.FlashcardOldSessions.AddAsync(entity);
+
+    public Task<FlashcardOldSession?> GetByIdAsync(string id) =>
+        context.FlashcardOldSessions
+            .AsNoTracking()
+            .FirstOrDefaultAsync(fos => fos.Id == id);
+
+    public FlashcardOldSession Update(FlashcardOldSession entity)
+    {
+        context.FlashcardOldSessions.Update(entity);
+
+        return entity;
+    }
+
+    public void Delete(FlashcardOldSession entity)
+    {
+        context.FlashcardOldSessions
+            .Remove(entity);
     }
 }

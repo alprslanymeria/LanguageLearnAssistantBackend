@@ -1,4 +1,4 @@
-﻿using App.Domain.Entities.WritingEntities;
+using App.Domain.Entities.WritingEntities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -10,7 +10,7 @@ public class WritingOldSessionConfiguration : BaseOldSessionConfiguration<Writin
     {
         base.Configure(builder);
 
-        // ENTITY SPECIFIC AYARLAR BURADA YAPILABİLİR.
+        // ENTITY SPECIFIC AYARLAR BURADA YAPILABILIR.
 
         // RELATIONS
         builder.HasMany(x => x.WritingSessionRows)

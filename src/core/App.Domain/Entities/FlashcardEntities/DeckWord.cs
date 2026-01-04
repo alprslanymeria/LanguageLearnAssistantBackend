@@ -1,4 +1,4 @@
-﻿namespace App.Domain.Entities.FlashcardEntities;
+namespace App.Domain.Entities.FlashcardEntities;
 
 public class DeckWord : BaseEntity<int>
 {

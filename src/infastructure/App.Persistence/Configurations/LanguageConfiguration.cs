@@ -1,10 +1,10 @@
-﻿using App.Domain.Entities;
+using App.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace App.Persistence.Configurations;
 
-// FLASHCARD - LISTENING - WRITING - READING BUNLAR USER SİLİNDİĞİNDE BURADAN SİLİNMELİ
+// FLASHCARD - LISTENING - WRITING - READING BUNLAR USER SILINDIGINDE BURADAN SILINMELI
 public class LanguageConfiguration : IEntityTypeConfiguration<Language>
 {
     public void Configure(EntityTypeBuilder<Language> builder)

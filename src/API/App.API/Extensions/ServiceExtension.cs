@@ -1,11 +1,5 @@
-using App.Application.Features.FlashcardOldSessions;
-using App.Application.Features.FlashcardSessionRows;
-using App.Application.Features.ListeningOldSessions;
-using App.Application.Features.ListeningSessionRows;
-using App.Application.Features.ReadingSessionRows;
-using App.Application.Features.Translation;
-using App.Application.Features.WritingOldSessions;
-using App.Application.Features.WritingSessionRows;
+using App.Application.Contracts.Services;
+using App.Integration;
 
 namespace App.API.Extensions;
 
@@ -18,19 +12,10 @@ public static class ServiceExtension
 {
     public static IServiceCollection AddApplicationServicesExt(this IServiceCollection services)
     {
-        // OLD SESSION SERVICES (REMAINING SERVICES THAT DON'T USE CQRS YET)
-        services.AddScoped<IWritingOldSessionService, WritingOldSessionService>();
-        services.AddScoped<IFlashcardOldSessionService, FlashcardOldSessionService>();
-        services.AddScoped<IListeningOldSessionService, ListeningOldSessionService>();
-
-        // SESSION ROW SERVICES (REMAINING SERVICES THAT DON'T USE CQRS YET)
-        services.AddScoped<IReadingSessionRowService, ReadingSessionRowService>();
-        services.AddScoped<IWritingSessionRowService, WritingSessionRowService>();
-        services.AddScoped<IFlashcardSessionRowService, FlashcardSessionRowService>();
-        services.AddScoped<IListeningSessionRowService, ListeningSessionRowService>();
-
-        // TRANSLATION SERVICE
-        services.AddScoped<ITranslateService, TranslateService>();
+        // COMMON HANDLER SERVICES
+        services.AddScoped<IEntityVerificationService, EntityVerificationService>();
+        services.AddScoped<IImageProcessingService, ImageProcessingService>();
+        services.AddScoped<IFileStorageHelper, FileStorageHelper>();
 
         return services;
     }

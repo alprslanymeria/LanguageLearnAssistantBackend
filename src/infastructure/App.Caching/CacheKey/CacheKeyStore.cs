@@ -1,4 +1,4 @@
-﻿using App.Application.Contracts.Infrastructure.Caching;
+using App.Application.Contracts.Infrastructure.Caching;
 
 namespace App.Caching.CacheKey;
 

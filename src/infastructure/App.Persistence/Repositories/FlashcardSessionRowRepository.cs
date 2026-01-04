@@ -7,11 +7,11 @@ namespace App.Persistence.Repositories;
 /// <summary>
 /// REPOSITORY IMPLEMENTATION FOR FLASHCARD SESSION ROW ENTITY.
 /// </summary>
-public class FlashcardSessionRowRepository(AppDbContext context) :GenericRepository<FlashcardSessionRow, int>(context),  IFlashcardSessionRowRepository
+public class FlashcardSessionRowRepository(AppDbContext context) : IFlashcardSessionRowRepository
 {
     public async Task<(List<FlashcardSessionRow> items, int totalCount)> GetFlashcardRowsByIdWithPagingAsync(string sessionId, int page, int pageSize)
     {
-        var query = Context.FlashcardSessionRows
+        var query = context.FlashcardSessionRows
             .AsNoTracking()
             .Where(r => r.FlashcardOldSessionId == sessionId);
 
@@ -28,6 +28,26 @@ public class FlashcardSessionRowRepository(AppDbContext context) :GenericReposit
 
     public async Task CreateRangeAsync(IEnumerable<FlashcardSessionRow> rows)
     {
-        await Context.FlashcardSessionRows.AddRangeAsync(rows);
+        await context.FlashcardSessionRows.AddRangeAsync(rows);
+    }
+
+    public async Task CreateAsync(FlashcardSessionRow entity) => await context.FlashcardSessionRows.AddAsync(entity);
+
+    public Task<FlashcardSessionRow?> GetByIdAsync(int id) =>
+        context.FlashcardSessionRows
+            .AsNoTracking()
+            .FirstOrDefaultAsync(fsr => fsr.Id == id);
+
+    public FlashcardSessionRow Update(FlashcardSessionRow entity)
+    {
+        context.FlashcardSessionRows.Update(entity);
+
+        return entity;
+    }
+
+    public void Delete(FlashcardSessionRow entity)
+    {
+        context.FlashcardSessionRows
+            .Remove(entity);
     }
 }

@@ -1,4 +1,4 @@
-﻿using App.Domain.Options;
+using App.Domain.Options;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
