@@ -1,7 +1,7 @@
 namespace App.Application.Contracts.Infrastructure.Storage;
 
 /// <summary>
-/// BASE INTERFACE FOR ALL STORAGE PROVIDERS (Local, CLOUD, ETC.)
+/// BASE INTERFACE FOR ALL STORAGE PROVIDERS
 /// </summary>
 public interface IStorageProvider : IDisposable
 {

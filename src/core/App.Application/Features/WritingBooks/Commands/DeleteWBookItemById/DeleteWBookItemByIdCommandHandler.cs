@@ -6,7 +6,7 @@ using App.Application.Contracts.Persistence;
 using App.Application.Contracts.Persistence.Repositories;
 using App.Application.Contracts.Services;
 using App.Application.Features.WritingBooks.CacheKeys;
-using Microsoft.Extensions.Logging;
+using App.Domain.Exceptions;
 
 namespace App.Application.Features.WritingBooks.Commands.DeleteWBookItemById;
 
@@ -17,7 +17,6 @@ public class DeleteWBookItemByIdCommandHandler(
 
     IWritingBookRepository writingBookRepository,
     IUnitOfWork unitOfWork,
-    ILogger<DeleteWBookItemByIdCommandHandler> logger,
     IStaticCacheManager cacheManager,
     IFileStorageHelper fileStorageHelper
 
@@ -26,31 +25,23 @@ public class DeleteWBookItemByIdCommandHandler(
 
     public async Task<ServiceResult> Handle(
 
-        DeleteWBookItemByIdCommand request, 
+        DeleteWBookItemByIdCommand request,
         CancellationToken cancellationToken)
     {
-        logger.LogInformation("DeleteWBookItemByIdCommandHandler -> ATTEMPTING TO DELETE WRITING BOOK WITH ID: {Id}", request.Id);
 
-        var writingBook = await writingBookRepository.GetByIdAsync(request.Id);
-
-        // FAST FAIL
-        if (writingBook is null)
-        {
-            logger.LogWarning("DeleteWBookItemByIdCommandHandler -> WRITING BOOK NOT FOUND FOR DELETION WITH ID: {Id}", request.Id);
-            return ServiceResult.Fail("WRITING BOOK NOT FOUND", HttpStatusCode.NotFound);
-        }
+        // GET WRITING BOOK
+        var writingBook = await writingBookRepository.GetByIdAsync(request.Id)
+            ?? throw new NotFoundException("WRITING BOOK NOT FOUND");
 
         // STORE FILE PATHS BEFORE DELETION
         var imageUrl = writingBook.ImageUrl;
         var sourceUrl = writingBook.SourceUrl;
 
-        writingBookRepository.Delete(writingBook);
+        await writingBookRepository.RemoveAsync(writingBook.Id);
         await unitOfWork.CommitAsync();
 
         // CACHE INVALIDATION
         await cacheManager.RemoveByPrefixAsync(WritingBookCacheKeys.Prefix);
-
-        logger.LogInformation("DeleteWBookItemByIdCommandHandler -> SUCCESSFULLY DELETED WRITING BOOK FROM DATABASE WITH ID: {Id}", request.Id);
 
         // DELETE FILES FROM STORAGE AFTER DATABASE DELETION
         await fileStorageHelper.DeleteFileFromStorageAsync(imageUrl);

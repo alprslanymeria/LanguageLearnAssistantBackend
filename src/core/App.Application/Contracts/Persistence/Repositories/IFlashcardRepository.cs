@@ -2,21 +2,12 @@ using App.Domain.Entities.FlashcardEntities;
 
 namespace App.Application.Contracts.Persistence.Repositories;
 
-/// <summary>
-/// REPOSITORY INTERFACE FOR FLASHCARD ENTITY.
-/// </summary>
 public interface IFlashcardRepository
 {
-
-    /// <summary>
-    /// GETS ALL FLASHCARDS FOR A USER WITH LANGUAGE AND PRACTICE INCLUDED.
-    /// </summary>
-    Task<List<Flashcard>> GetByUserIdWithDetailsAsync(string userId);
-
     /// <summary>
     /// ASYNCHRONOUSLY CREATES A NEW ENTITY IN THE UNDERLYING DATA STORE.
     /// </summary>
-    Task CreateAsync(Flashcard entity);
+    Task AddAsync(Flashcard entity);
 
     /// <summary>
     /// ASYNCHRONOUSLY RETRIEVES AN ENTITY BY ITS UNIQUE IDENTIFIER.
@@ -24,12 +15,17 @@ public interface IFlashcardRepository
     Task<Flashcard?> GetByIdAsync(int id);
 
     /// <summary>
-    /// UPDATES THE FLASHCARD IN THE UNDERLYING DATA STORE AND RETURNS THE UPDATED ENTITY.
+    /// UPDATES THE FLASHCARD IN THE UNDERLYING DATA STORE.
     /// </summary>
-    Flashcard Update(Flashcard entity);
+    void Update(Flashcard entity);
 
     /// <summary>
-    /// REMOVES THE FLASHCARD FROM THE UNDERLYING DATA STORE.
+    /// ASYNCHRONOUSLY REMOVES THE FLASHCARD FROM THE UNDERLYING DATA STORE.
     /// </summary>
-    void Delete(Flashcard entity);
+    Task RemoveAsync(int id);
+
+    /// <summary>
+    /// ASYNCHRONOUSLY RETRIEVES A FLASHCARD BY ITS PRACTICE ID, USER ID, AND LANGUAGE ID.
+    /// </summary>
+    Task<Flashcard?> GetByPracticeIdUserIdLanguageIdAsync(int practiceId, string userId, int languageId);
 }

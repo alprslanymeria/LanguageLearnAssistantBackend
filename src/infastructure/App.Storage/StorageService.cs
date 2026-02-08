@@ -9,9 +9,9 @@ namespace App.Storage;
 /// </summary>
 public class StorageService(
 
-    IStorageProviderFactory providerFactory,
+    IStorageProvider provider,
     IOptions<StorageConfig> config
-    
+
     ) : IStorageService
 
 {
@@ -22,10 +22,10 @@ public class StorageService(
 
     // IMPLEMENTATION OF IStorageService
     public StorageType CurrentStorageType => _config.StorageType;
-    public IStorageProvider Provider { get; } = providerFactory.GetDefaultProvider();
+    public IStorageProvider Provider { get; } = provider;
 
     public string ProviderName => Provider.ProviderName;
-    
+
     public Task<string> UploadAsync(Stream stream, string fileName, string contentType, string? folderPath = null, CancellationToken cancellationToken = default)
         => Provider.UploadAsync(stream, fileName, contentType, folderPath, cancellationToken);
 

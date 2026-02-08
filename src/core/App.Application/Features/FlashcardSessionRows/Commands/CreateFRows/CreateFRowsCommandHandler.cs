@@ -4,7 +4,7 @@ using App.Application.Common.CQRS;
 using App.Application.Contracts.Persistence;
 using App.Application.Contracts.Persistence.Repositories;
 using App.Domain.Entities.FlashcardEntities;
-using Microsoft.Extensions.Logging;
+using App.Domain.Exceptions;
 
 namespace App.Application.Features.FlashcardSessionRows.Commands.CreateFRows;
 
@@ -12,27 +12,19 @@ public class CreateFRowsCommandHandler(
 
     IFlashcardSessionRowRepository flashcardSessionRowRepository,
     IFlashcardOldSessionRepository flashcardOldSessionRepository,
-    IUnitOfWork unitOfWork,
-    ILogger<CreateFRowsCommandHandler> logger
+    IUnitOfWork unitOfWork
 
-    ) : ICommandHandler<CreateFRowsCommand, ServiceResult<int>>
+    ) : ICommandHandler<CreateFRowsCommand, ServiceResult>
 {
-    public async Task<ServiceResult<int>> Handle(
+    public async Task<ServiceResult> Handle(
 
         CreateFRowsCommand request,
         CancellationToken cancellationToken)
     {
 
-        logger.LogInformation("CreateFRowsCommandHandler -> SAVING {Count} FLASHCARD ROWS FOR SESSION: {SessionId}", request.Request.Rows.Count, request.Request.FlashcardOldSessionId);
-
-        var session = await flashcardOldSessionRepository.GetByIdAsync(request.Request.FlashcardOldSessionId);
-
-        // FAST FAIL
-        if (session is null)
-        {
-            logger.LogWarning("CreateFRowsCommandHandler -> FLASHCARD OLD SESSION NOT FOUND WITH ID: {SessionId}", request.Request.FlashcardOldSessionId);
-            return ServiceResult<int>.Fail("FLASHCARD OLD SESSION NOT FOUND", HttpStatusCode.NotFound);
-        }
+        // GET OLDSESSION
+        var session = await flashcardOldSessionRepository.GetByIdAsync(request.Request.FlashcardOldSessionId)
+            ?? throw new NotFoundException("FLASHCARD OLD SESSION NOT FOUND");
 
         var rows = request.Request.Rows.Select(r => new FlashcardSessionRow
         {
@@ -44,12 +36,10 @@ public class CreateFRowsCommandHandler(
 
         }).ToList();
 
-        await flashcardSessionRowRepository.CreateRangeAsync(rows);
+        await flashcardSessionRowRepository.AddRangeAsync(rows);
         await unitOfWork.CommitAsync();
 
-        logger.LogInformation("CreateFRowsCommandHandler -> SUCCESSFULLY SAVED {Count} FLASHCARD ROWS FOR SESSION: {SessionId}", rows.Count, request.Request.FlashcardOldSessionId);
-
-        return ServiceResult<int>.Success(rows.Count, HttpStatusCode.Created);
+        return ServiceResult.Success(HttpStatusCode.Created);
 
     }
 }

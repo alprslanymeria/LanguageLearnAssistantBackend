@@ -16,6 +16,6 @@ public class LanguageController(ISender sender) : BaseController
     /// /api/v1/Language
     /// </summary>
     [HttpGet]
-    public async Task<IActionResult> GetLanguages() 
+    public async Task<IActionResult> GetLanguages()
         => ActionResultInstance(await sender.Send(new GetLanguagesQuery()));
 }

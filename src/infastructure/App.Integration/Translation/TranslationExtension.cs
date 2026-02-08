@@ -1,6 +1,5 @@
 using App.Application.Contracts.Infrastructure.Translation;
 using App.Domain.Options.Translation;
-using Google.Cloud.Translation.V2;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -13,17 +12,34 @@ public static class TranslationExtension
 {
     public static IServiceCollection AddTranslationServicesExt(this IServiceCollection services, IConfiguration configuration)
     {
+        // LOAD TRANSLATION CONFIGURATION AND VALIDATE
+        var translationConfig = configuration
+            .GetRequiredSection(TranslationConfig.Key)
+            .Get<TranslationConfig>()
+            ?? throw new InvalidOperationException("Translation configuration is missing.");
 
-        // GOOGLE CLOUD TRANSLATE CLIENT
-        var googleOptions = configuration.GetSection(GoogleTranslateOptions.Key).Get<GoogleTranslateOptions>();
-        if (googleOptions is not null && !string.IsNullOrEmpty(googleOptions.CredentialsPath))
+        // CONFIGURATION BINDINGS
+        services.Configure<TranslationConfig>(configuration.GetSection(TranslationConfig.Key));
+        services.Configure<GoogleTranslateConfig>(configuration.GetSection(GoogleTranslateConfig.Key));
+
+        // COMMON TRANSLATION SERVICES
+
+        // REGISTER BASED ON CONFIGURATION
+        switch (translationConfig.TranslationType)
         {
-            Environment.SetEnvironmentVariable("GOOGLE_APPLICATION_CREDENTIALS", googleOptions.CredentialsPath);
+            case TranslationType.Google:
+                AddGoogleProvider(services, configuration);
+                break;
+
+            default:
+                throw new NotSupportedException($"Translation type '{translationConfig.TranslationType}' is not supported.");
         }
 
-        services.AddSingleton(_ => TranslationClient.Create());
-        services.AddSingleton<ITranslationProvider, GoogleTranslationProvider>();
-
         return services;
+    }
+
+    private static void AddGoogleProvider(IServiceCollection services, IConfiguration configuration)
+    {
+        services.AddSingleton<ITranslationProvider, GoogleTranslationProvider>();
     }
 }

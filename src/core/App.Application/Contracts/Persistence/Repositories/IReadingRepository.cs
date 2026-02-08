@@ -2,15 +2,12 @@ using App.Domain.Entities.ReadingEntities;
 
 namespace App.Application.Contracts.Persistence.Repositories;
 
-/// <summary>
-/// REPOSITORY INTERFACE FOR READING ENTITY.
-/// </summary>
 public interface IReadingRepository
 {
     /// <summary>
     /// ASYNCHRONOUSLY CREATES A NEW ENTITY IN THE UNDERLYING DATA STORE.
     /// </summary>
-    Task CreateAsync(Reading entity);
+    Task AddAsync(Reading entity);
 
     /// <summary>
     /// ASYNCHRONOUSLY RETRIEVES AN ENTITY BY ITS UNIQUE IDENTIFIER.
@@ -18,12 +15,17 @@ public interface IReadingRepository
     Task<Reading?> GetByIdAsync(int id);
 
     /// <summary>
-    /// UPDATES THE READING ENTITY IN THE UNDERLYING DATA STORE AND RETURNS THE UPDATED ENTITY.
+    /// UPDATES THE READING ENTITY IN THE UNDERLYING DATA STORE.
     /// </summary>
-    Reading Update(Reading entity);
+    void Update(Reading entity);
 
     /// <summary>
-    /// REMOVES THE READING ENTITY FROM THE UNDERLYING DATA STORE.
+    /// ASYNCHRONOUSLY REMOVES THE READING ENTITY FROM THE UNDERLYING DATA STORE.
     /// </summary>
-    void Delete(Reading entity);
+    Task RemoveAsync(int id);
+
+    /// <summary>
+    /// ASYNCHRONOUSLY RETRIEVES A READING BY ITS PRACTICE ID, USER ID, AND LANGUAGE ID.
+    /// </summary>
+    Task<Reading?> GetByPracticeIdUserIdLanguageIdAsync(int practiceId, string userId, int languageId);
 }

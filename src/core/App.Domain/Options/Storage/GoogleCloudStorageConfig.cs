@@ -16,14 +16,4 @@ public class GoogleCloudStorageConfig
     /// GOOGLE CLOUD STORAGE BUCKET NAME
     /// </summary>
     public string BucketName { get; set; } = string.Empty;
-
-    /// <summary>
-    /// BASE URL FOR PUBLIC ACCESS (OPTIONAL)
-    /// </summary>
-    public string? BaseUrl { get; set; }
-
-    /// <summary>
-    /// DEFAULT CACHE CONTROL HEADER FOR UPLOADED FILES
-    /// </summary>
-    public string? DefaultCacheControl { get; set; } = "public, max-age=31536000";
 }

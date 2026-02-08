@@ -4,4 +4,4 @@ using App.Application.Features.ListeningSessionRows.Dtos;
 
 namespace App.Application.Features.ListeningSessionRows.Commands.CreateLRows;
 
-public record CreateLRowsCommand(SaveListeningRowsRequest Request) : ICommand<ServiceResult<int>>;
+public record CreateLRowsCommand(SaveListeningRowsRequest Request) : ICommand<ServiceResult>;

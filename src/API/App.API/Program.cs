@@ -23,7 +23,7 @@ builder.Services
     .AddPersistenceServicesExt(builder.Configuration)
     .AddOpenTelemetryServicesExt(builder.Configuration)
     .AddCachingServicesExt(builder.Configuration)
-    .AddStorageServicesExt()
+    .AddStorageServicesExt(builder.Configuration)
     .AddMappingServicesExt()
     .AddCustomTokenAuthExt(builder.Configuration)
     .AddOptionsPatternExt(builder.Configuration)
@@ -37,6 +37,7 @@ builder.Services
 builder.Services.AddMediatR(cfg =>
 {
     cfg.RegisterServicesFromAssembly(typeof(ApplicationAssembly).Assembly);
+    cfg.AddOpenBehavior(typeof(ExceptionHandlerBehavior<,>));
     cfg.AddOpenBehavior(typeof(LoggingBehavior<,>));
     cfg.AddOpenBehavior(typeof(ValidationBehavior<,>));
     cfg.AddOpenBehavior(typeof(CachingBehavior<,>));
@@ -60,6 +61,7 @@ if (app.Environment.IsDevelopment())
 app.UseExceptionHandler(x => { });
 app.UseHttpsRedirection();
 app.UseRateLimiter();
+app.UseMiddleware<OpenTelemetryTraceIdMiddleware>();
 app.UseMiddleware<RequestAndResponseActivityMiddleware>();
 app.UseAuthentication();
 app.UseAuthorization();

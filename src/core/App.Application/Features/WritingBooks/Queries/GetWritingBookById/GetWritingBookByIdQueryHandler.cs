@@ -1,11 +1,8 @@
-using System.Net;
 using App.Application.Common;
 using App.Application.Common.CQRS;
 using App.Application.Contracts.Persistence.Repositories;
 using App.Application.Features.WritingBooks.Dtos;
-using App.Domain.Entities.WritingEntities;
-using MapsterMapper;
-using Microsoft.Extensions.Logging;
+using App.Domain.Exceptions;
 
 namespace App.Application.Features.WritingBooks.Queries.GetWritingBookById;
 
@@ -14,30 +11,20 @@ namespace App.Application.Features.WritingBooks.Queries.GetWritingBookById;
 /// </summary>
 public class GetWritingBookByIdQueryHandler(
 
-    IWritingBookRepository writingBookRepository,
-    IMapper mapper,
-    ILogger<GetWritingBookByIdQueryHandler> logger
+    IWritingBookRepository writingBookRepository
 
     ) : IQueryHandler<GetWritingBookByIdQuery, ServiceResult<WritingBookWithLanguageId>>
 {
     public async Task<ServiceResult<WritingBookWithLanguageId>> Handle(
 
-        GetWritingBookByIdQuery request, 
+        GetWritingBookByIdQuery request,
         CancellationToken cancellationToken)
     {
-        logger.LogInformation("GetWritingBookByIdQueryHandler --> FETCHING WRITING BOOK WITH ID: {Id}", request.Id);
 
-        var writingBook = await writingBookRepository.GetWritingBookItemByIdAsync(request.Id);
+        // GET WRITING BOOK
+        var writingBook = await writingBookRepository.GetWritingBookItemByIdAsync(request.Id)
+            ?? throw new NotFoundException("WRITING BOOK NOT FOUND");
 
-        if (writingBook is null)
-        {
-            logger.LogWarning("GetWritingBookByIdQueryHandler --> WRITING BOOK NOT FOUND WITH ID: {Id}", request.Id);
-            return ServiceResult<WritingBookWithLanguageId>.Fail("WRITING BOOK NOT FOUND", HttpStatusCode.NotFound);
-        }
-
-        logger.LogInformation("GetWritingBookByIdQueryHandler --> SUCCESSFULLY FETCHED WRITING BOOK: {BookName}", writingBook.Name);
-
-        var result = mapper.Map<WritingBook, WritingBookWithLanguageId>(writingBook);
-        return ServiceResult<WritingBookWithLanguageId>.Success(result);
+        return ServiceResult<WritingBookWithLanguageId>.Success(writingBook);
     }
 }

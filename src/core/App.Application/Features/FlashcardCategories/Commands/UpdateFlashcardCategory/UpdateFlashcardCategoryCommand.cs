@@ -7,4 +7,4 @@ namespace App.Application.Features.FlashcardCategories.Commands.UpdateFlashcardC
 /// <summary>
 /// COMMAND FOR UPDATING AN EXISTING FLASHCARD CATEGORY.
 /// </summary>
-public record UpdateFlashcardCategoryCommand(UpdateFlashcardCategoryRequest Request) : ICommand<ServiceResult<int>>;
+public record UpdateFlashcardCategoryCommand(UpdateFlashcardCategoryRequest Request) : ICommand<ServiceResult>;

@@ -1,4 +1,3 @@
-using System.Net;
 using App.Application.Common;
 using App.Application.Common.CQRS;
 using App.Application.Contracts.Infrastructure.Caching;
@@ -6,7 +5,7 @@ using App.Application.Contracts.Persistence;
 using App.Application.Contracts.Persistence.Repositories;
 using App.Application.Contracts.Services;
 using App.Application.Features.FlashcardCategories.CacheKeys;
-using Microsoft.Extensions.Logging;
+using App.Domain.Exceptions;
 
 namespace App.Application.Features.FlashcardCategories.Commands.UpdateFlashcardCategory;
 
@@ -17,65 +16,51 @@ public class UpdateFlashcardCategoryCommandHandler(
 
     IFlashcardCategoryRepository flashcardCategoryRepository,
     IUnitOfWork unitOfWork,
-    ILogger<UpdateFlashcardCategoryCommandHandler> logger,
     IStaticCacheManager cacheManager,
-    IEntityVerificationService entityVerificationService
+    IEntityVerificationService entityVerificationService,
+    IPracticeRepository practiceRepository
 
-    ) : ICommandHandler<UpdateFlashcardCategoryCommand, ServiceResult<int>>
+    ) : ICommandHandler<UpdateFlashcardCategoryCommand, ServiceResult>
 {
 
-    public async Task<ServiceResult<int>> Handle(
+    public async Task<ServiceResult> Handle(
 
-        UpdateFlashcardCategoryCommand request, 
+        UpdateFlashcardCategoryCommand request,
         CancellationToken cancellationToken)
     {
-        logger.LogInformation("UpdateFlashcardCategoryCommandHandler -> UPDATING FLASHCARD CATEGORY WITH ID: {Id}", request.Request.Id);
+
+        // GET PRACTICE
+        var practice = await practiceRepository.ExistsByLanguageIdAsync(request.Request.LanguageId)
+            ?? throw new NotFoundException("PRACTICE NOT FOUND");
 
         // VERIFY FLASHCARD CATEGORY EXISTS
-        var existingCategory = await flashcardCategoryRepository.GetByIdAsync(request.Request.Id);
-
-        // FAST FAIL
-        if (existingCategory is null)
-        {
-            logger.LogWarning("UpdateFlashcardCategoryCommandHandler -> FLASHCARD CATEGORY NOT FOUND WITH ID: {Id}", request.Request.Id);
-            return ServiceResult<int>.Fail("FLASHCARD CATEGORY NOT FOUND", HttpStatusCode.NotFound);
-        }
+        var existingCategory = await flashcardCategoryRepository.GetByIdAsync(request.Request.ItemId)
+            ?? throw new NotFoundException("FLASHCARD CATEGORY NOT FOUND");
 
         // VERIFY OR CREATE FLASHCARD
         var flashcardResult = await entityVerificationService.VerifyOrCreateFlashcardAsync(
 
-            request.Request.FlashcardId, 
-            request.Request.UserId, 
+            practice.Id,
+            request.Request.UserId,
             request.Request.LanguageId);
 
-        // FAST FAIL
-        if (!flashcardResult.IsSuccess)
+        if (flashcardResult.IsFail)
         {
-            return ServiceResult<int>.Fail(flashcardResult.ErrorMessage!, flashcardResult.Status);
+            throw new BusinessException(flashcardResult.ErrorMessage!.First(), flashcardResult.Status);
         }
 
         var flashcard = flashcardResult.Data!;
 
-        try
-        {
-            // UPDATE OTHER FIELDS
-            existingCategory.FlashcardId = flashcard.Id;
-            existingCategory.Name = request.Request.Name;
+        // UPDATE OTHER FIELDS
+        existingCategory.FlashcardId = flashcard.Id;
+        existingCategory.Name = request.Request.CategoryName;
 
-            flashcardCategoryRepository.Update(existingCategory);
-            await unitOfWork.CommitAsync();
+        flashcardCategoryRepository.Update(existingCategory);
+        await unitOfWork.CommitAsync();
 
-            // CACHE INVALIDATION
-            await cacheManager.RemoveByPrefixAsync(FlashcardCategoryCacheKeys.Prefix);
+        // CACHE INVALIDATION
+        await cacheManager.RemoveByPrefixAsync(FlashcardCategoryCacheKeys.Prefix);
 
-            logger.LogInformation("UpdateFlashcardCategoryCommandHandler -> SUCCESSFULLY UPDATED FLASHCARD CATEGORY WITH ID: {Id}", existingCategory.Id);
-
-            return ServiceResult<int>.Success(existingCategory.Id);
-        }
-        catch (Exception ex)
-        {
-            logger.LogError(ex, "UpdateFlashcardCategoryCommandHandler -> ERROR UPDATING FLASHCARD CATEGORY");
-            return ServiceResult<int>.Fail("ERROR UPDATING FLASHCARD CATEGORY", HttpStatusCode.InternalServerError);
-        }
+        return ServiceResult.Success();
     }
 }

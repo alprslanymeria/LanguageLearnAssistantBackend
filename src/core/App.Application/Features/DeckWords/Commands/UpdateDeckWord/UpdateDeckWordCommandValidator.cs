@@ -9,19 +9,19 @@ public class UpdateDeckWordCommandValidator : AbstractValidator<UpdateDeckWordCo
 {
     public UpdateDeckWordCommandValidator()
     {
-        RuleFor(x => x.Request.Id)
+        RuleFor(x => x.Request.ItemId)
             .GreaterThan(0)
-            .WithMessage("ID MUST BE GREATER THAN 0");
+            .WithMessage("ITEM ID MUST BE GREATER THAN 0");
 
-        RuleFor(x => x.Request.FlashcardCategoryId)
+        RuleFor(x => x.Request.CategoryId)
             .GreaterThan(0)
             .WithMessage("FLASHCARD CATEGORY ID MUST BE GREATER THAN 0");
 
-        RuleFor(x => x.Request.Question)
+        RuleFor(x => x.Request.Word)
             .NotEmpty()
-            .WithMessage("QUESTION IS REQUIRED")
+            .WithMessage("WORD IS REQUIRED")
             .MaximumLength(500)
-            .WithMessage("QUESTION MUST NOT EXCEED 500 CHARACTERS");
+            .WithMessage("WORD MUST NOT EXCEED 500 CHARACTERS");
 
         RuleFor(x => x.Request.Answer)
             .NotEmpty()

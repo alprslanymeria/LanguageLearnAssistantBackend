@@ -22,8 +22,8 @@ public class WritingOldSessionController(ISender sender) : BaseController
     /// /api/v1.0/WritingOldSession?PageNumber=1&PageSize=10
     /// </summary>
     [HttpGet]
-    public async Task<IActionResult> GetWritingOldSessionsWithPaging([FromQuery] PagedRequest request) 
-        => ActionResultInstance(await sender.Send(new GetWOSWithPagingQuery(UserId, request)));
+    public async Task<IActionResult> GetWOSWithPaging([FromQuery] PagedRequest request, string language)
+        => ActionResultInstance(await sender.Send(new GetWOSWithPagingQuery(UserId, language, request)));
 
 
     /// <summary>
@@ -31,7 +31,6 @@ public class WritingOldSessionController(ISender sender) : BaseController
     /// /api/v1.0/WritingOldSession + JSON BODY
     /// </summary>
     [HttpPost]
-    public async Task<IActionResult> SaveWritingOldSession([FromBody] SaveWritingOldSessionRequest request) 
+    public async Task<IActionResult> CreateWOS([FromBody] SaveWritingOldSessionRequest request)
         => ActionResultInstance(await sender.Send(new CreateWOSCommand(request)));
-
 }

@@ -22,8 +22,8 @@ public class FlashcardOldSessionController(ISender sender) : BaseController
     /// /api/v1.0/FlashcardOldSession?PageNumber=1&PageSize=10
     /// </summary>
     [HttpGet]
-    public async Task<IActionResult> GetFlashcardOldSessionsWithPaging([FromQuery] PagedRequest request) 
-        => ActionResultInstance(await sender.Send(new GetFOSWithPagingQuery(UserId, request)));
+    public async Task<IActionResult> GetFOSWithPaging([FromQuery] PagedRequest request, string language)
+        => ActionResultInstance(await sender.Send(new GetFOSWithPagingQuery(UserId, language, request)));
 
 
     /// <summary>
@@ -31,7 +31,7 @@ public class FlashcardOldSessionController(ISender sender) : BaseController
     /// /api/v1.0/FlashcardOldSession + JSON BODY
     /// </summary>
     [HttpPost]
-    public async Task<IActionResult> SaveFlashcardOldSession([FromBody] SaveFlashcardOldSessionRequest request) 
+    public async Task<IActionResult> CreateFOS([FromBody] SaveFlashcardOldSessionRequest request)
         => ActionResultInstance(await sender.Send(new CreateFOSCommand(request)));
 
 }

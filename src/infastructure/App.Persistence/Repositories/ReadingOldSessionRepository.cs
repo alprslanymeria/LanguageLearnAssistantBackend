@@ -9,41 +9,38 @@ namespace App.Persistence.Repositories;
 /// </summary>
 public class ReadingOldSessionRepository(AppDbContext context) : IReadingOldSessionRepository
 {
-    
-    public async Task<(List<ReadingOldSession> items, int totalCount)> GetReadingOldSessionsWithPagingAsync(string userId, int page, int pageSize)
+    public async Task AddAsync(ReadingOldSession entity) => await context.ReadingOldSessions.AddAsync(entity);
+
+    public async Task<ReadingOldSession?> GetByIdAsync(string id) =>
+        await context.ReadingOldSessions
+            .AsNoTracking()
+            .FirstOrDefaultAsync(ros => ros.Id == id);
+
+    public void Update(ReadingOldSession entity) => context.ReadingOldSessions.Update(entity);
+
+    public async Task RemoveAsync(string id)
+    {
+        var entity = await context.ReadingOldSessions.FindAsync(id);
+
+        if (entity is not null)
+        {
+            context.ReadingOldSessions.Remove(entity);
+        }
+    }
+
+    public async Task<(List<ReadingOldSession> Items, int TotalCount)> GetReadingOldSessionsWithPagingAsync(string userId, string language, int page, int pageSize)
     {
         var query = context.ReadingOldSessions
-            .AsNoTracking()
-            .Where(ros => ros.Reading.UserId == userId);
+            .Where(ros => ros.Reading.UserId == userId && ros.Reading.Language.Name == language);
 
         var totalCount = await query.CountAsync();
 
         var items = await query
-            .OrderByDescending(ros => ros.Id)
+            .OrderByDescending(ros => ros.CreatedAt)
             .Skip((page - 1) * pageSize)
             .Take(pageSize)
             .ToListAsync();
 
         return (items, totalCount);
-    }
-
-    public async Task CreateAsync(ReadingOldSession entity) => await context.ReadingOldSessions.AddAsync(entity);
-
-    public Task<ReadingOldSession?> GetByIdAsync(string id) =>
-        context.ReadingOldSessions
-            .AsNoTracking()
-            .FirstOrDefaultAsync(ros => ros.Id == id);
-
-    public ReadingOldSession Update(ReadingOldSession entity)
-    {
-        context.ReadingOldSessions.Update(entity);
-
-        return entity;
-    }
-
-    public void Delete(ReadingOldSession entity)
-    {
-        context.ReadingOldSessions
-            .Remove(entity);
     }
 }

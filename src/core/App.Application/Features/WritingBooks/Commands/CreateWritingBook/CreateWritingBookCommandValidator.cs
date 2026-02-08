@@ -14,11 +14,8 @@ public class CreateWritingBookCommandValidator : AbstractValidator<CreateWriting
 
     public CreateWritingBookCommandValidator()
     {
-        RuleFor(x => x.Request.WritingId)
-            .GreaterThan(0)
-            .WithMessage("WRITING ID MUST BE GREATER THAN 0");
 
-        RuleFor(x => x.Request.Name)
+        RuleFor(x => x.Request.BookName)
             .NotEmpty()
             .WithMessage("NAME IS REQUIRED")
             .MaximumLength(200)

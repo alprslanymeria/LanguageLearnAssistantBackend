@@ -19,7 +19,7 @@ public class ListeningSessionRowController(ISender sender) : BaseController
     /// /api/v1.0/ListeningSessionRow/{oldSessionId}?PageNumber=1&PageSize=10
     /// </summary>
     [HttpGet("{oldSessionId}")]
-    public async Task<IActionResult> GetListeningRowsByIdWithPaging([FromQuery] PagedRequest request, string oldSessionId) 
+    public async Task<IActionResult> GetLRowsByIdWithPaging([FromQuery] PagedRequest request, string oldSessionId)
         => ActionResultInstance(await sender.Send(new GetLRowsByIdWithPagingQuery(request, oldSessionId)));
 
 
@@ -28,6 +28,6 @@ public class ListeningSessionRowController(ISender sender) : BaseController
     /// /api/v1.0/ListeningSessionRow + JSON BODY
     /// </summary>
     [HttpPost]
-    public async Task<IActionResult> SaveListeningRows([FromBody] SaveListeningRowsRequest request) 
+    public async Task<IActionResult> CreateLRows([FromBody] SaveListeningRowsRequest request)
         => ActionResultInstance(await sender.Send(new CreateLRowsCommand(request)));
 }

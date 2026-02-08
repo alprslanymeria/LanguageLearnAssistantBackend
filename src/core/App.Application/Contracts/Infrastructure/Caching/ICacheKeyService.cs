@@ -1,4 +1,4 @@
-﻿namespace App.Application.Contracts.Infrastructure.Caching;
+namespace App.Application.Contracts.Infrastructure.Caching;
 
 /// <summary>
 /// PROVIDES CACHE KEY GENERATION AND PREPARATION SERVICES.

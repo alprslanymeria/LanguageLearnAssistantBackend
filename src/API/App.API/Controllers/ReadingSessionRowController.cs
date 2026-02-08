@@ -19,7 +19,7 @@ public class ReadingSessionRowController(ISender sender) : BaseController
     /// /api/v1.0/ReadingSessionRow/{oldSessionId}?PageNumber=1&PageSize=10
     /// </summary>
     [HttpGet("{oldSessionId}")]
-    public async Task<IActionResult> GetReadingRowsByIdWithPaging([FromQuery] PagedRequest request, string oldSessionId) 
+    public async Task<IActionResult> GetRRowsByIdWithPaging([FromQuery] PagedRequest request, string oldSessionId)
         => ActionResultInstance(await sender.Send(new GetRRowsByIdWithPagingQuery(request, oldSessionId)));
 
 
@@ -28,6 +28,6 @@ public class ReadingSessionRowController(ISender sender) : BaseController
     /// /api/v1.0/ReadingSessionRow + JSON BODY
     /// </summary>
     [HttpPost]
-    public async Task<IActionResult> SaveReadingRows([FromBody] SaveReadingRowsRequest request) 
+    public async Task<IActionResult> CreateRRows([FromBody] SaveReadingRowsRequest request)
         => ActionResultInstance(await sender.Send(new CreateRRowsCommand(request)));
 }

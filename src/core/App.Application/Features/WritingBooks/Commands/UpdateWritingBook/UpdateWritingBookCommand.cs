@@ -7,4 +7,4 @@ namespace App.Application.Features.WritingBooks.Commands.UpdateWritingBook;
 /// <summary>
 /// COMMAND FOR UPDATING AN EXISTING WRITING BOOK.
 /// </summary>
-public record UpdateWritingBookCommand(UpdateWritingBookRequest Request) : ICommand<ServiceResult<int>>;
+public record UpdateWritingBookCommand(UpdateWritingBookRequest Request) : ICommand<ServiceResult>;

@@ -7,7 +7,7 @@ using App.Application.Contracts.Persistence.Repositories;
 using App.Application.Contracts.Services;
 using App.Application.Features.WritingBooks.CacheKeys;
 using App.Domain.Entities.WritingEntities;
-using Microsoft.Extensions.Logging;
+using App.Domain.Exceptions;
 
 namespace App.Application.Features.WritingBooks.Commands.CreateWritingBook;
 
@@ -18,73 +18,61 @@ public class CreateWritingBookCommandHandler(
 
     IWritingBookRepository writingBookRepository,
     IUnitOfWork unitOfWork,
-    ILogger<CreateWritingBookCommandHandler> logger,
     IStaticCacheManager cacheManager,
     IEntityVerificationService entityVerificationService,
     IImageProcessingService imageProcessingService,
-    IFileStorageHelper fileStorageHelper
+    IFileStorageHelper fileStorageHelper,
+    IPracticeRepository practiceRepository
 
-    ) : ICommandHandler<CreateWritingBookCommand, ServiceResult<int>>
+    ) : ICommandHandler<CreateWritingBookCommand, ServiceResult>
 {
 
-    public async Task<ServiceResult<int>> Handle(
+    public async Task<ServiceResult> Handle(
 
-        CreateWritingBookCommand request, 
+        CreateWritingBookCommand request,
         CancellationToken cancellationToken)
     {
-        logger.LogInformation("CreateWritingBookCommandHandler -> CREATING NEW WRITING BOOK FOR WRITING ID: {WritingId}", request.Request.WritingId);
+        var practice = await practiceRepository.ExistsByLanguageIdAsync(request.Request.LanguageId)
+            ?? throw new NotFoundException("PRACTICE NOT FOUND");
 
         // VERIFY OR CREATE WRITING
         var writingResult = await entityVerificationService.VerifyOrCreateWritingAsync(
-            request.Request.WritingId, 
-            request.Request.UserId, 
+
+            practice.Id,
+            request.Request.UserId,
             request.Request.LanguageId);
 
-        // FAST FAIL
-        if (!writingResult.IsSuccess)
+        if (writingResult.IsFail)
         {
-            return ServiceResult<int>.Fail(writingResult.ErrorMessage!, writingResult.Status);
+            throw new BusinessException(writingResult.ErrorMessage!.First(), writingResult.Status);
         }
 
         var writing = writingResult.Data!;
 
-        try
+        // UPLOAD FILES TO STORAGE
+        var imageUrl = await fileStorageHelper.UploadFileToStorageAsync(request.Request.ImageFile, request.Request.UserId, "wbooks");
+        var sourceUrl = await fileStorageHelper.UploadFileToStorageAsync(request.Request.SourceFile, request.Request.UserId, "wbooks");
+
+        // EXTRACT LEFT SIDE COLOR FROM IMAGE
+        var leftColor = await imageProcessingService.ExtractLeftSideColorAsync(request.Request.ImageFile);
+
+        // CREATE WRITING BOOK
+        var writingBook = new WritingBook
         {
-            // UPLOAD FILES TO STORAGE
-            logger.LogInformation("CreateWritingBookCommandHandler -> UPLOADING FILES TO STORAGE");
+            WritingId = writing.Id,
+            Name = request.Request.BookName,
+            ImageUrl = imageUrl,
+            LeftColor = leftColor,
+            SourceUrl = sourceUrl,
+            Writing = writing
+        };
 
-            var imageUrl = await fileStorageHelper.UploadFileToStorageAsync(request.Request.ImageFile, request.Request.UserId, "wbooks");
-            var sourceUrl = await fileStorageHelper.UploadFileToStorageAsync(request.Request.SourceFile, request.Request.UserId, "wbooks");
+        await writingBookRepository.AddAsync(writingBook);
+        await unitOfWork.CommitAsync();
 
-            // EXTRACT LEFT SIDE COLOR FROM IMAGE
-            logger.LogInformation("CreateWritingBookCommandHandler -> EXTRACTING LEFT SIDE COLOR");
-            var leftColor = await imageProcessingService.ExtractLeftSideColorAsync(request.Request.ImageFile);
+        // CACHE INVALIDATION
+        await cacheManager.RemoveByPrefixAsync(WritingBookCacheKeys.Prefix);
 
-            // CREATE WRITING BOOK
-            var writingBook = new WritingBook
-            {
-                WritingId = writing.Id,
-                Name = request.Request.Name,
-                ImageUrl = imageUrl,
-                LeftColor = leftColor,
-                SourceUrl = sourceUrl,
-                Writing = writing
-            };
-
-            await writingBookRepository.CreateAsync(writingBook);
-            await unitOfWork.CommitAsync();
-
-            // CACHE INVALIDATION
-            await cacheManager.RemoveByPrefixAsync(WritingBookCacheKeys.Prefix);
-
-            logger.LogInformation("CreateWritingBookCommandHandler -> SUCCESSFULLY CREATED WRITING BOOK WITH ID: {Id}, NAME: {Name}", writingBook.Id, writingBook.Name);
-
-            return ServiceResult<int>.SuccessAsCreated(writingBook.Id, $"/api/WritingBook/{writingBook.Id}");
-        }
-        catch (Exception ex)
-        {
-            logger.LogError(ex, "CreateWritingBookCommandHandler -> ERROR CREATING WRITING BOOK");
-            return ServiceResult<int>.Fail("ERROR CREATING WRITING BOOK", HttpStatusCode.InternalServerError);
-        }
+        return ServiceResult.Success(HttpStatusCode.Created);
     }
 }

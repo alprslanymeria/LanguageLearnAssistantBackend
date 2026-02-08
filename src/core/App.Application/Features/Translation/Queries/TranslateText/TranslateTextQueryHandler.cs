@@ -1,11 +1,10 @@
-using System.Net;
 using App.Application.Common;
 using App.Application.Common.CQRS;
 using App.Application.Contracts.Infrastructure.ExternalApi;
 using App.Application.Contracts.Infrastructure.Translation;
 using App.Application.Contracts.Persistence.Repositories;
 using App.Application.Features.Translation.Dtos;
-using Microsoft.Extensions.Logging;
+using App.Domain.Exceptions;
 
 namespace App.Application.Features.Translation.Queries.TranslateText;
 
@@ -13,8 +12,7 @@ public class TranslateTextQueryHandler(
 
     ITranslationProvider translationProvider,
     IUserApiClient userApiClient,
-    ILanguageRepository languageRepository,
-    ILogger<TranslateTextQueryHandler> logger
+    ILanguageRepository languageRepository
 
     ) : IQueryHandler<TranslateTextQuery, ServiceResult<TranslateTextResponse>>
 {
@@ -56,11 +54,10 @@ public class TranslateTextQueryHandler(
     /// </summary>
     private async Task<string?> GetUserNativeLanguageCodeAsync(string userId, string accessToken, CancellationToken cancellationToken)
     {
-        var userInfo = await userApiClient.GetUserInfoAsync(userId, accessToken, cancellationToken);
+        var userInfo = await userApiClient.GetProfileInfos(userId, accessToken, cancellationToken);
 
         if (userInfo is null)
         {
-            logger.LogWarning("TranslateTextQueryHandler:GetUserNativeLanguageCodeAsync -> USER NOT FOUND: {UserId}", userId);
             return null;
         }
 
@@ -76,7 +73,6 @@ public class TranslateTextQueryHandler(
 
         if (language is null)
         {
-            logger.LogWarning("TranslateTextQueryHandler:GetLanguageCodeByNameAsync -> LANGUAGE NOT FOUND: {LanguageName}", languageName);
             return null;
         }
 
@@ -92,15 +88,12 @@ public class TranslateTextQueryHandler(
         CancellationToken cancellationToken)
     {
 
-        logger.LogInformation("TranslateTextQueryHandler -> STARTING TRANSLATION FOR USER {UserId}, PRACTICE: {Practice}", request.UserId, request.Request.Practice);
-
         // VALIDATE PRACTICE TYPE
         var practiceType = request.Request.Practice.ToLowerInvariant();
 
         if (!ValidPracticeTypes.Contains(practiceType))
         {
-            logger.LogWarning("TranslateTextQueryHandler -> INVALID PRACTICE TYPE: {Practice}", request.Request.Practice);
-            return ServiceResult<TranslateTextResponse>.Fail("INVALID PRACTICE TYPE. VALID VALUES: READING, LISTENING, WRITING");
+            throw new BusinessException("INVALID PRACTICE TYPE. VALID VALUES: READING, LISTENING, WRITING");
         }
 
         // DETERMINE TARGET LANGUAGE CODE
@@ -108,30 +101,19 @@ public class TranslateTextQueryHandler(
 
         if (string.IsNullOrEmpty(targetLanguageCode))
         {
-            logger.LogWarning("TranslateTextQueryHandler -> COULD NOT DETERMINE TARGET LANGUAGE");
-            return ServiceResult<TranslateTextResponse>.Fail("TARGET LANGUAGE COULD NOT BE DETERMINED", HttpStatusCode.BadRequest);
+            throw new BusinessException("TARGET LANGUAGE COULD NOT BE DETERMINED");
         }
 
         // PERFORM TRANSLATION
-        try
-        {
-            var translatedText = await translationProvider.TranslateAsync(request.Request.SelectedText, targetLanguageCode, cancellationToken);
+        var translatedText = await translationProvider.TranslateAsync(request.Request.SelectedText, targetLanguageCode, cancellationToken);
 
-            logger.LogInformation("TranslateTextQueryHandler -> TEXT SUCCESSFULLY TRANSLATED TO {TargetLanguage}", targetLanguageCode);
+        var response = new TranslateTextResponse(
 
-            var response = new TranslateTextResponse
-            {
-                OriginalText = request.Request.SelectedText,
-                TranslatedText = translatedText,
-                TargetLanguage = targetLanguageCode
-            };
+            OriginalText: request.Request.SelectedText,
+            TranslatedText: translatedText,
+            TargetLanguageCode: targetLanguageCode
+            );
 
-            return ServiceResult<TranslateTextResponse>.Success(response);
-        }
-        catch (Exception ex)
-        {
-            logger.LogError(ex, "TranslateTextQueryHandler -> TRANSLATION FAILED");
-            return ServiceResult<TranslateTextResponse>.Fail("TRANSLATION SERVICE ERROR", HttpStatusCode.InternalServerError);
-        }
+        return ServiceResult<TranslateTextResponse>.Success(response);
     }
 }

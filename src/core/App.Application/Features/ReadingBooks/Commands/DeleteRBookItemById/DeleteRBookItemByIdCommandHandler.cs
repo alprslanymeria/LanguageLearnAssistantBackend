@@ -6,7 +6,7 @@ using App.Application.Contracts.Persistence;
 using App.Application.Contracts.Persistence.Repositories;
 using App.Application.Contracts.Services;
 using App.Application.Features.ReadingBooks.CacheKeys;
-using Microsoft.Extensions.Logging;
+using App.Domain.Exceptions;
 
 namespace App.Application.Features.ReadingBooks.Commands.DeleteRBookItemById;
 
@@ -17,7 +17,6 @@ public class DeleteRBookItemByIdCommandHandler(
 
     IReadingBookRepository readingBookRepository,
     IUnitOfWork unitOfWork,
-    ILogger<DeleteRBookItemByIdCommandHandler> logger,
     IStaticCacheManager cacheManager,
     IFileStorageHelper fileStorageHelper
 
@@ -26,32 +25,23 @@ public class DeleteRBookItemByIdCommandHandler(
 
     public async Task<ServiceResult> Handle(
 
-        DeleteRBookItemByIdCommand request, 
+        DeleteRBookItemByIdCommand request,
         CancellationToken cancellationToken)
     {
 
-        logger.LogInformation("DeleteRBookItemByIdCommandHandler -> ATTEMPTING TO DELETE READING BOOK WITH ID: {Id}", request.Id);
-
-        var readingBook = await readingBookRepository.GetByIdAsync(request.Id);
-
-        // FAST FAIL
-        if (readingBook is null)
-        {
-            logger.LogWarning("DeleteRBookItemByIdCommandHandler -> READING BOOK NOT FOUND FOR DELETION WITH ID: {Id}", request.Id);
-            return ServiceResult.Fail("READING BOOK NOT FOUND", HttpStatusCode.NotFound);
-        }
+        // GET READING BOOK
+        var readingBook = await readingBookRepository.GetByIdAsync(request.Id)
+            ?? throw new NotFoundException("READING BOOK NOT FOUND");
 
         // STORE FILE PATHS BEFORE DELETION
         var imageUrl = readingBook.ImageUrl;
         var sourceUrl = readingBook.SourceUrl;
 
-        readingBookRepository.Delete(readingBook);
+        await readingBookRepository.RemoveAsync(readingBook.Id);
         await unitOfWork.CommitAsync();
 
         // CACHE INVALIDATION
         await cacheManager.RemoveByPrefixAsync(ReadingBookCacheKeys.Prefix);
-
-        logger.LogInformation("DeleteRBookItemByIdCommandHandler -> SUCCESSFULLY DELETED READING BOOK FROM DATABASE WITH ID: {Id}", request.Id);
 
         // DELETE FILES FROM STORAGE AFTER DATABASE DELETION
         await fileStorageHelper.DeleteFileFromStorageAsync(imageUrl);

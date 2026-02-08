@@ -2,15 +2,12 @@ using App.Domain.Entities.WritingEntities;
 
 namespace App.Application.Contracts.Persistence.Repositories;
 
-/// <summary>
-/// REPOSITORY INTERFACE FOR WRITING ENTITY.
-/// </summary>
 public interface IWritingRepository
 {
     /// <summary>
     /// ASYNCHRONOUSLY CREATES A NEW ENTITY IN THE UNDERLYING DATA STORE.
     /// </summary>
-    Task CreateAsync(Writing entity);
+    Task AddAsync(Writing entity);
 
     /// <summary>
     /// ASYNCHRONOUSLY RETRIEVES AN ENTITY BY ITS UNIQUE IDENTIFIER.
@@ -18,12 +15,17 @@ public interface IWritingRepository
     Task<Writing?> GetByIdAsync(int id);
 
     /// <summary>
-    /// UPDATES THE WRITING ENTITY IN THE UNDERLYING DATA STORE AND RETURNS THE UPDATED ENTITY.
+    /// UPDATES THE WRITING ENTITY IN THE UNDERLYING DATA STORE.
     /// </summary>
-    Writing Update(Writing entity);
+    void Update(Writing entity);
 
     /// <summary>
-    /// REMOVES THE WRITING ENTITY FROM THE UNDERLYING DATA STORE.
+    /// ASYNCHRONOUSLY REMOVES THE WRITING ENTITY FROM THE UNDERLYING DATA STORE.
     /// </summary>
-    void Delete(Writing entity);
+    Task RemoveAsync(int id);
+
+    /// <summary>
+    /// ASYNCHRONOUSLY RETRIEVES A WRITING BY ITS PRACTICE ID, USER ID, AND LANGUAGE ID.
+    /// </summary>
+    Task<Writing?> GetByPracticeIdUserIdLanguageIdAsync(int practiceId, string userId, int languageId);
 }

@@ -1,17 +1,14 @@
-using App.Domain.Entities.FlashcardEntities;
+using App.Application.Features.ListeningCategories.Dtos;
 using App.Domain.Entities.ListeningEntities;
 
 namespace App.Application.Contracts.Persistence.Repositories;
 
-/// <summary>
-/// REPOSITORY INTERFACE FOR LISTENING CATEGORY ENTITY.
-/// </summary>
 public interface IListeningCategoryRepository
 {
     /// <summary>
     /// ASYNCHRONOUSLY CREATES A NEW ENTITY IN THE UNDERLYING DATA STORE.
     /// </summary>
-    Task CreateAsync(ListeningCategory entity);
+    Task AddAsync(ListeningCategory entity);
 
     /// <summary>
     /// ASYNCHRONOUSLY RETRIEVES AN ENTITY BY ITS UNIQUE IDENTIFIER.
@@ -19,12 +16,22 @@ public interface IListeningCategoryRepository
     Task<ListeningCategory?> GetByIdAsync(int id);
 
     /// <summary>
-    /// UPDATES THE LISTENING CATEGORY IN THE UNDERLYING DATA STORE AND RETURNS THE UPDATED ENTITY.
+    /// UPDATES THE LISTENING CATEGORY IN THE UNDERLYING DATA STORE.
     /// </summary>
-    ListeningCategory Update(ListeningCategory entity);
+    void Update(ListeningCategory entity);
 
     /// <summary>
-    /// REMOVES THE LISTENING CATEGORY FROM THE UNDERLYING DATA STORE.
+    /// ASYNCHRONOUSLY REMOVES THE LISTENING CATEGORY FROM THE UNDERLYING DATA STORE.
     /// </summary>
-    void Delete(ListeningCategory entity);
+    Task RemoveAsync(int id);
+
+    /// <summary>
+    /// GETS LISTENING CATEGORIES WITH DECK VIDEOS FOR A USER BASED ON LANGUAGE AND PRACTICE.
+    /// </summary>
+    Task<List<ListeningCategoryWithDeckVideos>> GetLCategoryCreateItemsAsync(string userId, int languageId, int practiceId);
+
+    /// <summary>
+    /// GETS A LISTENING CATEGORY BY ID WITH DECK VIDEOS INCLUDED.
+    /// </summary>
+    Task<ListeningCategoryWithDeckVideos?> GetByIdWithDeckVideosAsync(int id);
 }

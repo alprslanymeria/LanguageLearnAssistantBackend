@@ -1,11 +1,8 @@
-using System.Net;
 using App.Application.Common;
 using App.Application.Common.CQRS;
 using App.Application.Contracts.Persistence.Repositories;
 using App.Application.Features.DeckWords.Dtos;
-using App.Domain.Entities.FlashcardEntities;
-using MapsterMapper;
-using Microsoft.Extensions.Logging;
+using App.Domain.Exceptions;
 
 namespace App.Application.Features.DeckWords.Queries.GetDeckWordById;
 
@@ -14,32 +11,20 @@ namespace App.Application.Features.DeckWords.Queries.GetDeckWordById;
 /// </summary>
 public class GetDeckWordByIdQueryHandler(
 
-    IDeckWordRepository deckWordRepository,
-    IMapper mapper,
-    ILogger<GetDeckWordByIdQueryHandler> logger
+    IDeckWordRepository deckWordRepository
 
     ) : IQueryHandler<GetDeckWordByIdQuery, ServiceResult<DeckWordWithLanguageId>>
 {
     public async Task<ServiceResult<DeckWordWithLanguageId>> Handle(
 
-        GetDeckWordByIdQuery request, 
+        GetDeckWordByIdQuery request,
         CancellationToken cancellationToken)
     {
-        var id = request.Id;
 
-        logger.LogInformation("GetDeckWordByIdQueryHandler --> FETCHING DECK WORD WITH ID: {Id}", id);
+        // GET DECK WORD
+        var deckWord = await deckWordRepository.GetDeckWordItemByIdAsync(request.Id)
+            ?? throw new NotFoundException("DECK WORD NOT FOUND");
 
-        var deckWord = await deckWordRepository.GetDeckWordItemByIdAsync(id);
-
-        if (deckWord is null)
-        {
-            logger.LogWarning("GetDeckWordByIdQueryHandler --> DECK WORD NOT FOUND WITH ID: {Id}", id);
-            return ServiceResult<DeckWordWithLanguageId>.Fail("DECK WORD NOT FOUND", HttpStatusCode.NotFound);
-        }
-
-        logger.LogInformation("GetDeckWordByIdQueryHandler --> SUCCESSFULLY FETCHED DECK WORD: {WordName}", deckWord.Question);
-
-        var result = mapper.Map<DeckWord, DeckWordWithLanguageId>(deckWord);
-        return ServiceResult<DeckWordWithLanguageId>.Success(result);
+        return ServiceResult<DeckWordWithLanguageId>.Success(deckWord);
     }
 }

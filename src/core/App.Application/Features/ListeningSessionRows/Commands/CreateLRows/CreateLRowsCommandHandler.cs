@@ -4,7 +4,7 @@ using App.Application.Common.CQRS;
 using App.Application.Contracts.Persistence;
 using App.Application.Contracts.Persistence.Repositories;
 using App.Domain.Entities.ListeningEntities;
-using Microsoft.Extensions.Logging;
+using App.Domain.Exceptions;
 
 namespace App.Application.Features.ListeningSessionRows.Commands.CreateLRows;
 
@@ -12,26 +12,18 @@ public class CreateLRowsCommandHandler(
 
     IListeningSessionRowRepository listeningSessionRowRepository,
     IListeningOldSessionRepository listeningOldSessionRepository,
-    IUnitOfWork unitOfWork,
-    ILogger<CreateLRowsCommandHandler> logger
+    IUnitOfWork unitOfWork
 
-    ) : ICommandHandler<CreateLRowsCommand, ServiceResult<int>>
+    ) : ICommandHandler<CreateLRowsCommand, ServiceResult>
 {
-    public async Task<ServiceResult<int>> Handle(
+    public async Task<ServiceResult> Handle(
 
         CreateLRowsCommand request,
         CancellationToken cancellationToken)
     {
-        logger.LogInformation("CreateLRowsCommandHandler -> SAVING {Count} LISTENING ROWS FOR SESSION: {SessionId}", request.Request.Rows.Count, request.Request.ListeningOldSessionId);
-
-        var session = await listeningOldSessionRepository.GetByIdAsync(request.Request.ListeningOldSessionId);
-
-        // FAST FAIL
-        if (session is null)
-        {
-            logger.LogWarning("CreateLRowsCommandHandler -> LISTENING OLD SESSION NOT FOUND WITH ID: {SessionId}", request.Request.ListeningOldSessionId);
-            return ServiceResult<int>.Fail("LISTENING OLD SESSION NOT FOUND", HttpStatusCode.NotFound);
-        }
+        // GET OLD SESSION
+        var session = await listeningOldSessionRepository.GetByIdAsync(request.Request.ListeningOldSessionId)
+            ?? throw new NotFoundException("LISTENING OLD SESSION NOT FOUND");
 
         var rows = request.Request.Rows.Select(r => new ListeningSessionRow
         {
@@ -43,11 +35,9 @@ public class CreateLRowsCommandHandler(
 
         }).ToList();
 
-        await listeningSessionRowRepository.CreateRangeAsync(rows);
+        await listeningSessionRowRepository.AddRangeAsync(rows);
         await unitOfWork.CommitAsync();
 
-        logger.LogInformation("CreateLRowsCommandHandler -> SUCCESSFULLY SAVED {Count} LISTENING ROWS FOR SESSION: {SessionId}", rows.Count, request.Request.ListeningOldSessionId);
-
-        return ServiceResult<int>.Success(rows.Count, HttpStatusCode.Created);
+        return ServiceResult.Success(HttpStatusCode.Created);
     }
 }

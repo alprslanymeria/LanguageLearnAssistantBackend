@@ -22,15 +22,14 @@ public class ReadingOldSessionController(ISender sender) : BaseController
     /// /api/v1.0/ReadingOldSession?Page=1&PageSize=10
     /// </summary>
     [HttpGet]
-    public async Task<IActionResult> GetReadingOldSessionsWithPaging([FromQuery] PagedRequest request) 
-        => ActionResultInstance(await sender.Send(new GetROSWithPagingQuery(UserId, request)));
+    public async Task<IActionResult> GetROSWithPaging([FromQuery] PagedRequest request, string language)
+        => ActionResultInstance(await sender.Send(new GetROSWithPagingQuery(UserId, language, request)));
 
     /// <summary>
     /// SAVES A NEW READING OLD SESSION.
     /// /api/v1.0/ReadingOldSession + JSON BODY
     /// </summary>
     [HttpPost]
-    public async Task<IActionResult> SaveReadingOldSession([FromBody] SaveReadingOldSessionRequest request)
+    public async Task<IActionResult> CreateROS([FromBody] SaveReadingOldSessionRequest request)
         => ActionResultInstance(await sender.Send(new CreateROSCommand(request)));
-    
 }

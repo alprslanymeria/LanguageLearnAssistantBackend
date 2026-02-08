@@ -7,4 +7,4 @@ namespace App.Application.Features.ReadingOldSessions.Commands.CreateROS;
 /// <summary>
 /// COMMAND FOR SAVING A NEW READING OLD SESSION.
 /// </summary>
-public record CreateROSCommand(SaveReadingOldSessionRequest Request) : ICommand<ServiceResult<string>>;
+public record CreateROSCommand(SaveReadingOldSessionRequest Request) : ICommand<ServiceResult>;

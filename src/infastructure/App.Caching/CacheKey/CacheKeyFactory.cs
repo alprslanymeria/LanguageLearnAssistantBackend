@@ -5,9 +5,9 @@ using Microsoft.Extensions.Options;
 namespace App.Caching.CacheKey;
 
 public class CacheKeyFactory(
-    
+
     IOptions<CacheConfig> cacheConfig
-    
+
     ) : ICacheKeyFactory
 
 {

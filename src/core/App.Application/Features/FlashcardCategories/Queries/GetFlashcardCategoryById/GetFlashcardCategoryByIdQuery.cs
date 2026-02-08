@@ -9,7 +9,7 @@ namespace App.Application.Features.FlashcardCategories.Queries.GetFlashcardCateg
 /// <summary>
 /// QUERY FOR RETRIEVING A FLASHCARD CATEGORY BY ID.
 /// </summary>
-public record GetFlashcardCategoryByIdQuery(int Id) : IQuery<ServiceResult<FlashcardCategoryWithLanguageId>> , ICacheableQuery
+public record GetFlashcardCategoryByIdQuery(int Id) : IQuery<ServiceResult<FlashcardCategoryWithLanguageId>>, ICacheableQuery
 {
     public ICacheKey GetCacheKey(ICacheKeyFactory keyFactory) => FlashcardCategoryCacheKeys.ById(keyFactory, Id);
 }

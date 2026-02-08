@@ -9,16 +9,34 @@ namespace App.Persistence.Repositories;
 /// </summary>
 public class FlashcardSessionRowRepository(AppDbContext context) : IFlashcardSessionRowRepository
 {
-    public async Task<(List<FlashcardSessionRow> items, int totalCount)> GetFlashcardRowsByIdWithPagingAsync(string sessionId, int page, int pageSize)
+    public async Task AddAsync(FlashcardSessionRow entity) => await context.FlashcardSessionRows.AddAsync(entity);
+
+    public async Task<FlashcardSessionRow?> GetByIdAsync(int id) =>
+        await context.FlashcardSessionRows
+            .AsNoTracking()
+            .FirstOrDefaultAsync(fsr => fsr.Id == id);
+
+    public void Update(FlashcardSessionRow entity) => context.FlashcardSessionRows.Update(entity);
+
+    public async Task RemoveAsync(int id)
+    {
+        var entity = await context.FlashcardSessionRows.FindAsync(id);
+
+        if (entity is not null)
+        {
+            context.FlashcardSessionRows.Remove(entity);
+        }
+    }
+
+    public async Task<(List<FlashcardSessionRow> Items, int TotalCount)> GetFlashcardRowsByIdWithPagingAsync(string sessionId, int page, int pageSize)
     {
         var query = context.FlashcardSessionRows
-            .AsNoTracking()
-            .Where(r => r.FlashcardOldSessionId == sessionId);
+            .Where(fsr => fsr.FlashcardOldSessionId == sessionId);
 
         var totalCount = await query.CountAsync();
 
         var items = await query
-            .OrderBy(f => f.Id)
+            .OrderBy(fsr => fsr.Id)
             .Skip((page - 1) * pageSize)
             .Take(pageSize)
             .ToListAsync();
@@ -26,28 +44,6 @@ public class FlashcardSessionRowRepository(AppDbContext context) : IFlashcardSes
         return (items, totalCount);
     }
 
-    public async Task CreateRangeAsync(IEnumerable<FlashcardSessionRow> rows)
-    {
+    public async Task AddRangeAsync(IEnumerable<FlashcardSessionRow> rows) =>
         await context.FlashcardSessionRows.AddRangeAsync(rows);
-    }
-
-    public async Task CreateAsync(FlashcardSessionRow entity) => await context.FlashcardSessionRows.AddAsync(entity);
-
-    public Task<FlashcardSessionRow?> GetByIdAsync(int id) =>
-        context.FlashcardSessionRows
-            .AsNoTracking()
-            .FirstOrDefaultAsync(fsr => fsr.Id == id);
-
-    public FlashcardSessionRow Update(FlashcardSessionRow entity)
-    {
-        context.FlashcardSessionRows.Update(entity);
-
-        return entity;
-    }
-
-    public void Delete(FlashcardSessionRow entity)
-    {
-        context.FlashcardSessionRows
-            .Remove(entity);
-    }
 }

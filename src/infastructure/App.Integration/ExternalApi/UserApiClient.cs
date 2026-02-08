@@ -15,40 +15,45 @@ public class UserApiClient(
     HttpClient httpClient,
     IOptions<UserApiOptions> options,
     ILogger<UserApiClient> logger
-    
+
     ) : IUserApiClient
 {
+
+    // FIELDS
     private readonly UserApiOptions _options = options.Value;
 
-    public async Task<UserInfoResponse?> GetUserInfoAsync(string userId, string accessToken, CancellationToken cancellationToken = default)
+    public async Task<UserDto?> GetProfileInfos(string userId, string accessToken, CancellationToken cancellationToken = default)
     {
-        logger.LogInformation("UserApiClient:GetUserInfoAsync -> FETCHING USER INFO FOR USER {UserId}", userId);
+        logger.LogInformation("UserApiClient:GetProfileInfos -> FETCHING USER INFO FOR USER {UserId}", userId);
 
         try
         {
+
+            // PREPARE REQUEST
             var requestUri = $"{_options.UserInfoEndpoint}/{userId}";
 
             using var request = new HttpRequestMessage(HttpMethod.Get, requestUri);
             request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
 
+            // SEND REQUEST
             var response = await httpClient.SendAsync(request, cancellationToken);
 
             if (!response.IsSuccessStatusCode)
             {
-                logger.LogWarning("UserApiClient:GetUserInfoAsync -> FAILED TO FETCH USER INFO. STATUS: {StatusCode}",
-                    response.StatusCode);
+                logger.LogWarning("UserApiClient:GetProfileInfos -> FAILED TO FETCH USER INFO. STATUS: {StatusCode}", response.StatusCode);
                 return null;
             }
 
-            var userInfo = await response.Content.ReadFromJsonAsync<UserInfoResponse>(cancellationToken);
+            // WRITE RESPONSE TO USER DTO
+            var userDto = await response.Content.ReadFromJsonAsync<UserDto>(cancellationToken);
 
-            logger.LogInformation("UserApiClient:GetUserInfoAsync -> SUCCESSFULLY FETCHED USER INFO");
+            logger.LogInformation("UserApiClient:GetProfileInfos -> SUCCESSFULLY FETCHED USER INFO");
 
-            return userInfo;
+            return userDto;
         }
         catch (Exception ex)
         {
-            logger.LogError(ex, "UserApiClient:GetUserInfoAsync -> ERROR FETCHING USER INFO FOR USER {UserId}", userId);
+            logger.LogError(ex, "UserApiClient:GetProfileInfos -> ERROR FETCHING USER INFO FOR USER {UserId}", userId);
             return null;
         }
     }

@@ -4,7 +4,7 @@ using App.Application.Common.CQRS;
 using App.Application.Contracts.Persistence;
 using App.Application.Contracts.Persistence.Repositories;
 using App.Domain.Entities.WritingEntities;
-using Microsoft.Extensions.Logging;
+using App.Domain.Exceptions;
 
 namespace App.Application.Features.WritingOldSessions.Commands.CreateWOS;
 
@@ -13,36 +13,23 @@ public class CreateWOSCommandHandler(
     IWritingOldSessionRepository writingOldSessionRepository,
     IWritingRepository writingRepository,
     IWritingBookRepository writingBookRepository,
-    IUnitOfWork unitOfWork,
-    ILogger<CreateWOSCommandHandler> logger
+    IUnitOfWork unitOfWork
 
-    ) : ICommandHandler<CreateWOSCommand, ServiceResult<string>>
+    ) : ICommandHandler<CreateWOSCommand, ServiceResult>
 {
-    public async Task<ServiceResult<string>> Handle(
+    public async Task<ServiceResult> Handle(
 
         CreateWOSCommand request,
         CancellationToken cancellationToken)
     {
 
-        logger.LogInformation("CreateWOSCommandHandler -> SAVING WRITING OLD SESSION WITH ID: {SessionId}", request.Request.Id);
+        // GET WRITING
+        var writing = await writingRepository.GetByIdAsync(request.Request.WritingId)
+            ?? throw new NotFoundException("WRITING NOT FOUND.");
 
-        var writing = await writingRepository.GetByIdAsync(request.Request.WritingId);
-
-        // FAST FAIL
-        if (writing is null)
-        {
-            logger.LogWarning("CreateWOSCommandHandler -> WRITING NOT FOUND WITH ID: {WritingId}", request.Request.WritingId);
-            return ServiceResult<string>.Fail("WRITING NOT FOUND.", HttpStatusCode.NotFound);
-        }
-
-        var writingBook = await writingBookRepository.GetByIdAsync(request.Request.WritingBookId);
-
-        // FAST FAIL
-        if (writingBook is null)
-        {
-            logger.LogWarning("CreateWOSCommandHandler -> WRITING BOOK NOT FOUND WITH ID: {WritingBookId}", request.Request.WritingBookId);
-            return ServiceResult<string>.Fail("WRITING BOOK NOT FOUND.", HttpStatusCode.NotFound);
-        }
+        // GET WRITING BOOK
+        var writingBook = await writingBookRepository.GetByIdAsync(request.Request.WritingBookId)
+            ?? throw new NotFoundException("WRITING BOOK NOT FOUND.");
 
         var session = new WritingOldSession
         {
@@ -55,11 +42,9 @@ public class CreateWOSCommandHandler(
             WritingBook = writingBook
         };
 
-        await writingOldSessionRepository.CreateAsync(session);
+        await writingOldSessionRepository.AddAsync(session);
         await unitOfWork.CommitAsync();
 
-        logger.LogInformation("CreateWOSCommandHandler -> SUCCESSFULLY SAVED WRITING OLD SESSION WITH ID: {SessionId}", session.Id);
-
-        return ServiceResult<string>.SuccessAsCreated(session.Id, $"/api/WritingOldSession/{session.Id}");
+        return ServiceResult.Success(HttpStatusCode.Created);
     }
 }

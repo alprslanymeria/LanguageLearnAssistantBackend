@@ -37,21 +37,6 @@ public class LocalFileStorageProvider(
             ? fileName
             : Path.Combine(folderPath.Trim('/').Replace('/', Path.DirectorySeparatorChar), fileName);
 
-    /// <summary>
-    /// VALIDATE FILE EXTENSION
-    /// </summary>
-    private void ValidateFile(string fileName)
-    {
-        if (_config.AllowedExtensions.Length <= 0)
-            return;
-
-        var extension = Path.GetExtension(fileName).ToLowerInvariant();
-
-        if (!_config.AllowedExtensions.Contains(extension, StringComparer.OrdinalIgnoreCase))
-        {
-            throw new InvalidOperationException($"File extension '{extension}' is not allowed.");
-        }
-    }
     #endregion
 
     // IMPLEMENTATION OF IStorageProvider
@@ -59,7 +44,6 @@ public class LocalFileStorageProvider(
 
     public async Task<string> UploadAsync(Stream stream, string fileName, string contentType, string? folderPath = null, CancellationToken cancellationToken = default)
     {
-        ValidateFile(fileName);
 
         var relativePath = BuildRelativePath(fileName, folderPath);
         var fullPath = GetFullPath(relativePath);

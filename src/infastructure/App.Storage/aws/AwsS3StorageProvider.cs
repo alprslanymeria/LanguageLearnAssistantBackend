@@ -14,7 +14,7 @@ public class AwsS3StorageProvider(
 
     IAwsS3ClientFactory clientFactory,
     IOptions<AwsS3StorageConfig> config
-    
+
     ) : IStorageProvider
 {
     // FIELDS
@@ -196,7 +196,8 @@ public class AwsS3StorageProvider(
 
     public void Dispose()
     {
-        if (_disposed) return;
+        if (_disposed)
+            return;
 
         _s3Client?.Dispose();
         _disposed = true;

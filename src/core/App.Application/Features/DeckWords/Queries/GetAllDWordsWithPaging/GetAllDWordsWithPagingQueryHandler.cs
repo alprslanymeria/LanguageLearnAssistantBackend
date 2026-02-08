@@ -4,7 +4,6 @@ using App.Application.Contracts.Persistence.Repositories;
 using App.Application.Features.DeckWords.Dtos;
 using App.Domain.Entities.FlashcardEntities;
 using MapsterMapper;
-using Microsoft.Extensions.Logging;
 
 namespace App.Application.Features.DeckWords.Queries.GetAllDWordsWithPaging;
 
@@ -14,33 +13,27 @@ namespace App.Application.Features.DeckWords.Queries.GetAllDWordsWithPaging;
 public class GetAllDWordsWithPagingQueryHandler(
 
     IDeckWordRepository deckWordRepository,
-    IMapper mapper,
-    ILogger<GetAllDWordsWithPagingQueryHandler> logger
+    IMapper mapper
 
     ) : IQueryHandler<GetAllDWordsWithPagingQuery, ServiceResult<PagedResult<DeckWordWithTotalCount>>>
 {
     public async Task<ServiceResult<PagedResult<DeckWordWithTotalCount>>> Handle(
 
-        GetAllDWordsWithPagingQuery request, 
+        GetAllDWordsWithPagingQuery request,
         CancellationToken cancellationToken)
     {
 
-        var categoryId = request.CategoryId;
-        var page = request.Request.Page;
-        var pageSize = request.Request.PageSize;
+        // GET ALL DECK WORDS WITH PAGING FROM REPOSITORY
+        var (items, totalCount) = await deckWordRepository.GetAllDWordsWithPagingAsync(request.UserId, request.Request.Page, request.Request.PageSize);
 
-        logger.LogInformation("GetAllDWordsWithPagingQueryHandler --> FETCHING DECK WORDS FOR CATEGORY: {CategoryId}, PAGE: {Page}, PAGE SIZE: {PageSize}", categoryId, page, pageSize);
-
-        var (items, totalCount) = await deckWordRepository.GetAllDWordsWithPagingAsync(categoryId, page, pageSize);
-
-        logger.LogInformation("GetAllDWordsWithPagingQueryHandler --> FETCHED {Count} DECK WORDS OUT OF {Total} FOR CATEGORY: {CategoryId}", items.Count, totalCount, categoryId);
-
+        // MAP DECK WORDS TO DECK WORD DTOS
         var mappedDtos = mapper.Map<List<DeckWord>, List<DeckWordDto>>(items);
-        var mappedResult = new DeckWordWithTotalCount
-        {
-            DeckWordDtos = mappedDtos,
-            TotalCount = totalCount
-        };
+
+        var mappedResult = new DeckWordWithTotalCount(
+
+            DeckWordDtos: mappedDtos,
+            TotalCount: totalCount
+            );
 
         var result = PagedResult<DeckWordWithTotalCount>.Create([mappedResult], request.Request, totalCount);
 

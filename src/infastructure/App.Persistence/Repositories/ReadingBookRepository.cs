@@ -1,5 +1,5 @@
 using App.Application.Contracts.Persistence.Repositories;
-using App.Domain.Entities.FlashcardEntities;
+using App.Application.Features.ReadingBooks.Dtos;
 using App.Domain.Entities.ReadingEntities;
 using Microsoft.EntityFrameworkCore;
 
@@ -10,19 +10,44 @@ namespace App.Persistence.Repositories;
 /// </summary>
 public class ReadingBookRepository(AppDbContext context) : IReadingBookRepository
 {
-    public async Task<ReadingBook?> GetReadingBookItemByIdAsync(int id)
+    public async Task AddAsync(ReadingBook entity) => await context.ReadingBooks.AddAsync(entity);
+
+    public async Task<ReadingBook?> GetByIdAsync(int id) =>
+        await context.ReadingBooks
+            .AsNoTracking()
+            .FirstOrDefaultAsync(rb => rb.Id == id);
+
+    public void Update(ReadingBook entity) => context.ReadingBooks.Update(entity);
+
+    public async Task RemoveAsync(int id)
+    {
+        var entity = await context.ReadingBooks.FindAsync(id);
+
+        if (entity is not null)
+        {
+            context.ReadingBooks.Remove(entity);
+        }
+    }
+
+    public async Task<ReadingBookWithLanguageId?> GetReadingBookItemByIdAsync(int id)
     {
         return await context.ReadingBooks
-            .AsNoTracking()
-            .Include(rb => rb.Reading)
-                .ThenInclude(r => r.LanguageId)
-            .FirstOrDefaultAsync(rb => rb.Id == id);
+            .Where(rb => rb.Id == id)
+            .Select(rb => new ReadingBookWithLanguageId(
+                rb.Id,
+                rb.ReadingId,
+                rb.Name,
+                rb.ImageUrl,
+                rb.LeftColor,
+                rb.SourceUrl,
+                rb.Reading.Language.Id
+            ))
+            .FirstOrDefaultAsync();
     }
 
     public async Task<(List<ReadingBook> Items, int TotalCount)> GetAllRBooksWithPagingAsync(string userId, int page, int pageSize)
     {
         var query = context.ReadingBooks
-            .AsNoTracking()
             .Where(rb => rb.Reading.UserId == userId);
 
         var totalCount = await query.CountAsync();
@@ -39,33 +64,11 @@ public class ReadingBookRepository(AppDbContext context) : IReadingBookRepositor
     public async Task<List<ReadingBook>> GetRBookCreateItemsAsync(string userId, int languageId, int practiceId)
     {
         return await context.ReadingBooks
+            .Where(rb =>
+                rb.Reading.UserId == userId &&
+                rb.Reading.LanguageId == languageId &&
+                rb.Reading.PracticeId == practiceId)
             .AsNoTracking()
-            .Where(rb => rb.Reading.UserId == userId &&
-                         rb.Reading.Language.Id == languageId &&
-                         rb.Reading.Practice.Id == practiceId)
             .ToListAsync();
-    }
-
-    public async Task CreateAsync(ReadingBook entity) => await context.ReadingBooks.AddAsync(entity);
-
-
-    public Task<ReadingBook?> GetByIdAsync(int id)
-    {
-        return context.ReadingBooks
-            .AsNoTracking()
-            .FirstOrDefaultAsync(rb => rb.Id == id);
-    }
-
-    public ReadingBook Update(ReadingBook entity)
-    {
-        context.ReadingBooks.Update(entity);
-
-        return entity;
-    }
-
-    public void Delete(ReadingBook entity)
-    {
-        context.ReadingBooks
-            .Remove(entity);
     }
 }

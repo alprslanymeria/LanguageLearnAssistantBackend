@@ -1,5 +1,5 @@
 using App.Application.Contracts.Persistence.Repositories;
-using App.Domain.Entities.FlashcardEntities;
+using App.Application.Features.WritingBooks.Dtos;
 using App.Domain.Entities.WritingEntities;
 using Microsoft.EntityFrameworkCore;
 
@@ -10,19 +10,44 @@ namespace App.Persistence.Repositories;
 /// </summary>
 public class WritingBookRepository(AppDbContext context) : IWritingBookRepository
 {
-    public async Task<WritingBook?> GetWritingBookItemByIdAsync(int id)
+    public async Task AddAsync(WritingBook entity) => await context.WritingBooks.AddAsync(entity);
+
+    public async Task<WritingBook?> GetByIdAsync(int id) =>
+        await context.WritingBooks
+            .AsNoTracking()
+            .FirstOrDefaultAsync(wb => wb.Id == id);
+
+    public void Update(WritingBook entity) => context.WritingBooks.Update(entity);
+
+    public async Task RemoveAsync(int id)
+    {
+        var entity = await context.WritingBooks.FindAsync(id);
+
+        if (entity is not null)
+        {
+            context.WritingBooks.Remove(entity);
+        }
+    }
+
+    public async Task<WritingBookWithLanguageId?> GetWritingBookItemByIdAsync(int id)
     {
         return await context.WritingBooks
-            .AsNoTracking()
-            .Include(wb => wb.Writing)
-            .ThenInclude(w => w.Language)
-            .FirstOrDefaultAsync(wb => wb.Id == id);
+            .Where(wb => wb.Id == id)
+            .Select(wb => new WritingBookWithLanguageId(
+                wb.Id,
+                wb.WritingId,
+                wb.Name,
+                wb.ImageUrl,
+                wb.LeftColor,
+                wb.SourceUrl,
+                wb.Writing.Language.Id
+            ))
+            .FirstOrDefaultAsync();
     }
 
     public async Task<(List<WritingBook> Items, int TotalCount)> GetAllWBooksWithPagingAsync(string userId, int page, int pageSize)
     {
         var query = context.WritingBooks
-            .AsNoTracking()
             .Where(wb => wb.Writing.UserId == userId);
 
         var totalCount = await query.CountAsync();
@@ -39,33 +64,11 @@ public class WritingBookRepository(AppDbContext context) : IWritingBookRepositor
     public async Task<List<WritingBook>> GetWBookCreateItemsAsync(string userId, int languageId, int practiceId)
     {
         return await context.WritingBooks
+            .Where(wb =>
+                wb.Writing.UserId == userId &&
+                wb.Writing.LanguageId == languageId &&
+                wb.Writing.PracticeId == practiceId)
             .AsNoTracking()
-            .Where(wb => wb.Writing.UserId == userId &&
-                         wb.Writing.Language.Id == languageId &&
-                         wb.Writing.Practice.Id == practiceId)
             .ToListAsync();
-    }
-
-    public async Task CreateAsync(WritingBook entity) => await context.WritingBooks.AddAsync(entity);
-
-
-    public Task<WritingBook?> GetByIdAsync(int id)
-    {
-        return context.WritingBooks
-            .AsNoTracking()
-            .FirstOrDefaultAsync(wb => wb.Id == id);
-    }
-
-    public WritingBook Update(WritingBook entity)
-    {
-        context.WritingBooks.Update(entity);
-
-        return entity;
-    }
-
-    public void Delete(WritingBook entity)
-    {
-        context.WritingBooks
-            .Remove(entity);
     }
 }

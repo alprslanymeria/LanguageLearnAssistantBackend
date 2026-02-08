@@ -19,7 +19,7 @@ public class FlashcardSessionRowController(ISender sender) : BaseController
     /// /api/v1.0/FlashcardSessionRow/{oldSessionId}?PageNumber=1&PageSize=10
     /// </summary>
     [HttpGet("{oldSessionId}")]
-    public async Task<IActionResult> GetFlashcardRowsByIdWithPaging([FromQuery] PagedRequest request, string oldSessionId) 
+    public async Task<IActionResult> GetFRowsByIdWithPaging([FromQuery] PagedRequest request, string oldSessionId)
         => ActionResultInstance(await sender.Send(new GetFRowsByIdWithPagingQuery(request, oldSessionId)));
 
 
@@ -28,7 +28,7 @@ public class FlashcardSessionRowController(ISender sender) : BaseController
     /// /api/v1.0/FlashcardSessionRow + JSON BODY
     /// </summary>
     [HttpPost]
-    public async Task<IActionResult> SaveFlashcardRows([FromBody] SaveFlashcardRowsRequest request) 
+    public async Task<IActionResult> CreateFRows([FromBody] SaveFlashcardRowsRequest request)
         => ActionResultInstance(await sender.Send(new CreateFRowsCommand(request)));
 
 }

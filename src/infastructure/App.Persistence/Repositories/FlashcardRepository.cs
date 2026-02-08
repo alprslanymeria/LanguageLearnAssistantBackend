@@ -9,34 +9,27 @@ namespace App.Persistence.Repositories;
 /// </summary>
 public class FlashcardRepository(AppDbContext context) : IFlashcardRepository
 {
+    public async Task AddAsync(Flashcard entity) => await context.Flashcards.AddAsync(entity);
 
-    public async Task<List<Flashcard>> GetByUserIdWithDetailsAsync(string userId)
-    {
-        return await context.Flashcards
-            .AsNoTracking()
-            .Include(f => f.Language)
-            .Include(f => f.Practice)
-            .Where(f => f.UserId == userId)
-            .ToListAsync();
-    }
-
-    public async Task CreateAsync(Flashcard entity) => await context.Flashcards.AddAsync(entity);
-
-    public Task<Flashcard?> GetByIdAsync(int id) =>
-        context.Flashcards
+    public async Task<Flashcard?> GetByIdAsync(int id) =>
+        await context.Flashcards
             .AsNoTracking()
             .FirstOrDefaultAsync(f => f.Id == id);
 
-    public Flashcard Update(Flashcard entity)
-    {
-        context.Flashcards.Update(entity);
+    public void Update(Flashcard entity) => context.Flashcards.Update(entity);
 
-        return entity;
+    public async Task RemoveAsync(int id)
+    {
+        var entity = await context.Flashcards.FindAsync(id);
+
+        if (entity is not null)
+        {
+            context.Flashcards.Remove(entity);
+        }
     }
 
-    public void Delete(Flashcard entity)
-    {
-        context.Flashcards
-            .Remove(entity);
-    }
+    public async Task<Flashcard?> GetByPracticeIdUserIdLanguageIdAsync(int practiceId, string userId, int languageId) =>
+        await context.Flashcards
+            .AsNoTracking()
+            .FirstOrDefaultAsync(f => f.PracticeId == practiceId && f.UserId == userId && f.LanguageId == languageId);
 }

@@ -9,9 +9,9 @@ public class GetAllDWordsWithPagingQueryValidator : AbstractValidator<GetAllDWor
 {
     public GetAllDWordsWithPagingQueryValidator()
     {
-        RuleFor(x => x.CategoryId)
-            .GreaterThan(0)
-            .WithMessage("CATEGORY ID MUST BE GREATER THAN 0");
+        RuleFor(x => x.UserId)
+            .NotEmpty()
+            .WithMessage("USER ID IS REQUIRED");
 
         RuleFor(x => x.Request.Page)
             .GreaterThan(0)

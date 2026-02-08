@@ -4,4 +4,4 @@ using App.Application.Features.FlashcardOldSessions.Dtos;
 
 namespace App.Application.Features.FlashcardOldSessions.Queries.GetFOSWithPaging;
 
-public record GetFOSWithPagingQuery(string UserId, PagedRequest Request) : IQuery<ServiceResult<PagedResult<FlashcardOldSessionWithTotalCount>>>;
+public record GetFOSWithPagingQuery(string UserId, string Language, PagedRequest Request) : IQuery<ServiceResult<PagedResult<FlashcardOldSessionWithTotalCount>>>;

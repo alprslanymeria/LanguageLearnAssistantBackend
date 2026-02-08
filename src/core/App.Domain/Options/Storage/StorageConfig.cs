@@ -11,10 +11,10 @@ public class StorageConfig
     /// <summary>
     /// THE TYPE OF STORAGE PROVIDER TO USE
     /// </summary>
-    public StorageType StorageType { get; set; } = StorageType.Local;
+    public StorageType StorageType { get; set; } = StorageType.GoogleCloud;
 
     /// <summary>
     /// WHETHER TO ENABLE STORAGE SERVICE
     /// </summary>
-    public bool Enabled { get; set; } = true;
+    public bool Enable { get; set; } = true;
 }

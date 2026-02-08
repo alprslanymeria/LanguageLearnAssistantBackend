@@ -7,4 +7,4 @@ namespace App.Application.Features.DeckWords.Queries.GetAllDWordsWithPaging;
 /// <summary>
 /// QUERY FOR RETRIEVING ALL DECK WORDS WITH PAGING FOR A SPECIFIC CATEGORY.
 /// </summary>
-public record GetAllDWordsWithPagingQuery(int CategoryId, PagedRequest Request) : IQuery<ServiceResult<PagedResult<DeckWordWithTotalCount>>>;
+public record GetAllDWordsWithPagingQuery(string UserId, PagedRequest Request) : IQuery<ServiceResult<PagedResult<DeckWordWithTotalCount>>>;

@@ -10,10 +10,10 @@ namespace App.Application.Features.FlashcardCategories.Queries.GetFCategoryCreat
 /// QUERY FOR RETRIEVING CREATE ITEMS FOR DROPDOWN SELECTIONS.
 /// </summary>
 public record GetFCategoryCreateItemsQuery(
-    string UserId,
-    string Language,
-    string Practice
-) : IQuery<ServiceResult<List<FlashcardCategoryDto>>>, ICacheableQuery
+        string UserId,
+        string Language,
+        string Practice
+    ) : IQuery<ServiceResult<List<FlashcardCategoryWithDeckWords>>>, ICacheableQuery
 {
     public ICacheKey GetCacheKey(ICacheKeyFactory keyFactory) => FlashcardCategoryCacheKeys.CreateItems(keyFactory, UserId, Language, Practice);
 }

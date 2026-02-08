@@ -8,10 +8,10 @@ namespace App.Integration.Translation;
 /// GOOGLE CLOUD TRANSLATE IMPLEMENTATION OF TRANSLATION PROVIDER.
 /// </summary>
 public class GoogleTranslationProvider(
-    
-    TranslationClient client, 
+
+    TranslationClient client,
     ILogger<GoogleTranslationProvider> logger
-    
+
     ) : ITranslationProvider
 
 {

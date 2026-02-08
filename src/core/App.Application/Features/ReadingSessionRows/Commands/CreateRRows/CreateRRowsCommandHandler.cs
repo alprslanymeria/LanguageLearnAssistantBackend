@@ -4,7 +4,7 @@ using App.Application.Common.CQRS;
 using App.Application.Contracts.Persistence;
 using App.Application.Contracts.Persistence.Repositories;
 using App.Domain.Entities.ReadingEntities;
-using Microsoft.Extensions.Logging;
+using App.Domain.Exceptions;
 
 namespace App.Application.Features.ReadingSessionRows.Commands.CreateRRows;
 
@@ -12,27 +12,19 @@ public class CreateRRowsCommandHandler(
 
     IReadingSessionRowRepository readingSessionRowRepository,
     IReadingOldSessionRepository readingOldSessionRepository,
-    IUnitOfWork unitOfWork,
-    ILogger<CreateRRowsCommandHandler> logger
+    IUnitOfWork unitOfWork
 
-    ) : ICommandHandler<CreateRRowsCommand, ServiceResult<int>>
+    ) : ICommandHandler<CreateRRowsCommand, ServiceResult>
 {
-    public async Task<ServiceResult<int>> Handle(
+    public async Task<ServiceResult> Handle(
 
         CreateRRowsCommand request,
         CancellationToken cancellationToken)
     {
 
-        logger.LogInformation("CreateRRowsCommandHandler -> SAVING {Count} READING ROWS FOR SESSION: {SessionId}", request.Request.Rows.Count, request.Request.ReadingOldSessionId);
-
-        var session = await readingOldSessionRepository.GetByIdAsync(request.Request.ReadingOldSessionId);
-
-        // FAST FAIL
-        if (session is null)
-        {
-            logger.LogWarning("CreateRRowsCommandHandler -> READING OLD SESSION NOT FOUND WITH ID: {SessionId}", request.Request.ReadingOldSessionId);
-            return ServiceResult<int>.Fail("READING OLD SESSION NOT FOUND", HttpStatusCode.NotFound);
-        }
+        // GET SESSION
+        var session = await readingOldSessionRepository.GetByIdAsync(request.Request.ReadingOldSessionId)
+            ?? throw new NotFoundException("READING OLD SESSION NOT FOUND");
 
         var rows = request.Request.Rows.Select(r => new ReadingSessionRow
         {
@@ -45,11 +37,9 @@ public class CreateRRowsCommandHandler(
 
         }).ToList();
 
-        await readingSessionRowRepository.CreateRangeAsync(rows);
+        await readingSessionRowRepository.AddRangeAsync(rows);
         await unitOfWork.CommitAsync();
 
-        logger.LogInformation("CreateRRowsCommandHandler -> SUCCESSFULLY SAVED {Count} READING ROWS FOR SESSION: {SessionId}", rows.Count, request.Request.ReadingOldSessionId);
-
-        return ServiceResult<int>.Success(rows.Count, HttpStatusCode.Created);
+        return ServiceResult.Success(HttpStatusCode.Created);
     }
 }

@@ -4,4 +4,4 @@ using App.Application.Features.ListeningOldSessions.Dtos;
 
 namespace App.Application.Features.ListeningOldSessions.Commands.CreateLOS;
 
-public record CreateLOSCommand(SaveListeningOldSessionRequest Request) : ICommand<ServiceResult<string>>;
+public record CreateLOSCommand(SaveListeningOldSessionRequest Request) : ICommand<ServiceResult>;

@@ -9,7 +9,10 @@ namespace App.Application.Features.WritingBooks.Queries.GetWBookCreateItems;
 /// <summary>
 /// QUERY FOR RETRIEVING CREATE ITEMS FOR DROPDOWN SELECTIONS.
 /// </summary>
-public record GetWBookCreateItemsQuery(string UserId, string Language, string Practice) : IQuery<ServiceResult<List<WritingBookDto>>>, ICacheableQuery
+public record GetWBookCreateItemsQuery(
+    string UserId,
+    string Language,
+    string Practice) : IQuery<ServiceResult<List<WritingBookDto>>>, ICacheableQuery
 {
     public ICacheKey GetCacheKey(ICacheKeyFactory keyFactory) => WritingBookCacheKeys.CreateItems(keyFactory, UserId, Language, Practice);
 }

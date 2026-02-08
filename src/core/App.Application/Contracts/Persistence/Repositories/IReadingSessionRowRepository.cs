@@ -2,25 +2,12 @@ using App.Domain.Entities.ReadingEntities;
 
 namespace App.Application.Contracts.Persistence.Repositories;
 
-/// <summary>
-/// REPOSITORY INTERFACE FOR READING SESSION ROW ENTITY.
-/// </summary>
 public interface IReadingSessionRowRepository
 {
     /// <summary>
-    /// GETS ALL READING SESSION ROWS FOR A SESSION.
-    /// </summary>
-    Task<(List<ReadingSessionRow> items, int totalCount)> GetReadingRowsByIdWithPagingAsync(string sessionId, int page, int pageSize);
-
-    /// <summary>
-    /// CREATES MULTIPLE READING SESSION ROWS.
-    /// </summary>
-    Task CreateRangeAsync(IEnumerable<ReadingSessionRow> rows);
-
-    /// <summary>
     /// ASYNCHRONOUSLY CREATES A NEW ENTITY IN THE UNDERLYING DATA STORE.
     /// </summary>
-    Task CreateAsync(ReadingSessionRow entity);
+    Task AddAsync(ReadingSessionRow entity);
 
     /// <summary>
     /// ASYNCHRONOUSLY RETRIEVES AN ENTITY BY ITS UNIQUE IDENTIFIER.
@@ -28,12 +15,22 @@ public interface IReadingSessionRowRepository
     Task<ReadingSessionRow?> GetByIdAsync(int id);
 
     /// <summary>
-    /// UPDATES THE READING SESSION ROW IN THE UNDERLYING DATA STORE AND RETURNS THE UPDATED ENTITY.
+    /// UPDATES THE READING SESSION ROW IN THE UNDERLYING DATA STORE.
     /// </summary>
-    ReadingSessionRow Update(ReadingSessionRow entity);
+    void Update(ReadingSessionRow entity);
 
     /// <summary>
-    /// REMOVES THE READING SESSION ROW FROM THE UNDERLYING DATA STORE.
+    /// ASYNCHRONOUSLY REMOVES THE READING SESSION ROW FROM THE UNDERLYING DATA STORE.
     /// </summary>
-    void Delete(ReadingSessionRow entity);
+    Task RemoveAsync(int id);
+
+    /// <summary>
+    /// GETS ALL READING SESSION ROWS FOR A SESSION.
+    /// </summary>
+    Task<(List<ReadingSessionRow> Items, int TotalCount)> GetReadingRowsByIdWithPagingAsync(string sessionId, int page, int pageSize);
+
+    /// <summary>
+    /// CREATES MULTIPLE READING SESSION ROWS.
+    /// </summary>
+    Task AddRangeAsync(IEnumerable<ReadingSessionRow> rows);
 }

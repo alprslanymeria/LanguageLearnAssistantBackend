@@ -9,16 +9,34 @@ namespace App.Persistence.Repositories;
 /// </summary>
 public class ListeningSessionRowRepository(AppDbContext context) : IListeningSessionRowRepository
 {
-    public async Task<(List<ListeningSessionRow> items, int totalCount)> GetListeningRowsByIdWithPagingAsync(string sessionId, int page, int pageSize)
+    public async Task AddAsync(ListeningSessionRow entity) => await context.ListeningSessionRows.AddAsync(entity);
+
+    public async Task<ListeningSessionRow?> GetByIdAsync(int id) =>
+        await context.ListeningSessionRows
+            .AsNoTracking()
+            .FirstOrDefaultAsync(lsr => lsr.Id == id);
+
+    public void Update(ListeningSessionRow entity) => context.ListeningSessionRows.Update(entity);
+
+    public async Task RemoveAsync(int id)
+    {
+        var entity = await context.ListeningSessionRows.FindAsync(id);
+
+        if (entity is not null)
+        {
+            context.ListeningSessionRows.Remove(entity);
+        }
+    }
+
+    public async Task<(List<ListeningSessionRow> Items, int TotalCount)> GetListeningRowsByIdWithPagingAsync(string sessionId, int page, int pageSize)
     {
         var query = context.ListeningSessionRows
-            .AsNoTracking()
-            .Where(l =>l.ListeningOldSessionId == sessionId);
+            .Where(lsr => lsr.ListeningOldSessionId == sessionId);
 
         var totalCount = await query.CountAsync();
 
         var items = await query
-            .OrderBy(l => l.Id)
+            .OrderBy(lsr => lsr.Id)
             .Skip((page - 1) * pageSize)
             .Take(pageSize)
             .ToListAsync();
@@ -26,28 +44,6 @@ public class ListeningSessionRowRepository(AppDbContext context) : IListeningSes
         return (items, totalCount);
     }
 
-    public async Task CreateRangeAsync(IEnumerable<ListeningSessionRow> rows)
-    {
+    public async Task AddRangeAsync(IEnumerable<ListeningSessionRow> rows) =>
         await context.ListeningSessionRows.AddRangeAsync(rows);
-    }
-
-    public async Task CreateAsync(ListeningSessionRow entity) => await context.ListeningSessionRows.AddAsync(entity);
-
-    public Task<ListeningSessionRow?> GetByIdAsync(int id) =>
-        context.ListeningSessionRows
-            .AsNoTracking()
-            .FirstOrDefaultAsync(lsr => lsr.Id == id);
-
-    public ListeningSessionRow Update(ListeningSessionRow entity)
-    {
-        context.ListeningSessionRows.Update(entity);
-
-        return entity;
-    }
-
-    public void Delete(ListeningSessionRow entity)
-    {
-        context.ListeningSessionRows
-            .Remove(entity);
-    }
 }

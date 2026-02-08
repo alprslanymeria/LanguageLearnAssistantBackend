@@ -1,4 +1,4 @@
-﻿namespace App.Domain.Options.Storage;
+namespace App.Domain.Options.Storage;
 
 /// <summary>
 /// Defines the available storage provider types

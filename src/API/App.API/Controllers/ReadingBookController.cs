@@ -1,5 +1,4 @@
 using System.Security.Claims;
-using App.API.Adapters;
 using App.Application.Common;
 using App.Application.Features.ReadingBooks.Commands.CreateReadingBook;
 using App.Application.Features.ReadingBooks.Commands.DeleteRBookItemById;
@@ -26,8 +25,8 @@ public class ReadingBookController(ISender sender) : BaseController
     /// RETRIEVES A READING BOOK BY ID.
     /// /api/v1.0/ReadingBook/{id}
     /// </summary>
-    [HttpGet("{id:int:min(1)}")]
-    public async Task<IActionResult> GetReadingBookItemById(int id) 
+    [HttpGet("{id:int}")]
+    public async Task<IActionResult> GetReadingBookById(int id)
         => ActionResultInstance(await sender.Send(new GetReadingBookByIdQuery(id)));
 
     /// <summary>
@@ -35,7 +34,7 @@ public class ReadingBookController(ISender sender) : BaseController
     /// /api/v1.0/ReadingBook?Page=1&PageSize=10
     /// </summary>
     [HttpGet]
-    public async Task<IActionResult> GetAllRBooksWithPaging([FromQuery] PagedRequest request) 
+    public async Task<IActionResult> GetAllRBooksWithPaging([FromQuery] PagedRequest request)
         => ActionResultInstance(await sender.Send(new GetAllRBooksWithPagingQuery(UserId, request)));
 
     /// <summary>
@@ -43,7 +42,7 @@ public class ReadingBookController(ISender sender) : BaseController
     /// /api/v1.0/ReadingBook/create-items?language=en&practice=reading
     /// </summary>
     [HttpGet("create-items")]
-    public async Task<IActionResult> GetRBookCreateItems([FromQuery] string language, string practice) 
+    public async Task<IActionResult> GetRBookCreateItems([FromQuery] string language, [FromQuery] string practice)
         => ActionResultInstance(await sender.Send(new GetRBookCreateItemsQuery(UserId, language, practice)));
 
     /// <summary>
@@ -51,7 +50,7 @@ public class ReadingBookController(ISender sender) : BaseController
     /// /api/v1.0/ReadingBook/{id}
     /// </summary>
     [HttpDelete("{id:int}")]
-    public async Task<IActionResult> DeleteRBookItemById(int id) 
+    public async Task<IActionResult> DeleteRBookItemById(int id)
         => ActionResultInstance(await sender.Send(new DeleteRBookItemByIdCommand(id)));
 
     /// <summary>
@@ -59,43 +58,14 @@ public class ReadingBookController(ISender sender) : BaseController
     /// /api/v1.0/ReadingBook + FORM DATA
     /// </summary>
     [HttpPost]
-    [Consumes("multipart/form-data")]
-    public async Task<IActionResult> ReadingBookAdd(
-
-        [FromForm] CreateReadingBookRequest request,
-        [FromForm] IFormFile imageFile,
-        [FromForm] IFormFile sourceFile)
-    {
-        var requestWithExtra = request with
-        {
-            UserId = UserId,
-            ImageFile = new FormFileUploadAdapter(imageFile),
-            SourceFile = new FormFileUploadAdapter(sourceFile)
-        };
-
-        return ActionResultInstance(await sender.Send(new CreateReadingBookCommand(requestWithExtra)));
-    }
+    public async Task<IActionResult> CreateReadingBook([FromBody] CreateReadingBookRequest request)
+        => ActionResultInstance(await sender.Send(new CreateReadingBookCommand(request)));
 
     /// <summary>
     /// UPDATES AN EXISTING READING BOOK WITH OPTIONAL FILE UPLOAD.
     /// /api/v1.0/ReadingBook + FORM DATA
     /// </summary>
     [HttpPut]
-    [Consumes("multipart/form-data")]
-    public async Task<IActionResult> ReadingBookUpdate(
-
-        [FromForm] UpdateReadingBookRequest request,
-        [FromForm] IFormFile imageFile,
-        [FromForm] IFormFile sourceFile)
-    {
-
-        var requestWithExtra = request with
-        {
-            UserId = UserId,
-            ImageFile = new FormFileUploadAdapter(imageFile),
-            SourceFile = new FormFileUploadAdapter(sourceFile)
-        };
-
-        return ActionResultInstance(await sender.Send(new UpdateReadingBookCommand(requestWithExtra)));
-    }
+    public async Task<IActionResult> UpdateReadingBook([FromBody] UpdateReadingBookRequest request)
+        => ActionResultInstance(await sender.Send(new UpdateReadingBookCommand(request)));
 }

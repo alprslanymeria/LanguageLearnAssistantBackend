@@ -1,45 +1,46 @@
 using App.Domain.Entities;
-using App.Domain.Entities.FlashcardEntities;
 
 namespace App.Application.Contracts.Persistence.Repositories;
 
-/// <summary>
-/// REPOSITORY INTERFACE FOR PRACTICE ENTITY.
-/// </summary>
 public interface IPracticeRepository
 {
     /// <summary>
-    /// GETS PRACTICES BY THE SPECIFIED LANGUAGE.
-    /// </summary>
-    Task<List<Practice>> GetPracticesByLanguageAsync(string language);
-
-    /// <summary>
-    /// CHECKS IF A LANGUAGE EXISTS BY NAME AND LANGUAGE ID.
-    /// </summary>
-    Task<Practice?> ExistsByLanguageIdAsync(int languageId);
-
-    /// <summary>
-    /// CHECKS IF A LANGUAGE EXISTS BY NAME AND LANGUAGE ID.
-    /// </summary>
-    Task<Practice?> ExistsByNameAndLanguageIdAsync(string name, int languageId);
-
-    /// <summary>
     /// ASYNCHRONOUSLY CREATES A NEW ENTITY IN THE UNDERLYING DATA STORE.
     /// </summary>
-    Task CreateAsync(Practice entity);
+    Task AddAsync(Practice entity);
 
     /// <summary>
     /// ASYNCHRONOUSLY RETRIEVES AN ENTITY BY ITS UNIQUE IDENTIFIER.
     /// </summary>
     Task<Practice?> GetByIdAsync(int id);
-        
-    /// <summary>
-    /// UPDATES THE PRACTICE IN THE UNDERLYING DATA STORE AND RETURNS THE UPDATED ENTITY.
-    /// </summary>
-    Practice Update(Practice entity);
 
     /// <summary>
-    /// REMOVES THE PRACTICE FROM THE UNDERLYING DATA STORE.
+    /// UPDATES THE PRACTICE IN THE UNDERLYING DATA STORE.
     /// </summary>
-    void Delete(Practice entity);
+    void Update(Practice entity);
+
+    /// <summary>
+    /// ASYNCHRONOUSLY REMOVES THE PRACTICE FROM THE UNDERLYING DATA STORE.
+    /// </summary>
+    Task RemoveAsync(int id);
+
+    /// <summary>
+    /// GETS PRACTICES BY THE SPECIFIED LANGUAGE NAME.
+    /// </summary>
+    Task<List<Practice>> GetPracticesByLanguageAsync(string language);
+
+    /// <summary>
+    /// GETS A PRACTICE BY LANGUAGE ID AND NAME.
+    /// </summary>
+    Task<Practice?> GetPracticeByLanguageIdAndNameAsync(int languageId, string name);
+
+    /// <summary>
+    /// CHECKS IF A PRACTICE EXISTS BY LANGUAGE ID.
+    /// </summary>
+    Task<Practice?> ExistsByLanguageIdAsync(int languageId);
+
+    /// <summary>
+    /// CHECKS IF A PRACTICE EXISTS BY NAME AND LANGUAGE ID.
+    /// </summary>
+    Task<Practice?> ExistsByNameAndLanguageIdAsync(string name, int languageId);
 }

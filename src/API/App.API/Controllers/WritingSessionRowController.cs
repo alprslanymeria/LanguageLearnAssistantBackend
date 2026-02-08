@@ -19,7 +19,7 @@ public class WritingSessionRowController(ISender sender) : BaseController
     /// /api/v1.0/WritingSessionRow/{oldSessionId}?PageNumber=1&PageSize=10
     /// </summary>
     [HttpGet("{oldSessionId}")]
-    public async Task<IActionResult> GetWritingRowsByIWithPaging([FromQuery] PagedRequest request, string oldSessionId) 
+    public async Task<IActionResult> GetWRowsByIdWithPaging([FromQuery] PagedRequest request, string oldSessionId)
         => ActionResultInstance(await sender.Send(new GetWRowsByIdWithPagingQuery(request, oldSessionId)));
 
 
@@ -28,7 +28,7 @@ public class WritingSessionRowController(ISender sender) : BaseController
     /// /api/v1.0/WritingSessionRow + JSON BODY
     /// </summary>
     [HttpPost]
-    public async Task<IActionResult> SaveWritingRows([FromBody] SaveWritingRowsRequest request) 
+    public async Task<IActionResult> CreateWRows([FromBody] SaveWritingRowsRequest request)
         => ActionResultInstance(await sender.Send(new CreateWRowsCommand(request)));
 
 }

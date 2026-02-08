@@ -14,15 +14,12 @@ public class CreateReadingBookCommandValidator : AbstractValidator<CreateReading
 
     public CreateReadingBookCommandValidator()
     {
-        RuleFor(x => x.Request.ReadingId)
-            .GreaterThan(0)
-            .WithMessage("READING ID MUST BE GREATER THAN 0");
 
-        RuleFor(x => x.Request.Name)
+        RuleFor(x => x.Request.BookName)
             .NotEmpty()
-            .WithMessage("NAME IS REQUIRED")
+            .WithMessage("BOOK NAME IS REQUIRED")
             .MaximumLength(200)
-            .WithMessage("NAME MUST NOT EXCEED 200 CHARACTERS");
+            .WithMessage("BOOK NAME MUST NOT EXCEED 200 CHARACTERS");
 
         RuleFor(x => x.Request.UserId)
             .NotEmpty()

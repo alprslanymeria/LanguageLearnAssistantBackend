@@ -7,4 +7,4 @@ namespace App.Application.Features.ReadingOldSessions.Queries.GetROSWithPaging;
 /// <summary>
 /// QUERY FOR RETRIEVING ALL READING OLD SESSIONS WITH PAGING.
 /// </summary>
-public record GetROSWithPagingQuery(string UserId, PagedRequest Request) : IQuery<ServiceResult<PagedResult<ReadingOldSessionWithTotalCount>>>;
+public record GetROSWithPagingQuery(string UserId, string Language, PagedRequest Request) : IQuery<ServiceResult<PagedResult<ReadingOldSessionWithTotalCount>>>;

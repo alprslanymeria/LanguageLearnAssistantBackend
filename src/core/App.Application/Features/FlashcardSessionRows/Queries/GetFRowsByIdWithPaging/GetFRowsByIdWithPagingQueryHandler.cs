@@ -1,11 +1,10 @@
-using System.Net;
 using App.Application.Common;
 using App.Application.Common.CQRS;
 using App.Application.Contracts.Persistence.Repositories;
 using App.Application.Features.FlashcardSessionRows.Dtos;
 using App.Domain.Entities.FlashcardEntities;
+using App.Domain.Exceptions;
 using MapsterMapper;
-using Microsoft.Extensions.Logging;
 
 namespace App.Application.Features.FlashcardSessionRows.Queries.GetFRowsByIdWithPaging;
 
@@ -13,8 +12,8 @@ public class GetFRowsByIdWithPagingQueryHandler(
 
     IFlashcardSessionRowRepository flashcardSessionRowRepository,
     IFlashcardOldSessionRepository flashcardOldSessionRepository,
-    IMapper mapper,
-    ILogger<GetFRowsByIdWithPagingQueryHandler> logger
+    IFlashcardCategoryRepository flashcardCategoryRepository,
+    IMapper mapper
 
     ) : IQueryHandler<GetFRowsByIdWithPagingQuery, ServiceResult<FlashcardRowsResponse>>
 {
@@ -25,31 +24,23 @@ public class GetFRowsByIdWithPagingQueryHandler(
     {
 
         // FIND OLD SESSION
-        var oldSession = await flashcardOldSessionRepository.GetByIdAsync(request.OldSessionId);
-
-        if (oldSession is null)
-        {
-            logger.LogWarning("GetFRowsByIdWithPagingHandler -> FLASHCARD OLD SESSION NOT FOUND WITH ID: {SessionId}", request.OldSessionId);
-            return ServiceResult<FlashcardRowsResponse>.Fail("FLASHCARD OLD SESSION NOT FOUND", HttpStatusCode.NotFound);
-        }
+        var oldSession = await flashcardOldSessionRepository.GetByIdAsync(request.OldSessionId)
+            ?? throw new NotFoundException("FLASHCARD OLD SESSION NOT FOUND");
 
         // GET ROWS
-        logger.LogInformation("GetFRowsByIdWithPagingHandler -> FETCHING FLASHCARD ROWS FOR OLD SESSION: {SessionId}", request.OldSessionId);
-
         var rows = await flashcardSessionRowRepository.GetFlashcardRowsByIdWithPagingAsync(request.OldSessionId, request.Request.Page, request.Request.PageSize);
 
         // GET FLASHCARD CATEGORY ITEM
-        var flashcardCategoryItem = oldSession.FlashcardCategory;
+        var flashcardCategoryItem = await flashcardCategoryRepository.GetByIdWithDeckWordsAsync(oldSession.FlashcardCategoryId);
 
-        logger.LogInformation("GetFRowsByIdWithPagingHandler -> SUCCESSFULLY FETCHED {Count} FLASHCARD ROWS FOR SESSION: {SessionId}", rows.totalCount, request.OldSessionId);
+        var result = mapper.Map<List<FlashcardSessionRow>, List<FlashcardSessionRowDto>>(rows.Items);
 
-        var result = mapper.Map<List<FlashcardSessionRow>, List<FlashcardSessionRowDto>>(rows.items);
-        var response = new FlashcardRowsResponse
-        {
-            Item = flashcardCategoryItem,
-            Contents = result,
-            Total = rows.totalCount
-        };
+        var response = new FlashcardRowsResponse(
+
+            Item: flashcardCategoryItem!,
+            Contents: result,
+            Total: rows.TotalCount
+            );
 
         return ServiceResult<FlashcardRowsResponse>.Success(response);
     }

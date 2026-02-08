@@ -1,5 +1,4 @@
 using System.Security.Claims;
-using App.API.Adapters;
 using App.Application.Common;
 using App.Application.Features.WritingBooks.Commands.CreateWritingBook;
 using App.Application.Features.WritingBooks.Commands.DeleteWBookItemById;
@@ -27,7 +26,7 @@ public class WritingBookController(ISender sender) : BaseController
     /// /api/v1.0/WritingBook/{id}
     /// </summary>
     [HttpGet("{id:int}")]
-    public async Task<IActionResult> GetWritingBookItemById(int id) 
+    public async Task<IActionResult> GetWritingBookById(int id)
         => ActionResultInstance(await sender.Send(new GetWritingBookByIdQuery(id)));
 
     /// <summary>
@@ -43,7 +42,7 @@ public class WritingBookController(ISender sender) : BaseController
     /// /api/v1.0/WritingBook/create-items?language=en&practice=writing
     /// </summary>
     [HttpGet("create-items")]
-    public async Task<IActionResult> GetWBookCreateItems([FromQuery] string language, string practice)
+    public async Task<IActionResult> GetWBookCreateItems([FromQuery] string language, [FromQuery] string practice)
         => ActionResultInstance(await sender.Send(new GetWBookCreateItemsQuery(UserId, language, practice)));
 
     /// <summary>
@@ -59,44 +58,14 @@ public class WritingBookController(ISender sender) : BaseController
     /// /api/v1.0/WritingBook + FORM DATA
     /// </summary>
     [HttpPost]
-    [Consumes("multipart/form-data")]
-    public async Task<IActionResult> WritingBookAdd(
-
-        [FromForm] CreateWritingBookRequest request,
-        [FromForm] IFormFile imageFile,
-        [FromForm] IFormFile sourceFile)
-    {
-
-        var requestWithExtra = request with
-        {
-            UserId = UserId,
-            ImageFile = new FormFileUploadAdapter(imageFile),
-            SourceFile = new FormFileUploadAdapter(sourceFile)
-        };
-
-        return ActionResultInstance(await sender.Send(new CreateWritingBookCommand(requestWithExtra)));
-    }
+    public async Task<IActionResult> CreateWritingBook([FromBody] CreateWritingBookRequest request)
+        => ActionResultInstance(await sender.Send(new CreateWritingBookCommand(request)));
 
     /// <summary>
     /// UPDATES AN EXISTING WRITING BOOK WITH OPTIONAL FILE UPLOAD.
     /// /api/v1.0/WritingBook + FORM DATA
     /// </summary>
     [HttpPut]
-    [Consumes("multipart/form-data")]
-    public async Task<IActionResult> WritingBookUpdate(
-
-        [FromForm] UpdateWritingBookRequest request,
-        [FromForm] IFormFile imageFile,
-        [FromForm] IFormFile sourceFile)
-    {
-
-        var requestWithExtra = request with
-        {
-            UserId = UserId,
-            ImageFile = new FormFileUploadAdapter(imageFile),
-            SourceFile = new FormFileUploadAdapter(sourceFile)
-        };      
-
-        return ActionResultInstance(await sender.Send(new UpdateWritingBookCommand(requestWithExtra)));
-    }
+    public async Task<IActionResult> UpdateWritingBook([FromBody] UpdateWritingBookRequest request)
+        => ActionResultInstance(await sender.Send(new UpdateWritingBookCommand(request)));
 }

@@ -9,16 +9,34 @@ namespace App.Persistence.Repositories;
 /// </summary>
 public class WritingSessionRowRepository(AppDbContext context) : IWritingSessionRowRepository
 {
-    public async Task<(List<WritingSessionRow> items, int totalCount)> GetWritingRowsByIdWithPagingAsync(string sessionId, int page, int pageSize)
+    public async Task AddAsync(WritingSessionRow entity) => await context.WritingSessionRows.AddAsync(entity);
+
+    public async Task<WritingSessionRow?> GetByIdAsync(int id) =>
+        await context.WritingSessionRows
+            .AsNoTracking()
+            .FirstOrDefaultAsync(wsr => wsr.Id == id);
+
+    public void Update(WritingSessionRow entity) => context.WritingSessionRows.Update(entity);
+
+    public async Task RemoveAsync(int id)
+    {
+        var entity = await context.WritingSessionRows.FindAsync(id);
+
+        if (entity is not null)
+        {
+            context.WritingSessionRows.Remove(entity);
+        }
+    }
+
+    public async Task<(List<WritingSessionRow> Items, int TotalCount)> GetWritingRowsByIdWithPagingAsync(string sessionId, int page, int pageSize)
     {
         var query = context.WritingSessionRows
-            .AsNoTracking()
-            .Where(r => r.WritingOldSessionId == sessionId);
+            .Where(wsr => wsr.WritingOldSessionId == sessionId);
 
         var totalCount = await query.CountAsync();
 
         var items = await query
-            .OrderBy(w => w.Id)
+            .OrderBy(wsr => wsr.Id)
             .Skip((page - 1) * pageSize)
             .Take(pageSize)
             .ToListAsync();
@@ -26,28 +44,6 @@ public class WritingSessionRowRepository(AppDbContext context) : IWritingSession
         return (items, totalCount);
     }
 
-    public async Task CreateRangeAsync(IEnumerable<WritingSessionRow> rows)
-    {
+    public async Task AddRangeAsync(IEnumerable<WritingSessionRow> rows) =>
         await context.WritingSessionRows.AddRangeAsync(rows);
-    }
-
-    public async Task CreateAsync(WritingSessionRow entity) => await context.WritingSessionRows.AddAsync(entity);
-
-    public Task<WritingSessionRow?> GetByIdAsync(int id) =>
-        context.WritingSessionRows
-            .AsNoTracking()
-            .FirstOrDefaultAsync(wsr => wsr.Id == id);
-
-    public WritingSessionRow Update(WritingSessionRow entity)
-    {
-        context.WritingSessionRows.Update(entity);
-
-        return entity;
-    }
-
-    public void Delete(WritingSessionRow entity)
-    {
-        context.WritingSessionRows
-            .Remove(entity);
-    }
 }

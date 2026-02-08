@@ -7,4 +7,4 @@ namespace App.Application.Features.DeckWords.Commands.UpdateDeckWord;
 /// <summary>
 /// COMMAND FOR UPDATING AN EXISTING DECK WORD.
 /// </summary>
-public record UpdateDeckWordCommand(UpdateDeckWordRequest Request) : ICommand<ServiceResult<int>>;
+public record UpdateDeckWordCommand(UpdateDeckWordRequest Request) : ICommand<ServiceResult>;

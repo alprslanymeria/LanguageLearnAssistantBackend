@@ -1,4 +1,6 @@
 using App.Application.Contracts.Persistence.Repositories;
+using App.Application.Features.DeckWords.Dtos;
+using App.Application.Features.FlashcardCategories.Dtos;
 using App.Domain.Entities.FlashcardEntities;
 using Microsoft.EntityFrameworkCore;
 
@@ -9,19 +11,61 @@ namespace App.Persistence.Repositories;
 /// </summary>
 public class FlashcardCategoryRepository(AppDbContext context) : IFlashcardCategoryRepository
 {
-    public async Task<FlashcardCategory?> GetFlashcardCategoryItemByIdAsync(int id)
+    public async Task AddAsync(FlashcardCategory entity) => await context.FlashcardCategories.AddAsync(entity);
+
+    public async Task<FlashcardCategory?> GetByIdAsync(int id) =>
+        await context.FlashcardCategories
+            .AsNoTracking()
+            .FirstOrDefaultAsync(fc => fc.Id == id);
+
+    public void Update(FlashcardCategory entity) => context.FlashcardCategories.Update(entity);
+
+    public async Task RemoveAsync(int id)
+    {
+        var entity = await context.FlashcardCategories.FindAsync(id);
+
+        if (entity is not null)
+        {
+            context.FlashcardCategories.Remove(entity);
+        }
+    }
+
+    public async Task<FlashcardCategoryWithLanguageId?> GetFlashcardCategoryItemByIdAsync(int id)
     {
         return await context.FlashcardCategories
-            .AsNoTracking()
-            .Include(fc => fc.Flashcard)
-            .ThenInclude(f => f.LanguageId)
-            .FirstOrDefaultAsync(fc => fc.Id == id);
+            .Where(fc => fc.Id == id)
+            .Select(fc => new FlashcardCategoryWithLanguageId(
+                fc.Id,
+                fc.FlashcardId,
+                fc.Name,
+                fc.Flashcard.Language.Id
+            ))
+            .FirstOrDefaultAsync();
+    }
+
+    public async Task<(List<FlashcardCategoryWithLanguageId> Items, int TotalCount)> GetAllFCategoriesAsync(string userId)
+    {
+        var query = context.FlashcardCategories
+            .Where(fc => fc.Flashcard.UserId == userId);
+
+        var totalCount = await query.CountAsync();
+
+        var items = await query
+            .OrderByDescending(fc => fc.Id)
+            .Select(fc => new FlashcardCategoryWithLanguageId(
+                fc.Id,
+                fc.FlashcardId,
+                fc.Name,
+                fc.Flashcard.Language.Id
+            ))
+            .ToListAsync();
+
+        return (items, totalCount);
     }
 
     public async Task<(List<FlashcardCategory> Items, int TotalCount)> GetAllFCategoriesWithPagingAsync(string userId, int page, int pageSize)
     {
         var query = context.FlashcardCategories
-            .AsNoTracking()
             .Where(fc => fc.Flashcard.UserId == userId);
 
         var totalCount = await query.CountAsync();
@@ -35,35 +79,47 @@ public class FlashcardCategoryRepository(AppDbContext context) : IFlashcardCateg
         return (items, totalCount);
     }
 
-    public async Task<List<FlashcardCategory>> GetFCategoryCreateItemsAsync(string userId, int languageId, int practiceId)
+    public async Task<List<FlashcardCategoryWithDeckWords>> GetFCategoryCreateItemsAsync(string userId, int languageId, int practiceId)
     {
         return await context.FlashcardCategories
-            .AsNoTracking()
-            .Where(fc => fc.Flashcard.UserId == userId &&
-                         fc.Flashcard.Language.Id == languageId &&
-                         fc.Flashcard.Practice.Id == practiceId)
+            .Where(fc =>
+                fc.Flashcard.UserId == userId &&
+                fc.Flashcard.LanguageId == languageId &&
+                fc.Flashcard.PracticeId == practiceId &&
+                fc.DeckWords.Any())
+            .Select(fc => new FlashcardCategoryWithDeckWords(
+                fc.Id,
+                fc.FlashcardId,
+                fc.Name,
+                fc.DeckWords
+                    .Select(dw => new DeckWordDto(
+                        dw.Id,
+                        dw.FlashcardCategoryId,
+                        dw.Question,
+                        dw.Answer
+                    ))
+                    .ToList()
+            ))
             .ToListAsync();
     }
 
-    public async Task CreateAsync(FlashcardCategory entity) => await context.FlashcardCategories.AddAsync(entity);
-
-    public Task<FlashcardCategory?> GetByIdAsync(int id)
+    public async Task<FlashcardCategoryWithDeckWords?> GetByIdWithDeckWordsAsync(int id)
     {
-        return context.FlashcardCategories
-            .AsNoTracking()
-            .FirstOrDefaultAsync(fc => fc.Id == id);
-    }
-
-    public FlashcardCategory Update(FlashcardCategory entity)
-    {
-        context.FlashcardCategories.Update(entity);
-
-        return entity;
-    }
-
-    public void Delete(FlashcardCategory entity)
-    {
-        context.FlashcardCategories
-            .Remove(entity);
+        return await context.FlashcardCategories
+            .Where(fc => fc.Id == id)
+            .Select(fc => new FlashcardCategoryWithDeckWords(
+                fc.Id,
+                fc.FlashcardId,
+                fc.Name,
+                fc.DeckWords
+                    .Select(dw => new DeckWordDto(
+                        dw.Id,
+                        dw.FlashcardCategoryId,
+                        dw.Question,
+                        dw.Answer
+                    ))
+                    .ToList()
+            ))
+            .FirstOrDefaultAsync();
     }
 }

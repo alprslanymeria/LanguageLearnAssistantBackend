@@ -4,4 +4,4 @@ using App.Application.Features.WritingSessionRows.Dtos;
 
 namespace App.Application.Features.WritingSessionRows.Commands.CreateWRows;
 
-public record CreateWRowsCommand(SaveWritingRowsRequest Request) : ICommand<ServiceResult<int>>;
+public record CreateWRowsCommand(SaveWritingRowsRequest Request) : ICommand<ServiceResult>;

@@ -2,6 +2,7 @@
   <Folder Name="/Solution Items/">
     <File Path="gitSenaryo.txt" />
     <File Path="notes.txt" />
+    <File Path="signs.txt" />
     <File Path="todo.txt" />
   </Folder>
   <Folder Name="/src/" />

@@ -7,12 +7,12 @@ namespace App.Application.Common.Behaviors;
 /// VALIDATION BEHAVIOR FOR MEDIATR PIPELINE.
 /// AUTOMATICALLY VALIDATES REQUESTS USING FLUENT VALIDATION BEFORE HANDLER EXECUTION.
 /// </summary>
-public class ValidationBehavior<TRequest, TResponse>( IEnumerable<IValidator<TRequest>> validators ) : IPipelineBehavior<TRequest, TResponse> where TRequest : notnull
+public class ValidationBehavior<TRequest, TResponse>(IEnumerable<IValidator<TRequest>> validators) : IPipelineBehavior<TRequest, TResponse> where TRequest : notnull
 {
     public async Task<TResponse> Handle(
 
-        TRequest request, 
-        RequestHandlerDelegate<TResponse> next, 
+        TRequest request,
+        RequestHandlerDelegate<TResponse> next,
         CancellationToken cancellationToken
 
         )

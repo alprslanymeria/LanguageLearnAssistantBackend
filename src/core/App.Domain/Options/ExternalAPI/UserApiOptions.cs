@@ -15,7 +15,7 @@ public class UserApiOptions
     /// <summary>
     /// ENDPOINT PATH FOR GETTING USER INFO (E.G., "/api/users/{userId}").
     /// </summary>
-    public string UserInfoEndpoint { get; set; } = "/api/users";
+    public string UserInfoEndpoint { get; set; } = "/api/User";
 
     /// <summary>
     /// TIMEOUT IN SECONDS FOR API CALLS.

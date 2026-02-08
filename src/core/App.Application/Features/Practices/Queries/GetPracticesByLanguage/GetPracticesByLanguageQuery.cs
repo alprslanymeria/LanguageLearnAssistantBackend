@@ -9,7 +9,7 @@ namespace App.Application.Features.Practices.Queries.GetPracticesByLanguage;
 /// <summary>
 /// QUERY FOR RETRIEVING PRACTICES BY SPECIFIED LANGUAGE.
 /// </summary>
-public record GetPracticesByLanguageQuery(string Language) : IQuery<ServiceResult<List<PracticeDto>>> , ICacheableQuery
+public record GetPracticesByLanguageQuery(string Language) : IQuery<ServiceResult<List<PracticeDto>>>, ICacheableQuery
 {
     public ICacheKey GetCacheKey(ICacheKeyFactory keyFactory) => PracticeCacheKeys.ByLanguage(keyFactory, Language);
 }

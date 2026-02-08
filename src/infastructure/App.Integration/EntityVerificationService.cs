@@ -23,16 +23,16 @@ public class EntityVerificationService(
 
     ) : IEntityVerificationService
 {
-    public async Task<ServiceResult<Flashcard>> VerifyOrCreateFlashcardAsync(int flashcardId, string userId, int languageId)
+    public async Task<ServiceResult<Flashcard>> VerifyOrCreateFlashcardAsync(int practiceId, string userId, int languageId)
     {
-        var flashcard = await flashcardRepository.GetByIdAsync(flashcardId);
+        var flashcard = await flashcardRepository.GetByPracticeIdUserIdLanguageIdAsync(practiceId, userId, languageId);
 
         if (flashcard is not null)
         {
             return ServiceResult<Flashcard>.Success(flashcard);
         }
 
-        logger.LogWarning("EntityVerificationService -> FLASHCARD NOT FOUND WITH ID: {FlashcardId}", flashcardId);
+        logger.LogWarning("EntityVerificationService -> FLASHCARD NOT FOUND");
 
         var language = await languageRepository.GetByIdAsync(languageId);
 
@@ -59,23 +59,23 @@ public class EntityVerificationService(
             Practice = practice
         };
 
-        await flashcardRepository.CreateAsync(flashcard);
+        await flashcardRepository.AddAsync(flashcard);
 
         logger.LogInformation("EntityVerificationService -> NEW FLASHCARD CREATED WITH ID: {FlashcardId}", flashcard.Id);
 
         return ServiceResult<Flashcard>.Success(flashcard);
     }
 
-    public async Task<ServiceResult<Reading>> VerifyOrCreateReadingAsync(int readingId, string userId, int languageId)
+    public async Task<ServiceResult<Reading>> VerifyOrCreateReadingAsync(int practiceId, string userId, int languageId)
     {
-        var reading = await readingRepository.GetByIdAsync(readingId);
+        var reading = await readingRepository.GetByPracticeIdUserIdLanguageIdAsync(practiceId, userId, languageId);
 
         if (reading is not null)
         {
             return ServiceResult<Reading>.Success(reading);
         }
 
-        logger.LogWarning("EntityVerificationService -> READING NOT FOUND WITH ID: {ReadingId}", readingId);
+        logger.LogWarning("EntityVerificationService -> READING NOT FOUND");
 
         var language = await languageRepository.GetByIdAsync(languageId);
 
@@ -102,23 +102,23 @@ public class EntityVerificationService(
             Practice = practice
         };
 
-        await readingRepository.CreateAsync(reading);
+        await readingRepository.AddAsync(reading);
 
         logger.LogInformation("EntityVerificationService -> NEW READING CREATED WITH ID: {ReadingId}", reading.Id);
 
         return ServiceResult<Reading>.Success(reading);
     }
 
-    public async Task<ServiceResult<Writing>> VerifyOrCreateWritingAsync(int writingId, string userId, int languageId)
+    public async Task<ServiceResult<Writing>> VerifyOrCreateWritingAsync(int practiceId, string userId, int languageId)
     {
-        var writing = await writingRepository.GetByIdAsync(writingId);
+        var writing = await writingRepository.GetByPracticeIdUserIdLanguageIdAsync(practiceId, userId, languageId);
 
         if (writing is not null)
         {
             return ServiceResult<Writing>.Success(writing);
         }
 
-        logger.LogWarning("EntityVerificationService -> WRITING NOT FOUND WITH ID: {WritingId}", writingId);
+        logger.LogWarning("EntityVerificationService -> WRITING NOT FOUND");
 
         var language = await languageRepository.GetByIdAsync(languageId);
 
@@ -145,7 +145,7 @@ public class EntityVerificationService(
             Practice = practice
         };
 
-        await writingRepository.CreateAsync(writing);
+        await writingRepository.AddAsync(writing);
 
         logger.LogInformation("EntityVerificationService -> NEW WRITING CREATED WITH ID: {WritingId}", writing.Id);
 

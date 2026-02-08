@@ -4,7 +4,7 @@ using App.Application.Common.CQRS;
 using App.Application.Contracts.Persistence;
 using App.Application.Contracts.Persistence.Repositories;
 using App.Domain.Entities.ReadingEntities;
-using Microsoft.Extensions.Logging;
+using App.Domain.Exceptions;
 
 namespace App.Application.Features.ReadingOldSessions.Commands.CreateROS;
 
@@ -16,36 +16,23 @@ public class CreateROSCommandHandler(
     IReadingOldSessionRepository readingOldSessionRepository,
     IReadingRepository readingRepository,
     IReadingBookRepository readingBookRepository,
-    IUnitOfWork unitOfWork,
-    ILogger<CreateROSCommandHandler> logger
+    IUnitOfWork unitOfWork
 
-    ) : ICommandHandler<CreateROSCommand, ServiceResult<string>>
+    ) : ICommandHandler<CreateROSCommand, ServiceResult>
 {
-    public async Task<ServiceResult<string>> Handle(
+    public async Task<ServiceResult> Handle(
 
-        CreateROSCommand request, 
+        CreateROSCommand request,
         CancellationToken cancellationToken)
     {
 
-        logger.LogInformation("CreateROSCommandHandler -> SAVING READING OLD SESSION WITH ID: {SessionId}", request.Request.Id);
+        // GET READING
+        var reading = await readingRepository.GetByIdAsync(request.Request.ReadingId)
+            ?? throw new NotFoundException("READING NOT FOUND.");
 
-        var reading = await readingRepository.GetByIdAsync(request.Request.ReadingId);
-
-        // FAST FAIL
-        if (reading is null)
-        {
-            logger.LogWarning("CreateROSCommandHandler -> READING NOT FOUND WITH ID: {ReadingId}", request.Request.ReadingId);
-            return ServiceResult<string>.Fail("READING NOT FOUND.", HttpStatusCode.NotFound);
-        }
-
-        var readingBook = await readingBookRepository.GetByIdAsync(request.Request.ReadingBookId);
-
-        // FAST FAIL
-        if (readingBook is null)
-        {
-            logger.LogWarning("CreateROSCommandHandler -> READING BOOK NOT FOUND WITH ID: {ReadingBookId}", request.Request.ReadingBookId);
-            return ServiceResult<string>.Fail("READING BOOK NOT FOUND.", HttpStatusCode.NotFound);
-        }
+        // GET READING BOOK
+        var readingBook = await readingBookRepository.GetByIdAsync(request.Request.ReadingBookId)
+            ?? throw new NotFoundException("READING BOOK NOT FOUND.");
 
         var session = new ReadingOldSession
         {
@@ -58,11 +45,9 @@ public class CreateROSCommandHandler(
             ReadingBook = readingBook
         };
 
-        await readingOldSessionRepository.CreateAsync(session);
+        await readingOldSessionRepository.AddAsync(session);
         await unitOfWork.CommitAsync();
 
-        logger.LogInformation("CreateROSCommandHandler -> SUCCESSFULLY SAVED READING OLD SESSION WITH ID: {SessionId}", session.Id);
-
-        return ServiceResult<string>.SuccessAsCreated(session.Id, $"/api/ReadingOldSession/{session.Id}");
+        return ServiceResult.Success(HttpStatusCode.Created);
     }
 }

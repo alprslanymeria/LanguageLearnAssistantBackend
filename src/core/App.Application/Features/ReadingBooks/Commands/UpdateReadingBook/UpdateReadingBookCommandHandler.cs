@@ -1,4 +1,3 @@
-using System.Net;
 using App.Application.Common;
 using App.Application.Common.CQRS;
 using App.Application.Contracts.Infrastructure.Caching;
@@ -6,7 +5,7 @@ using App.Application.Contracts.Persistence;
 using App.Application.Contracts.Persistence.Repositories;
 using App.Application.Contracts.Services;
 using App.Application.Features.ReadingBooks.CacheKeys;
-using Microsoft.Extensions.Logging;
+using App.Domain.Exceptions;
 
 namespace App.Application.Features.ReadingBooks.Commands.UpdateReadingBook;
 
@@ -17,96 +16,81 @@ public class UpdateReadingBookCommandHandler(
 
     IReadingBookRepository readingBookRepository,
     IUnitOfWork unitOfWork,
-    ILogger<UpdateReadingBookCommandHandler> logger,
     IStaticCacheManager cacheManager,
     IEntityVerificationService entityVerificationService,
     IImageProcessingService imageProcessingService,
-    IFileStorageHelper fileStorageHelper
+    IFileStorageHelper fileStorageHelper,
+    IPracticeRepository practiceRepository
 
-    ) : ICommandHandler<UpdateReadingBookCommand, ServiceResult<int>>
+    ) : ICommandHandler<UpdateReadingBookCommand, ServiceResult>
 {
 
-    public async Task<ServiceResult<int>> Handle(
+    public async Task<ServiceResult> Handle(
 
-        UpdateReadingBookCommand request, 
+        UpdateReadingBookCommand request,
         CancellationToken cancellationToken)
     {
-        logger.LogInformation("UpdateReadingBookCommandHandler -> UPDATING READING BOOK WITH ID: {Id}", request.Request.Id);
+
+        // GET PRACTICE
+        var practice = await practiceRepository.ExistsByLanguageIdAsync(request.Request.LanguageId)
+            ?? throw new NotFoundException("PRACTICE NOT FOUND");
 
         // VERIFY READING BOOK EXISTS
-        var existingBook = await readingBookRepository.GetByIdAsync(request.Request.Id);
-
-        // FAST FAIL
-        if (existingBook is null)
-        {
-            logger.LogWarning("UpdateReadingBookCommandHandler -> READING BOOK NOT FOUND WITH ID: {Id}", request.Request.Id);
-            return ServiceResult<int>.Fail("READING BOOK NOT FOUND", HttpStatusCode.NotFound);
-        }
+        var existingBook = await readingBookRepository.GetByIdAsync(request.Request.ItemId)
+            ?? throw new NotFoundException("READING BOOK NOT FOUND");
 
         // VERIFY OR CREATE READING
         var readingResult = await entityVerificationService.VerifyOrCreateReadingAsync(
-            request.Request.ReadingId, 
-            request.Request.UserId, 
+
+            practice.Id,
+            request.Request.UserId,
             request.Request.LanguageId);
 
-        // FAST FAIL
-        if (!readingResult.IsSuccess)
+        if (readingResult.IsFail)
         {
-            return ServiceResult<int>.Fail(readingResult.ErrorMessage!, readingResult.Status);
+            throw new BusinessException(readingResult.ErrorMessage!.First(), readingResult.Status);
         }
 
         var reading = readingResult.Data!;
 
-        try
+        // STORE OLD FILE URLS FOR DELETION
+        var oldImageUrl = existingBook.ImageUrl;
+        var oldSourceUrl = existingBook.SourceUrl;
+
+        // UPDATE IMAGE IF NEW FILE PROVIDED
+        if (request.Request.ImageFile is not null)
         {
-            // STORE OLD FILE URLS FOR DELETION
-            var oldImageUrl = existingBook.ImageUrl;
-            var oldSourceUrl = existingBook.SourceUrl;
-
-            // UPDATE IMAGE IF NEW FILE PROVIDED
-            if (request.Request.ImageFile is not null)
-            {
-                logger.LogInformation("UpdateReadingBookCommandHandler -> UPLOADING NEW IMAGE FILE");
-                existingBook.ImageUrl = await fileStorageHelper.UploadFileToStorageAsync(request.Request.ImageFile, request.Request.UserId, "rbooks");
-                existingBook.LeftColor = await imageProcessingService.ExtractLeftSideColorAsync(request.Request.ImageFile);
-            }
-
-            // UPDATE SOURCE IF NEW FILE PROVIDED
-            if (request.Request.SourceFile is not null)
-            {
-                logger.LogInformation("UpdateReadingBookCommandHandler -> UPLOADING NEW SOURCE FILE");
-                existingBook.SourceUrl = await fileStorageHelper.UploadFileToStorageAsync(request.Request.SourceFile, request.Request.UserId, "rbooks");
-            }
-
-            // UPDATE OTHER FIELDS
-            existingBook.ReadingId = reading.Id;
-            existingBook.Name = request.Request.Name;
-
-            readingBookRepository.Update(existingBook);
-            await unitOfWork.CommitAsync();
-
-            // CACHE INVALIDATION
-            await cacheManager.RemoveByPrefixAsync(ReadingBookCacheKeys.Prefix);
-
-            logger.LogInformation("UpdateReadingBookCommandHandler -> SUCCESSFULLY UPDATED READING BOOK WITH ID: {Id}", existingBook.Id);
-
-            // DELETE OLD FILES FROM STORAGE IF URLS CHANGED
-            if (request.Request.ImageFile is not null && !string.Equals(oldImageUrl, existingBook.ImageUrl, StringComparison.OrdinalIgnoreCase))
-            {
-                await fileStorageHelper.DeleteFileFromStorageAsync(oldImageUrl);
-            }
-
-            if (request.Request.SourceFile is not null && !string.Equals(oldSourceUrl, existingBook.SourceUrl, StringComparison.OrdinalIgnoreCase))
-            {
-                await fileStorageHelper.DeleteFileFromStorageAsync(oldSourceUrl);
-            }
-
-            return ServiceResult<int>.Success(existingBook.Id);
+            existingBook.ImageUrl = await fileStorageHelper.UploadFileToStorageAsync(request.Request.ImageFile, request.Request.UserId, "rbooks");
+            existingBook.LeftColor = await imageProcessingService.ExtractLeftSideColorAsync(request.Request.ImageFile);
         }
-        catch (Exception ex)
+
+        // UPDATE SOURCE IF NEW FILE PROVIDED
+        if (request.Request.SourceFile is not null)
         {
-            logger.LogError(ex, "UpdateReadingBookCommandHandler -> ERROR UPDATING READING BOOK");
-            return ServiceResult<int>.Fail("ERROR UPDATING READING BOOK", HttpStatusCode.InternalServerError);
+            existingBook.SourceUrl = await fileStorageHelper.UploadFileToStorageAsync(request.Request.SourceFile, request.Request.UserId, "rbooks");
         }
+
+        // UPDATE OTHER FIELDS
+        existingBook.ReadingId = reading.Id;
+        existingBook.Name = request.Request.BookName;
+
+        readingBookRepository.Update(existingBook);
+        await unitOfWork.CommitAsync();
+
+        // CACHE INVALIDATION
+        await cacheManager.RemoveByPrefixAsync(ReadingBookCacheKeys.Prefix);
+
+        // DELETE OLD FILES FROM STORAGE IF URLS CHANGED
+        if (request.Request.ImageFile is not null && !string.Equals(oldImageUrl, existingBook.ImageUrl, StringComparison.OrdinalIgnoreCase))
+        {
+            await fileStorageHelper.DeleteFileFromStorageAsync(oldImageUrl);
+        }
+
+        if (request.Request.SourceFile is not null && !string.Equals(oldSourceUrl, existingBook.SourceUrl, StringComparison.OrdinalIgnoreCase))
+        {
+            await fileStorageHelper.DeleteFileFromStorageAsync(oldSourceUrl);
+        }
+
+        return ServiceResult.Success();
     }
 }

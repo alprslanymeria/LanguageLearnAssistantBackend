@@ -22,8 +22,8 @@ public class ListeningOldSessionController(ISender sender) : BaseController
     /// /api/v1.0/ListeningOldSession?PageNumber=1&PageSize=10
     /// </summary>
     [HttpGet]
-    public async Task<IActionResult> GetListeningOldSessionsWithPaging([FromQuery] PagedRequest request) 
-        => ActionResultInstance(await sender.Send(new GetLOSWithPagingQuery(UserId, request)));
+    public async Task<IActionResult> GetLOSWithPaging([FromQuery] PagedRequest request, string language)
+        => ActionResultInstance(await sender.Send(new GetLOSWithPagingQuery(UserId, language, request)));
 
 
     /// <summary>
@@ -31,6 +31,6 @@ public class ListeningOldSessionController(ISender sender) : BaseController
     /// /api/v1.0/ListeningOldSession + JSON BODY
     /// </summary>
     [HttpPost]
-    public async Task<IActionResult> SaveListeningOldSession([FromBody] SaveListeningOldSessionRequest request)
+    public async Task<IActionResult> CreateLOS([FromBody] SaveListeningOldSessionRequest request)
         => ActionResultInstance(await sender.Send(new CreateLOSCommand(request)));
 }

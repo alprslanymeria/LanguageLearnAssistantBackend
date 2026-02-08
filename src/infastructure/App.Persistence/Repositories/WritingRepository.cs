@@ -9,33 +9,27 @@ namespace App.Persistence.Repositories;
 /// </summary>
 public class WritingRepository(AppDbContext context) : IWritingRepository
 {
-    public async Task<List<Writing>> GetByUserIdWithDetailsAsync(string userId)
-    {
-        return await context.Writings
-            .AsNoTracking()
-            .Include(w => w.Language)
-            .Include(w => w.Practice)
-            .Where(w => w.UserId == userId)
-            .ToListAsync();
-    }
+    public async Task AddAsync(Writing entity) => await context.Writings.AddAsync(entity);
 
-    public async Task CreateAsync(Writing entity) => await context.Writings.AddAsync(entity);
-
-    public Task<Writing?> GetByIdAsync(int id) =>
-        context.Writings
+    public async Task<Writing?> GetByIdAsync(int id) =>
+        await context.Writings
             .AsNoTracking()
             .FirstOrDefaultAsync(w => w.Id == id);
 
-    public Writing Update(Writing entity)
-    {
-        context.Writings.Update(entity);
+    public void Update(Writing entity) => context.Writings.Update(entity);
 
-        return entity;
+    public async Task RemoveAsync(int id)
+    {
+        var entity = await context.Writings.FindAsync(id);
+
+        if (entity is not null)
+        {
+            context.Writings.Remove(entity);
+        }
     }
 
-    public void Delete(Writing entity)
-    {
-        context.Writings
-            .Remove(entity);
-    }
+    public async Task<Writing?> GetByPracticeIdUserIdLanguageIdAsync(int practiceId, string userId, int languageId) =>
+        await context.Writings
+            .AsNoTracking()
+            .FirstOrDefaultAsync(w => w.PracticeId == practiceId && w.UserId == userId && w.LanguageId == languageId);
 }

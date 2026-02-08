@@ -5,7 +5,7 @@ using App.Application.Contracts.Infrastructure.Caching;
 using App.Application.Contracts.Persistence;
 using App.Application.Contracts.Persistence.Repositories;
 using App.Application.Features.FlashcardCategories.CacheKeys;
-using Microsoft.Extensions.Logging;
+using App.Domain.Exceptions;
 
 namespace App.Application.Features.FlashcardCategories.Commands.DeleteFCategoryItemById;
 
@@ -16,35 +16,26 @@ public class DeleteFCategoryItemByIdCommandHandler(
 
     IFlashcardCategoryRepository flashcardCategoryRepository,
     IUnitOfWork unitOfWork,
-    ILogger<DeleteFCategoryItemByIdCommandHandler> logger,
     IStaticCacheManager cacheManager
 
     ) : ICommandHandler<DeleteFCategoryItemByIdCommand, ServiceResult>
 {
     public async Task<ServiceResult> Handle(
 
-        DeleteFCategoryItemByIdCommand request, 
+        DeleteFCategoryItemByIdCommand request,
         CancellationToken cancellationToken)
     {
 
-        logger.LogInformation("FDeleteFCategoryItemByIdCommandHandler -> ATTEMPTING TO DELETE FLASHCARD CATEGORY WITH ID: {Id}", request.Id);
+        // GET FLASHCARD CATEGORY
+        var flashcardCategory = await flashcardCategoryRepository.GetByIdAsync(request.Id)
+            ?? throw new NotFoundException("FLASHCARD CATEGORY NOT FOUND");
 
-        var flashcardCategory = await flashcardCategoryRepository.GetByIdAsync(request.Id);
-
-        // FAST FAIL
-        if (flashcardCategory is null)
-        {
-            logger.LogWarning("DeleteFCategoryItemByIdCommandHandler -> FLASHCARD CATEGORY NOT FOUND FOR DELETION WITH ID: {Id}", request.Id);
-            return ServiceResult.Fail("FLASHCARD CATEGORY NOT FOUND", HttpStatusCode.NotFound);
-        }
-
-        flashcardCategoryRepository.Delete(flashcardCategory);
+        // REMOVE FLASHCARD CATEGORY AND COMMIT
+        await flashcardCategoryRepository.RemoveAsync(flashcardCategory.Id);
         await unitOfWork.CommitAsync();
 
         // CACHE INVALIDATION
         await cacheManager.RemoveByPrefixAsync(FlashcardCategoryCacheKeys.Prefix);
-
-        logger.LogInformation("DeleteFCategoryItemByIdCommandHandler -> SUCCESSFULLY DELETED FLASHCARD CATEGORY FROM DATABASE WITH ID: {Id}", request.Id);
 
         return ServiceResult.Success(HttpStatusCode.NoContent);
     }

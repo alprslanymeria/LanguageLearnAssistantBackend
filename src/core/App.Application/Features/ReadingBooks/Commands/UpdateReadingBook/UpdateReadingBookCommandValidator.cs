@@ -14,15 +14,11 @@ public class UpdateReadingBookCommandValidator : AbstractValidator<UpdateReading
 
     public UpdateReadingBookCommandValidator()
     {
-        RuleFor(x => x.Request.Id)
+        RuleFor(x => x.Request.ItemId)
             .GreaterThan(0)
             .WithMessage("ID MUST BE GREATER THAN 0");
 
-        RuleFor(x => x.Request.ReadingId)
-            .GreaterThan(0)
-            .WithMessage("READING ID MUST BE GREATER THAN 0");
-
-        RuleFor(x => x.Request.Name)
+        RuleFor(x => x.Request.BookName)
             .NotEmpty()
             .WithMessage("NAME IS REQUIRED")
             .MaximumLength(200)

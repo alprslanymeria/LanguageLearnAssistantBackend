@@ -4,7 +4,7 @@ using App.Application.Common.CQRS;
 using App.Application.Contracts.Persistence;
 using App.Application.Contracts.Persistence.Repositories;
 using App.Domain.Entities.ListeningEntities;
-using Microsoft.Extensions.Logging;
+using App.Domain.Exceptions;
 
 namespace App.Application.Features.ListeningOldSessions.Commands.CreateLOS;
 
@@ -13,35 +13,23 @@ public class CreateLOSCommandHandler(
     IListeningOldSessionRepository listeningOldSessionRepository,
     IListeningRepository listeningRepository,
     IListeningCategoryRepository listeningCategoryRepository,
-    IUnitOfWork unitOfWork,
-    ILogger<CreateLOSCommandHandler> logger
+    IUnitOfWork unitOfWork
 
-    ) : ICommandHandler<CreateLOSCommand, ServiceResult<string>>
+    ) : ICommandHandler<CreateLOSCommand, ServiceResult>
 {
-    public async Task<ServiceResult<string>> Handle(
+    public async Task<ServiceResult> Handle(
 
         CreateLOSCommand request,
         CancellationToken cancellationToken)
     {
-        logger.LogInformation("CreateLOSCommandHandler -> SAVING LISTENING OLD SESSION WITH ID: {SessionId}", request.Request.Id);
 
-        var listening = await listeningRepository.GetByIdAsync(request.Request.ListeningId);
+        // GET LISTENING
+        var listening = await listeningRepository.GetByIdAsync(request.Request.ListeningId)
+            ?? throw new NotFoundException("LISTENING NOT FOUND.");
 
-        // FAST FAIL
-        if (listening is null)
-        {
-            logger.LogWarning("CreateLOSCommandHandler -> LISTENING NOT FOUND WITH ID: {ListeningId}", request.Request.ListeningId);
-            return ServiceResult<string>.Fail("LISTENING NOT FOUND.", HttpStatusCode.NotFound);
-        }
-
-        var listeningCategory = await listeningCategoryRepository.GetByIdAsync(request.Request.ListeningCategoryId);
-
-        // FAST FAIL
-        if (listeningCategory is null)
-        {
-            logger.LogWarning("CreateLOSCommandHandler -> LISTENING CATEGORY NOT FOUND WITH ID: {ListeningCategoryId}", request.Request.ListeningCategoryId);
-            return ServiceResult<string>.Fail("LISTENING CATEGORY NOT FOUND.", HttpStatusCode.NotFound);
-        }
+        // GET LISTENING CATEGORY
+        var listeningCategory = await listeningCategoryRepository.GetByIdAsync(request.Request.ListeningCategoryId)
+            ?? throw new NotFoundException("LISTENING CATEGORY NOT FOUND.");
 
         var session = new ListeningOldSession
         {
@@ -54,12 +42,10 @@ public class CreateLOSCommandHandler(
             ListeningCategory = listeningCategory
         };
 
-        await listeningOldSessionRepository.CreateAsync(session);
+        await listeningOldSessionRepository.AddAsync(session);
         await unitOfWork.CommitAsync();
 
-        logger.LogInformation("CreateLOSCommandHandler -> SUCCESSFULLY SAVED LISTENING OLD SESSION WITH ID: {SessionId}", session.Id);
-
-        return ServiceResult<string>.SuccessAsCreated(session.Id, $"/api/ListeningOldSession/{session.Id}");
+        return ServiceResult.Success(HttpStatusCode.Created);
 
     }
 }

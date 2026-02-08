@@ -9,40 +9,38 @@ namespace App.Persistence.Repositories;
 /// </summary>
 public class FlashcardOldSessionRepository(AppDbContext context) : IFlashcardOldSessionRepository
 {
-    public async Task<(List<FlashcardOldSession> items, int totalCount)> GetFlashcardOldSessionsWithPagingAsync(string userId, int page, int pageSize)
+    public async Task AddAsync(FlashcardOldSession entity) => await context.FlashcardOldSessions.AddAsync(entity);
+
+    public async Task<FlashcardOldSession?> GetByIdAsync(string id) =>
+        await context.FlashcardOldSessions
+            .AsNoTracking()
+            .FirstOrDefaultAsync(fos => fos.Id == id);
+
+    public void Update(FlashcardOldSession entity) => context.FlashcardOldSessions.Update(entity);
+
+    public async Task RemoveAsync(string id)
+    {
+        var entity = await context.FlashcardOldSessions.FindAsync(id);
+
+        if (entity is not null)
+        {
+            context.FlashcardOldSessions.Remove(entity);
+        }
+    }
+
+    public async Task<(List<FlashcardOldSession> Items, int TotalCount)> GetFlashcardOldSessionsWithPagingAsync(string userId, string language, int page, int pageSize)
     {
         var query = context.FlashcardOldSessions
-            .AsNoTracking()
-            .Where(fos => fos.Flashcard.UserId == userId);
+            .Where(fos => fos.Flashcard.UserId == userId && fos.Flashcard.Language.Name == language);
 
         var totalCount = await query.CountAsync();
 
         var items = await query
-            .OrderByDescending(fos => fos.Id)
+            .OrderByDescending(fos => fos.CreatedAt)
             .Skip((page - 1) * pageSize)
             .Take(pageSize)
             .ToListAsync();
 
         return (items, totalCount);
-    }
-
-    public async Task CreateAsync(FlashcardOldSession entity) => await context.FlashcardOldSessions.AddAsync(entity);
-
-    public Task<FlashcardOldSession?> GetByIdAsync(string id) =>
-        context.FlashcardOldSessions
-            .AsNoTracking()
-            .FirstOrDefaultAsync(fos => fos.Id == id);
-
-    public FlashcardOldSession Update(FlashcardOldSession entity)
-    {
-        context.FlashcardOldSessions.Update(entity);
-
-        return entity;
-    }
-
-    public void Delete(FlashcardOldSession entity)
-    {
-        context.FlashcardOldSessions
-            .Remove(entity);
     }
 }

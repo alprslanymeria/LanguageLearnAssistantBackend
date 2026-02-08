@@ -4,4 +4,4 @@ using App.Application.Features.FlashcardSessionRows.Dtos;
 
 namespace App.Application.Features.FlashcardSessionRows.Commands.CreateFRows;
 
-public record CreateFRowsCommand(SaveFlashcardRowsRequest Request) : ICommand<ServiceResult<int>>;
+public record CreateFRowsCommand(SaveFlashcardRowsRequest Request) : ICommand<ServiceResult>;
