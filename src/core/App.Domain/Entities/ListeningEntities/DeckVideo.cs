@@ -1,4 +1,4 @@
-﻿namespace App.Domain.Entities.ListeningEntities;
+namespace App.Domain.Entities.ListeningEntities;
 
 public class DeckVideo : BaseEntity<int>
 {
@@ -7,5 +7,5 @@ public class DeckVideo : BaseEntity<int>
     public string SourceUrl { get; set; } = null!;
 
     // REFERENCES (PARENTS)
-    public required ListeningCategory ListeningCategory { get; set; } // FOR ListeningCategoryId
+    public ListeningCategory? ListeningCategory { get; set; } // FOR ListeningCategoryId
 }

@@ -27,11 +27,10 @@ public class CreateLRowsCommandHandler(
 
         var rows = request.Request.Rows.Select(r => new ListeningSessionRow
         {
-            ListeningOldSessionId = request.Request.ListeningOldSessionId,
             ListenedSentence = r.ListenedSentence,
             Answer = r.Answer,
             Similarity = r.Similarity,
-            ListeningOldSession = session
+            ListeningOldSessionId = request.Request.ListeningOldSessionId
 
         }).ToList();
 

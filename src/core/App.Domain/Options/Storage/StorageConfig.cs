@@ -6,7 +6,7 @@ namespace App.Domain.Options.Storage;
 /// </summary>
 public class StorageConfig
 {
-    public const string Key = "Storage";
+    public const string Key = "StorageConfig";
 
     /// <summary>
     /// THE TYPE OF STORAGE PROVIDER TO USE

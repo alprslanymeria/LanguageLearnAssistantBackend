@@ -1,0 +1,1573 @@
+﻿Starting IIS Express ...
+﻿Successfully registered URL "http://localhost:53944/" for site "App.API" application "/"
+﻿Successfully registered URL "https://localhost:44343/" for site "App.API" application "/"
+﻿Registration completed for site "App.API"
+﻿IIS Express is running.
+﻿dbug: Microsoft.AspNetCore.Watch.BrowserRefresh.BlazorWasmHotReloadMiddleware[0]
+﻿      Middleware loaded
+﻿LogRecord.Timestamp:               2026-02-09T16:54:02.0062402Z
+﻿LogRecord.CategoryName:            Microsoft.AspNetCore.Watch.BrowserRefresh.BlazorWasmHotReloadMiddleware
+﻿LogRecord.Severity:                Debug
+﻿LogRecord.SeverityText:            Debug
+﻿LogRecord.Body:                    Middleware loaded
+﻿LogRecord.Attributes (Key:Value):
+﻿    OriginalFormat (a.k.a Body): Middleware loaded
+﻿
+﻿Resource associated with LogRecord:
+﻿service.name: LanguageLearnAssistantBackend.API
+﻿service.version: 1.0.0
+﻿service.instance.id: 33959474-575a-4382-b411-92c031499a21
+﻿telemetry.sdk.name: opentelemetry
+﻿telemetry.sdk.language: dotnet
+﻿telemetry.sdk.version: 1.14.0
+﻿
+﻿LogRecord.Timestamp:               2026-02-09T16:54:02.0062402Z
+﻿LogRecord.CategoryName:            Microsoft.AspNetCore.Watch.BrowserRefresh.BlazorWasmHotReloadMiddleware
+﻿LogRecord.Severity:                Debug
+﻿LogRecord.SeverityText:            Debug
+﻿LogRecord.Body:                    Middleware loaded
+﻿LogRecord.Attributes (Key:Value):
+﻿    OriginalFormat (a.k.a Body): Middleware loaded
+﻿
+﻿Resource associated with LogRecord:
+﻿service.name: LanguageLearnAssistantBackend.API
+﻿service.version: 1.0.0
+﻿service.instance.id: 33959474-575a-4382-b411-92c031499a21
+﻿telemetry.sdk.name: opentelemetry
+﻿telemetry.sdk.language: dotnet
+﻿telemetry.sdk.version: 1.14.0
+﻿
+﻿dbug: Microsoft.AspNetCore.Watch.BrowserRefresh.BrowserScriptMiddleware[0]
+﻿      Middleware loaded. Script /_framework/aspnetcore-browser-refresh.js (16499 B).
+﻿LogRecord.Timestamp:               2026-02-09T16:54:02.1513616Z
+﻿LogRecord.CategoryName:            Microsoft.AspNetCore.Watch.BrowserRefresh.BrowserScriptMiddleware
+﻿LogRecord.Severity:                Debug
+﻿LogRecord.SeverityText:            Debug
+﻿LogRecord.Body:                    Middleware loaded. Script {scriptPath} ({size} B).
+﻿LogRecord.Attributes (Key:Value):
+﻿    scriptPath: /_framework/aspnetcore-browser-refresh.js
+﻿    size: 16499
+﻿    OriginalFormat (a.k.a Body): Middleware loaded. Script {scriptPath} ({size} B).
+﻿
+﻿Resource associated with LogRecord:
+﻿service.name: LanguageLearnAssistantBackend.API
+﻿service.version: 1.0.0
+﻿service.instance.id: 33959474-575a-4382-b411-92c031499a21
+﻿telemetry.sdk.name: opentelemetry
+﻿telemetry.sdk.language: dotnet
+﻿telemetry.sdk.version: 1.14.0
+﻿
+﻿LogRecord.Timestamp:               2026-02-09T16:54:02.1513616Z
+﻿LogRecord.CategoryName:            Microsoft.AspNetCore.Watch.BrowserRefresh.BrowserScriptMiddleware
+﻿LogRecord.Severity:                Debug
+﻿LogRecord.SeverityText:            Debug
+﻿LogRecord.Body:                    Middleware loaded. Script {scriptPath} ({size} B).
+﻿LogRecord.Attributes (Key:Value):
+﻿    scriptPath: /_framework/aspnetcore-browser-refresh.js
+﻿    size: 16499
+﻿    OriginalFormat (a.k.a Body): Middleware loaded. Script {scriptPath} ({size} B).
+﻿
+﻿Resource associated with LogRecord:
+﻿service.name: LanguageLearnAssistantBackend.API
+﻿service.version: 1.0.0
+﻿service.instance.id: 33959474-575a-4382-b411-92c031499a21
+﻿telemetry.sdk.name: opentelemetry
+﻿telemetry.sdk.language: dotnet
+﻿telemetry.sdk.version: 1.14.0
+﻿
+﻿dbug: Microsoft.AspNetCore.Watch.BrowserRefresh.BrowserScriptMiddleware[0]
+﻿      Middleware loaded. Script /_framework/blazor-hotreload.js (799 B).
+﻿LogRecord.Timestamp:               2026-02-09T16:54:02.1580000Z
+﻿LogRecord.CategoryName:            Microsoft.AspNetCore.Watch.BrowserRefresh.BrowserScriptMiddleware
+﻿LogRecord.Severity:                Debug
+﻿LogRecord.SeverityText:            Debug
+﻿LogRecord.Body:                    Middleware loaded. Script {scriptPath} ({size} B).
+﻿LogRecord.Attributes (Key:Value):
+﻿    scriptPath: /_framework/blazor-hotreload.js
+﻿    size: 799
+﻿    OriginalFormat (a.k.a Body): Middleware loaded. Script {scriptPath} ({size} B).
+﻿
+﻿Resource associated with LogRecord:
+﻿service.name: LanguageLearnAssistantBackend.API
+﻿service.version: 1.0.0
+﻿service.instance.id: 33959474-575a-4382-b411-92c031499a21
+﻿telemetry.sdk.name: opentelemetry
+﻿telemetry.sdk.language: dotnet
+﻿telemetry.sdk.version: 1.14.0
+﻿
+﻿LogRecord.Timestamp:               2026-02-09T16:54:02.1580000Z
+﻿LogRecord.CategoryName:            Microsoft.AspNetCore.Watch.BrowserRefresh.BrowserScriptMiddleware
+﻿LogRecord.Severity:                Debug
+﻿LogRecord.SeverityText:            Debug
+﻿LogRecord.Body:                    Middleware loaded. Script {scriptPath} ({size} B).
+﻿LogRecord.Attributes (Key:Value):
+﻿    scriptPath: /_framework/blazor-hotreload.js
+﻿    size: 799
+﻿    OriginalFormat (a.k.a Body): Middleware loaded. Script {scriptPath} ({size} B).
+﻿
+﻿Resource associated with LogRecord:
+﻿service.name: LanguageLearnAssistantBackend.API
+﻿service.version: 1.0.0
+﻿service.instance.id: 33959474-575a-4382-b411-92c031499a21
+﻿telemetry.sdk.name: opentelemetry
+﻿telemetry.sdk.language: dotnet
+﻿telemetry.sdk.version: 1.14.0
+﻿
+﻿dbug: Microsoft.AspNetCore.Watch.BrowserRefresh.BrowserRefreshMiddleware[0]
+﻿      Middleware loaded: DOTNET_MODIFIABLE_ASSEMBLIES=debug, __ASPNETCORE_BROWSER_TOOLS=true
+﻿LogRecord.Timestamp:               2026-02-09T16:54:02.4807865Z
+﻿LogRecord.CategoryName:            Microsoft.AspNetCore.Watch.BrowserRefresh.BrowserRefreshMiddleware
+﻿LogRecord.Severity:                Debug
+﻿LogRecord.SeverityText:            Debug
+﻿LogRecord.Body:                    Middleware loaded: DOTNET_MODIFIABLE_ASSEMBLIES={ModifiableAssemblies}, __ASPNETCORE_BROWSER_TOOLS={BrowserTools}
+﻿LogRecord.Attributes (Key:Value):
+﻿    ModifiableAssemblies: debug
+﻿    BrowserTools: true
+﻿    OriginalFormat (a.k.a Body): Middleware loaded: DOTNET_MODIFIABLE_ASSEMBLIES={ModifiableAssemblies}, __ASPNETCORE_BROWSER_TOOLS={BrowserTools}
+﻿
+﻿Resource associated with LogRecord:
+﻿service.name: LanguageLearnAssistantBackend.API
+﻿service.version: 1.0.0
+﻿service.instance.id: 33959474-575a-4382-b411-92c031499a21
+﻿telemetry.sdk.name: opentelemetry
+﻿telemetry.sdk.language: dotnet
+﻿telemetry.sdk.version: 1.14.0
+﻿
+﻿LogRecord.Timestamp:               2026-02-09T16:54:02.4807865Z
+﻿LogRecord.CategoryName:            Microsoft.AspNetCore.Watch.BrowserRefresh.BrowserRefreshMiddleware
+﻿LogRecord.Severity:                Debug
+﻿LogRecord.SeverityText:            Debug
+﻿LogRecord.Body:                    Middleware loaded: DOTNET_MODIFIABLE_ASSEMBLIES={ModifiableAssemblies}, __ASPNETCORE_BROWSER_TOOLS={BrowserTools}
+﻿LogRecord.Attributes (Key:Value):
+﻿    ModifiableAssemblies: debug
+﻿    BrowserTools: true
+﻿    OriginalFormat (a.k.a Body): Middleware loaded: DOTNET_MODIFIABLE_ASSEMBLIES={ModifiableAssemblies}, __ASPNETCORE_BROWSER_TOOLS={BrowserTools}
+﻿
+﻿Resource associated with LogRecord:
+﻿service.name: LanguageLearnAssistantBackend.API
+﻿service.version: 1.0.0
+﻿service.instance.id: 33959474-575a-4382-b411-92c031499a21
+﻿telemetry.sdk.name: opentelemetry
+﻿telemetry.sdk.language: dotnet
+﻿telemetry.sdk.version: 1.14.0
+﻿
+﻿info: Microsoft.Hosting.Lifetime[0]
+﻿      Application started. Press Ctrl+C to shut down.
+﻿LogRecord.Timestamp:               2026-02-09T16:54:02.9227903Z
+﻿LogRecord.CategoryName:            Microsoft.Hosting.Lifetime
+﻿LogRecord.Severity:                Info
+﻿LogRecord.SeverityText:            Information
+﻿LogRecord.Body:                    Application started. Press Ctrl+C to shut down.
+﻿LogRecord.Attributes (Key:Value):
+﻿    OriginalFormat (a.k.a Body): Application started. Press Ctrl+C to shut down.
+﻿
+﻿Resource associated with LogRecord:
+﻿service.name: LanguageLearnAssistantBackend.API
+﻿service.version: 1.0.0
+﻿service.instance.id: 33959474-575a-4382-b411-92c031499a21
+﻿telemetry.sdk.name: opentelemetry
+﻿telemetry.sdk.language: dotnet
+﻿telemetry.sdk.version: 1.14.0
+﻿
+﻿LogRecord.Timestamp:               2026-02-09T16:54:02.9227903Z
+﻿LogRecord.CategoryName:            Microsoft.Hosting.Lifetime
+﻿LogRecord.Severity:                Info
+﻿LogRecord.SeverityText:            Information
+﻿LogRecord.Body:                    Application started. Press Ctrl+C to shut down.
+﻿LogRecord.Attributes (Key:Value):
+﻿    OriginalFormat (a.k.a Body): Application started. Press Ctrl+C to shut down.
+﻿
+﻿Resource associated with LogRecord:
+﻿service.name: LanguageLearnAssistantBackend.API
+﻿service.version: 1.0.0
+﻿service.instance.id: 33959474-575a-4382-b411-92c031499a21
+﻿telemetry.sdk.name: opentelemetry
+﻿telemetry.sdk.language: dotnet
+﻿telemetry.sdk.version: 1.14.0
+﻿
+﻿info: Microsoft.Hosting.Lifetime[0]
+﻿      Hosting environment: Development
+﻿LogRecord.Timestamp:               2026-02-09T16:54:02.9292066Z
+﻿LogRecord.CategoryName:            Microsoft.Hosting.Lifetime
+﻿LogRecord.Severity:                Info
+﻿LogRecord.SeverityText:            Information
+﻿LogRecord.Body:                    Hosting environment: {EnvName}
+﻿LogRecord.Attributes (Key:Value):
+﻿    EnvName: Development
+﻿    OriginalFormat (a.k.a Body): Hosting environment: {EnvName}
+﻿
+﻿Resource associated with LogRecord:
+﻿service.name: LanguageLearnAssistantBackend.API
+﻿service.version: 1.0.0
+﻿service.instance.id: 33959474-575a-4382-b411-92c031499a21
+﻿telemetry.sdk.name: opentelemetry
+﻿telemetry.sdk.language: dotnet
+﻿telemetry.sdk.version: 1.14.0
+﻿
+﻿LogRecord.Timestamp:               2026-02-09T16:54:02.9292066Z
+﻿LogRecord.CategoryName:            Microsoft.Hosting.Lifetime
+﻿LogRecord.Severity:                Info
+﻿LogRecord.SeverityText:            Information
+﻿LogRecord.Body:                    Hosting environment: {EnvName}
+﻿LogRecord.Attributes (Key:Value):
+﻿    EnvName: Development
+﻿    OriginalFormat (a.k.a Body): Hosting environment: {EnvName}
+﻿
+﻿Resource associated with LogRecord:
+﻿service.name: LanguageLearnAssistantBackend.API
+﻿service.version: 1.0.0
+﻿service.instance.id: 33959474-575a-4382-b411-92c031499a21
+﻿telemetry.sdk.name: opentelemetry
+﻿telemetry.sdk.language: dotnet
+﻿telemetry.sdk.version: 1.14.0
+﻿
+﻿info: Microsoft.Hosting.Lifetime[0]
+﻿      Content root path: C:\Users\alpar\source\repos\LanguageLearnAssistantBackend\src\API\App.API
+﻿LogRecord.Timestamp:               2026-02-09T16:54:02.9335772Z
+﻿LogRecord.CategoryName:            Microsoft.Hosting.Lifetime
+﻿LogRecord.Severity:                Info
+﻿LogRecord.SeverityText:            Information
+﻿LogRecord.Body:                    Content root path: {ContentRoot}
+﻿LogRecord.Attributes (Key:Value):
+﻿    ContentRoot: C:\Users\alpar\source\repos\LanguageLearnAssistantBackend\src\API\App.API
+﻿    OriginalFormat (a.k.a Body): Content root path: {ContentRoot}
+﻿
+﻿Resource associated with LogRecord:
+﻿service.name: LanguageLearnAssistantBackend.API
+﻿service.version: 1.0.0
+﻿service.instance.id: 33959474-575a-4382-b411-92c031499a21
+﻿telemetry.sdk.name: opentelemetry
+﻿telemetry.sdk.language: dotnet
+﻿telemetry.sdk.version: 1.14.0
+﻿
+﻿LogRecord.Timestamp:               2026-02-09T16:54:02.9335772Z
+﻿LogRecord.CategoryName:            Microsoft.Hosting.Lifetime
+﻿LogRecord.Severity:                Info
+﻿LogRecord.SeverityText:            Information
+﻿LogRecord.Body:                    Content root path: {ContentRoot}
+﻿LogRecord.Attributes (Key:Value):
+﻿    ContentRoot: C:\Users\alpar\source\repos\LanguageLearnAssistantBackend\src\API\App.API
+﻿    OriginalFormat (a.k.a Body): Content root path: {ContentRoot}
+﻿
+﻿Resource associated with LogRecord:
+﻿service.name: LanguageLearnAssistantBackend.API
+﻿service.version: 1.0.0
+﻿service.instance.id: 33959474-575a-4382-b411-92c031499a21
+﻿telemetry.sdk.name: opentelemetry
+﻿telemetry.sdk.language: dotnet
+﻿telemetry.sdk.version: 1.14.0
+﻿
+﻿warn: LuckyPennySoftware.MediatR.License[0]
+﻿      You do not have a valid license key for the Lucky Penny software MediatR. This is allowed for development and testing scenarios. If you are running in production you are required to have a licensed version. Please visit https://luckypennysoftware.com to obtain a valid license.
+﻿LogRecord.Timestamp:               2026-02-09T16:54:17.1580023Z
+﻿LogRecord.TraceId:                 f196fea6cf5c459e08d4a13e18a0833d
+﻿LogRecord.SpanId:                  03022b19637ea260
+﻿LogRecord.TraceFlags:              Recorded
+﻿LogRecord.CategoryName:            LuckyPennySoftware.MediatR.License
+﻿LogRecord.Severity:                Warn
+﻿LogRecord.SeverityText:            Warning
+﻿LogRecord.Body:                    You do not have a valid license key for the Lucky Penny software MediatR. This is allowed for development and testing scenarios. If you are running in production you are required to have a licensed version. Please visit https://luckypennysoftware.com to obtain a valid license.
+﻿LogRecord.Attributes (Key:Value):
+﻿    OriginalFormat (a.k.a Body): You do not have a valid license key for the Lucky Penny software MediatR. This is allowed for development and testing scenarios. If you are running in production you are required to have a licensed version. Please visit https://luckypennysoftware.com to obtain a valid license.
+﻿
+﻿Resource associated with LogRecord:
+﻿service.name: LanguageLearnAssistantBackend.API
+﻿service.version: 1.0.0
+﻿service.instance.id: 33959474-575a-4382-b411-92c031499a21
+﻿telemetry.sdk.name: opentelemetry
+﻿telemetry.sdk.language: dotnet
+﻿telemetry.sdk.version: 1.14.0
+﻿
+﻿LogRecord.Timestamp:               2026-02-09T16:54:17.1580023Z
+﻿LogRecord.TraceId:                 f196fea6cf5c459e08d4a13e18a0833d
+﻿LogRecord.SpanId:                  03022b19637ea260
+﻿LogRecord.TraceFlags:              Recorded
+﻿LogRecord.CategoryName:            LuckyPennySoftware.MediatR.License
+﻿LogRecord.Severity:                Warn
+﻿LogRecord.SeverityText:            Warning
+﻿LogRecord.Body:                    You do not have a valid license key for the Lucky Penny software MediatR. This is allowed for development and testing scenarios. If you are running in production you are required to have a licensed version. Please visit https://luckypennysoftware.com to obtain a valid license.
+﻿LogRecord.Attributes (Key:Value):
+﻿    OriginalFormat (a.k.a Body): You do not have a valid license key for the Lucky Penny software MediatR. This is allowed for development and testing scenarios. If you are running in production you are required to have a licensed version. Please visit https://luckypennysoftware.com to obtain a valid license.
+﻿
+﻿Resource associated with LogRecord:
+﻿service.name: LanguageLearnAssistantBackend.API
+﻿service.version: 1.0.0
+﻿service.instance.id: 33959474-575a-4382-b411-92c031499a21
+﻿telemetry.sdk.name: opentelemetry
+﻿telemetry.sdk.language: dotnet
+﻿telemetry.sdk.version: 1.14.0
+﻿
+﻿Starting IIS Express ...
+﻿Successfully registered URL "http://localhost:53944/" for site "App.API" application "/"
+﻿Successfully registered URL "https://localhost:44343/" for site "App.API" application "/"
+﻿Registration completed for site "App.API"
+﻿IIS Express is running.
+﻿dbug: Microsoft.AspNetCore.Watch.BrowserRefresh.BlazorWasmHotReloadMiddleware[0]
+﻿      Middleware loaded
+﻿LogRecord.Timestamp:               2026-02-09T17:19:29.6328207Z
+﻿LogRecord.CategoryName:            Microsoft.AspNetCore.Watch.BrowserRefresh.BlazorWasmHotReloadMiddleware
+﻿LogRecord.Severity:                Debug
+﻿LogRecord.SeverityText:            Debug
+﻿LogRecord.Body:                    Middleware loaded
+﻿LogRecord.Attributes (Key:Value):
+﻿    OriginalFormat (a.k.a Body): Middleware loaded
+﻿
+﻿Resource associated with LogRecord:
+﻿service.name: LanguageLearnAssistantBackend.API
+﻿service.version: 1.0.0
+﻿service.instance.id: 09645806-4577-4110-9acc-951372a8f5c7
+﻿telemetry.sdk.name: opentelemetry
+﻿telemetry.sdk.language: dotnet
+﻿telemetry.sdk.version: 1.14.0
+﻿
+﻿LogRecord.Timestamp:               2026-02-09T17:19:29.6328207Z
+﻿LogRecord.CategoryName:            Microsoft.AspNetCore.Watch.BrowserRefresh.BlazorWasmHotReloadMiddleware
+﻿LogRecord.Severity:                Debug
+﻿LogRecord.SeverityText:            Debug
+﻿LogRecord.Body:                    Middleware loaded
+﻿LogRecord.Attributes (Key:Value):
+﻿    OriginalFormat (a.k.a Body): Middleware loaded
+﻿
+﻿Resource associated with LogRecord:
+﻿service.name: LanguageLearnAssistantBackend.API
+﻿service.version: 1.0.0
+﻿service.instance.id: 09645806-4577-4110-9acc-951372a8f5c7
+﻿telemetry.sdk.name: opentelemetry
+﻿telemetry.sdk.language: dotnet
+﻿telemetry.sdk.version: 1.14.0
+﻿
+﻿dbug: Microsoft.AspNetCore.Watch.BrowserRefresh.BrowserScriptMiddleware[0]
+﻿      Middleware loaded. Script /_framework/aspnetcore-browser-refresh.js (16499 B).
+﻿LogRecord.Timestamp:               2026-02-09T17:19:29.7731168Z
+﻿LogRecord.CategoryName:            Microsoft.AspNetCore.Watch.BrowserRefresh.BrowserScriptMiddleware
+﻿LogRecord.Severity:                Debug
+﻿LogRecord.SeverityText:            Debug
+﻿LogRecord.Body:                    Middleware loaded. Script {scriptPath} ({size} B).
+﻿LogRecord.Attributes (Key:Value):
+﻿    scriptPath: /_framework/aspnetcore-browser-refresh.js
+﻿    size: 16499
+﻿    OriginalFormat (a.k.a Body): Middleware loaded. Script {scriptPath} ({size} B).
+﻿
+﻿Resource associated with LogRecord:
+﻿service.name: LanguageLearnAssistantBackend.API
+﻿service.version: 1.0.0
+﻿service.instance.id: 09645806-4577-4110-9acc-951372a8f5c7
+﻿telemetry.sdk.name: opentelemetry
+﻿telemetry.sdk.language: dotnet
+﻿telemetry.sdk.version: 1.14.0
+﻿
+﻿LogRecord.Timestamp:               2026-02-09T17:19:29.7731168Z
+﻿LogRecord.CategoryName:            Microsoft.AspNetCore.Watch.BrowserRefresh.BrowserScriptMiddleware
+﻿LogRecord.Severity:                Debug
+﻿LogRecord.SeverityText:            Debug
+﻿LogRecord.Body:                    Middleware loaded. Script {scriptPath} ({size} B).
+﻿LogRecord.Attributes (Key:Value):
+﻿    scriptPath: /_framework/aspnetcore-browser-refresh.js
+﻿    size: 16499
+﻿    OriginalFormat (a.k.a Body): Middleware loaded. Script {scriptPath} ({size} B).
+﻿
+﻿Resource associated with LogRecord:
+﻿service.name: LanguageLearnAssistantBackend.API
+﻿service.version: 1.0.0
+﻿service.instance.id: 09645806-4577-4110-9acc-951372a8f5c7
+﻿telemetry.sdk.name: opentelemetry
+﻿telemetry.sdk.language: dotnet
+﻿telemetry.sdk.version: 1.14.0
+﻿
+﻿dbug: Microsoft.AspNetCore.Watch.BrowserRefresh.BrowserScriptMiddleware[0]
+﻿      Middleware loaded. Script /_framework/blazor-hotreload.js (799 B).
+﻿LogRecord.Timestamp:               2026-02-09T17:19:29.7968857Z
+﻿LogRecord.CategoryName:            Microsoft.AspNetCore.Watch.BrowserRefresh.BrowserScriptMiddleware
+﻿LogRecord.Severity:                Debug
+﻿LogRecord.SeverityText:            Debug
+﻿LogRecord.Body:                    Middleware loaded. Script {scriptPath} ({size} B).
+﻿LogRecord.Attributes (Key:Value):
+﻿    scriptPath: /_framework/blazor-hotreload.js
+﻿    size: 799
+﻿    OriginalFormat (a.k.a Body): Middleware loaded. Script {scriptPath} ({size} B).
+﻿
+﻿Resource associated with LogRecord:
+﻿service.name: LanguageLearnAssistantBackend.API
+﻿service.version: 1.0.0
+﻿service.instance.id: 09645806-4577-4110-9acc-951372a8f5c7
+﻿telemetry.sdk.name: opentelemetry
+﻿telemetry.sdk.language: dotnet
+﻿telemetry.sdk.version: 1.14.0
+﻿
+﻿LogRecord.Timestamp:               2026-02-09T17:19:29.7968857Z
+﻿LogRecord.CategoryName:            Microsoft.AspNetCore.Watch.BrowserRefresh.BrowserScriptMiddleware
+﻿LogRecord.Severity:                Debug
+﻿LogRecord.SeverityText:            Debug
+﻿LogRecord.Body:                    Middleware loaded. Script {scriptPath} ({size} B).
+﻿LogRecord.Attributes (Key:Value):
+﻿    scriptPath: /_framework/blazor-hotreload.js
+﻿    size: 799
+﻿    OriginalFormat (a.k.a Body): Middleware loaded. Script {scriptPath} ({size} B).
+﻿
+﻿Resource associated with LogRecord:
+﻿service.name: LanguageLearnAssistantBackend.API
+﻿service.version: 1.0.0
+﻿service.instance.id: 09645806-4577-4110-9acc-951372a8f5c7
+﻿telemetry.sdk.name: opentelemetry
+﻿telemetry.sdk.language: dotnet
+﻿telemetry.sdk.version: 1.14.0
+﻿
+﻿dbug: Microsoft.AspNetCore.Watch.BrowserRefresh.BrowserRefreshMiddleware[0]
+﻿      Middleware loaded: DOTNET_MODIFIABLE_ASSEMBLIES=debug, __ASPNETCORE_BROWSER_TOOLS=true
+﻿LogRecord.Timestamp:               2026-02-09T17:19:30.7970760Z
+﻿LogRecord.CategoryName:            Microsoft.AspNetCore.Watch.BrowserRefresh.BrowserRefreshMiddleware
+﻿LogRecord.Severity:                Debug
+﻿LogRecord.SeverityText:            Debug
+﻿LogRecord.Body:                    Middleware loaded: DOTNET_MODIFIABLE_ASSEMBLIES={ModifiableAssemblies}, __ASPNETCORE_BROWSER_TOOLS={BrowserTools}
+﻿LogRecord.Attributes (Key:Value):
+﻿    ModifiableAssemblies: debug
+﻿    BrowserTools: true
+﻿    OriginalFormat (a.k.a Body): Middleware loaded: DOTNET_MODIFIABLE_ASSEMBLIES={ModifiableAssemblies}, __ASPNETCORE_BROWSER_TOOLS={BrowserTools}
+﻿
+﻿Resource associated with LogRecord:
+﻿service.name: LanguageLearnAssistantBackend.API
+﻿service.version: 1.0.0
+﻿service.instance.id: 09645806-4577-4110-9acc-951372a8f5c7
+﻿telemetry.sdk.name: opentelemetry
+﻿telemetry.sdk.language: dotnet
+﻿telemetry.sdk.version: 1.14.0
+﻿
+﻿LogRecord.Timestamp:               2026-02-09T17:19:30.7970760Z
+﻿LogRecord.CategoryName:            Microsoft.AspNetCore.Watch.BrowserRefresh.BrowserRefreshMiddleware
+﻿LogRecord.Severity:                Debug
+﻿LogRecord.SeverityText:            Debug
+﻿LogRecord.Body:                    Middleware loaded: DOTNET_MODIFIABLE_ASSEMBLIES={ModifiableAssemblies}, __ASPNETCORE_BROWSER_TOOLS={BrowserTools}
+﻿LogRecord.Attributes (Key:Value):
+﻿    ModifiableAssemblies: debug
+﻿    BrowserTools: true
+﻿    OriginalFormat (a.k.a Body): Middleware loaded: DOTNET_MODIFIABLE_ASSEMBLIES={ModifiableAssemblies}, __ASPNETCORE_BROWSER_TOOLS={BrowserTools}
+﻿
+﻿Resource associated with LogRecord:
+﻿service.name: LanguageLearnAssistantBackend.API
+﻿service.version: 1.0.0
+﻿service.instance.id: 09645806-4577-4110-9acc-951372a8f5c7
+﻿telemetry.sdk.name: opentelemetry
+﻿telemetry.sdk.language: dotnet
+﻿telemetry.sdk.version: 1.14.0
+﻿
+﻿info: Microsoft.Hosting.Lifetime[0]
+﻿      Application started. Press Ctrl+C to shut down.
+﻿LogRecord.Timestamp:               2026-02-09T17:19:31.6629026Z
+﻿LogRecord.CategoryName:            Microsoft.Hosting.Lifetime
+﻿LogRecord.Severity:                Info
+﻿LogRecord.SeverityText:            Information
+﻿LogRecord.Body:                    Application started. Press Ctrl+C to shut down.
+﻿LogRecord.Attributes (Key:Value):
+﻿    OriginalFormat (a.k.a Body): Application started. Press Ctrl+C to shut down.
+﻿
+﻿Resource associated with LogRecord:
+﻿service.name: LanguageLearnAssistantBackend.API
+﻿service.version: 1.0.0
+﻿service.instance.id: 09645806-4577-4110-9acc-951372a8f5c7
+﻿telemetry.sdk.name: opentelemetry
+﻿telemetry.sdk.language: dotnet
+﻿telemetry.sdk.version: 1.14.0
+﻿
+﻿LogRecord.Timestamp:               2026-02-09T17:19:31.6629026Z
+﻿LogRecord.CategoryName:            Microsoft.Hosting.Lifetime
+﻿LogRecord.Severity:                Info
+﻿LogRecord.SeverityText:            Information
+﻿LogRecord.Body:                    Application started. Press Ctrl+C to shut down.
+﻿LogRecord.Attributes (Key:Value):
+﻿    OriginalFormat (a.k.a Body): Application started. Press Ctrl+C to shut down.
+﻿
+﻿Resource associated with LogRecord:
+﻿service.name: LanguageLearnAssistantBackend.API
+﻿service.version: 1.0.0
+﻿service.instance.id: 09645806-4577-4110-9acc-951372a8f5c7
+﻿telemetry.sdk.name: opentelemetry
+﻿telemetry.sdk.language: dotnet
+﻿telemetry.sdk.version: 1.14.0
+﻿
+﻿info: Microsoft.Hosting.Lifetime[0]
+﻿      Hosting environment: Development
+﻿LogRecord.Timestamp:               2026-02-09T17:19:31.6737693Z
+﻿LogRecord.CategoryName:            Microsoft.Hosting.Lifetime
+﻿LogRecord.Severity:                Info
+﻿LogRecord.SeverityText:            Information
+﻿LogRecord.Body:                    Hosting environment: {EnvName}
+﻿LogRecord.Attributes (Key:Value):
+﻿    EnvName: Development
+﻿    OriginalFormat (a.k.a Body): Hosting environment: {EnvName}
+﻿
+﻿Resource associated with LogRecord:
+﻿service.name: LanguageLearnAssistantBackend.API
+﻿service.version: 1.0.0
+﻿service.instance.id: 09645806-4577-4110-9acc-951372a8f5c7
+﻿telemetry.sdk.name: opentelemetry
+﻿telemetry.sdk.language: dotnet
+﻿telemetry.sdk.version: 1.14.0
+﻿
+﻿LogRecord.Timestamp:               2026-02-09T17:19:31.6737693Z
+﻿LogRecord.CategoryName:            Microsoft.Hosting.Lifetime
+﻿LogRecord.Severity:                Info
+﻿LogRecord.SeverityText:            Information
+﻿LogRecord.Body:                    Hosting environment: {EnvName}
+﻿LogRecord.Attributes (Key:Value):
+﻿    EnvName: Development
+﻿    OriginalFormat (a.k.a Body): Hosting environment: {EnvName}
+﻿
+﻿Resource associated with LogRecord:
+﻿service.name: LanguageLearnAssistantBackend.API
+﻿service.version: 1.0.0
+﻿service.instance.id: 09645806-4577-4110-9acc-951372a8f5c7
+﻿telemetry.sdk.name: opentelemetry
+﻿telemetry.sdk.language: dotnet
+﻿telemetry.sdk.version: 1.14.0
+﻿
+﻿info: Microsoft.Hosting.Lifetime[0]
+﻿      Content root path: C:\Users\alpar\source\repos\LanguageLearnAssistantBackend\src\API\App.API
+﻿LogRecord.Timestamp:               2026-02-09T17:19:31.7017464Z
+﻿LogRecord.CategoryName:            Microsoft.Hosting.Lifetime
+﻿LogRecord.Severity:                Info
+﻿LogRecord.SeverityText:            Information
+﻿LogRecord.Body:                    Content root path: {ContentRoot}
+﻿LogRecord.Attributes (Key:Value):
+﻿    ContentRoot: C:\Users\alpar\source\repos\LanguageLearnAssistantBackend\src\API\App.API
+﻿    OriginalFormat (a.k.a Body): Content root path: {ContentRoot}
+﻿
+﻿Resource associated with LogRecord:
+﻿service.name: LanguageLearnAssistantBackend.API
+﻿service.version: 1.0.0
+﻿service.instance.id: 09645806-4577-4110-9acc-951372a8f5c7
+﻿telemetry.sdk.name: opentelemetry
+﻿telemetry.sdk.language: dotnet
+﻿telemetry.sdk.version: 1.14.0
+﻿
+﻿LogRecord.Timestamp:               2026-02-09T17:19:31.7017464Z
+﻿LogRecord.CategoryName:            Microsoft.Hosting.Lifetime
+﻿LogRecord.Severity:                Info
+﻿LogRecord.SeverityText:            Information
+﻿LogRecord.Body:                    Content root path: {ContentRoot}
+﻿LogRecord.Attributes (Key:Value):
+﻿    ContentRoot: C:\Users\alpar\source\repos\LanguageLearnAssistantBackend\src\API\App.API
+﻿    OriginalFormat (a.k.a Body): Content root path: {ContentRoot}
+﻿
+﻿Resource associated with LogRecord:
+﻿service.name: LanguageLearnAssistantBackend.API
+﻿service.version: 1.0.0
+﻿service.instance.id: 09645806-4577-4110-9acc-951372a8f5c7
+﻿telemetry.sdk.name: opentelemetry
+﻿telemetry.sdk.language: dotnet
+﻿telemetry.sdk.version: 1.14.0
+﻿
+﻿warn: LuckyPennySoftware.MediatR.License[0]
+﻿      You do not have a valid license key for the Lucky Penny software MediatR. This is allowed for development and testing scenarios. If you are running in production you are required to have a licensed version. Please visit https://luckypennysoftware.com to obtain a valid license.
+﻿LogRecord.Timestamp:               2026-02-09T17:23:15.6093533Z
+﻿LogRecord.TraceId:                 84c2d33482b7763919709e867814dbe5
+﻿LogRecord.SpanId:                  4afc43246c7206f3
+﻿LogRecord.TraceFlags:              Recorded
+﻿LogRecord.CategoryName:            LuckyPennySoftware.MediatR.License
+﻿LogRecord.Severity:                Warn
+﻿LogRecord.SeverityText:            Warning
+﻿LogRecord.Body:                    You do not have a valid license key for the Lucky Penny software MediatR. This is allowed for development and testing scenarios. If you are running in production you are required to have a licensed version. Please visit https://luckypennysoftware.com to obtain a valid license.
+﻿LogRecord.Attributes (Key:Value):
+﻿    OriginalFormat (a.k.a Body): You do not have a valid license key for the Lucky Penny software MediatR. This is allowed for development and testing scenarios. If you are running in production you are required to have a licensed version. Please visit https://luckypennysoftware.com to obtain a valid license.
+﻿
+﻿Resource associated with LogRecord:
+﻿service.name: LanguageLearnAssistantBackend.API
+﻿service.version: 1.0.0
+﻿service.instance.id: 09645806-4577-4110-9acc-951372a8f5c7
+﻿telemetry.sdk.name: opentelemetry
+﻿telemetry.sdk.language: dotnet
+﻿telemetry.sdk.version: 1.14.0
+﻿
+﻿LogRecord.Timestamp:               2026-02-09T17:23:15.6093533Z
+﻿LogRecord.TraceId:                 84c2d33482b7763919709e867814dbe5
+﻿LogRecord.SpanId:                  4afc43246c7206f3
+﻿LogRecord.TraceFlags:              Recorded
+﻿LogRecord.CategoryName:            LuckyPennySoftware.MediatR.License
+﻿LogRecord.Severity:                Warn
+﻿LogRecord.SeverityText:            Warning
+﻿LogRecord.Body:                    You do not have a valid license key for the Lucky Penny software MediatR. This is allowed for development and testing scenarios. If you are running in production you are required to have a licensed version. Please visit https://luckypennysoftware.com to obtain a valid license.
+﻿LogRecord.Attributes (Key:Value):
+﻿    OriginalFormat (a.k.a Body): You do not have a valid license key for the Lucky Penny software MediatR. This is allowed for development and testing scenarios. If you are running in production you are required to have a licensed version. Please visit https://luckypennysoftware.com to obtain a valid license.
+﻿
+﻿Resource associated with LogRecord:
+﻿service.name: LanguageLearnAssistantBackend.API
+﻿service.version: 1.0.0
+﻿service.instance.id: 09645806-4577-4110-9acc-951372a8f5c7
+﻿telemetry.sdk.name: opentelemetry
+﻿telemetry.sdk.language: dotnet
+﻿telemetry.sdk.version: 1.14.0
+﻿
+﻿info: App.Application.Common.Behaviors.LoggingBehavior[0]
+﻿      HANDLING CreateFlashcardCategoryCommand
+﻿LogRecord.Timestamp:               2026-02-09T17:23:15.7645683Z
+﻿LogRecord.TraceId:                 84c2d33482b7763919709e867814dbe5
+﻿LogRecord.SpanId:                  4afc43246c7206f3
+﻿LogRecord.TraceFlags:              Recorded
+﻿LogRecord.CategoryName:            App.Application.Common.Behaviors.LoggingBehavior
+﻿LogRecord.Severity:                Info
+﻿LogRecord.SeverityText:            Information
+﻿LogRecord.Body:                    HANDLING {RequestName}
+﻿LogRecord.Attributes (Key:Value):
+﻿    RequestName: CreateFlashcardCategoryCommand
+﻿    OriginalFormat (a.k.a Body): HANDLING {RequestName}
+﻿
+﻿Resource associated with LogRecord:
+﻿service.name: LanguageLearnAssistantBackend.API
+﻿service.version: 1.0.0
+﻿service.instance.id: 09645806-4577-4110-9acc-951372a8f5c7
+﻿telemetry.sdk.name: opentelemetry
+﻿telemetry.sdk.language: dotnet
+﻿telemetry.sdk.version: 1.14.0
+﻿
+﻿LogRecord.Timestamp:               2026-02-09T17:23:15.7645683Z
+﻿LogRecord.TraceId:                 84c2d33482b7763919709e867814dbe5
+﻿LogRecord.SpanId:                  4afc43246c7206f3
+﻿LogRecord.TraceFlags:              Recorded
+﻿LogRecord.CategoryName:            App.Application.Common.Behaviors.LoggingBehavior
+﻿LogRecord.Severity:                Info
+﻿LogRecord.SeverityText:            Information
+﻿LogRecord.Body:                    HANDLING {RequestName}
+﻿LogRecord.Attributes (Key:Value):
+﻿    RequestName: CreateFlashcardCategoryCommand
+﻿    OriginalFormat (a.k.a Body): HANDLING {RequestName}
+﻿
+﻿Resource associated with LogRecord:
+﻿service.name: LanguageLearnAssistantBackend.API
+﻿service.version: 1.0.0
+﻿service.instance.id: 09645806-4577-4110-9acc-951372a8f5c7
+﻿telemetry.sdk.name: opentelemetry
+﻿telemetry.sdk.language: dotnet
+﻿telemetry.sdk.version: 1.14.0
+﻿
+﻿warn: Microsoft.EntityFrameworkCore.Model.Validation[30000]
+﻿      No store type was specified for the decimal property 'Rate' on entity type 'FlashcardOldSession'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'.
+﻿LogRecord.Timestamp:               2026-02-09T17:23:18.4805643Z
+﻿LogRecord.TraceId:                 84c2d33482b7763919709e867814dbe5
+﻿LogRecord.SpanId:                  4afc43246c7206f3
+﻿LogRecord.TraceFlags:              Recorded
+﻿LogRecord.CategoryName:            Microsoft.EntityFrameworkCore.Model.Validation
+﻿LogRecord.Severity:                Warn
+﻿LogRecord.SeverityText:            Warning
+﻿LogRecord.Body:                    No store type was specified for the decimal property '{property}' on entity type '{entityType}'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'.
+﻿LogRecord.Attributes (Key:Value):
+﻿    property: Rate
+﻿    entityType: FlashcardOldSession
+﻿    OriginalFormat (a.k.a Body): No store type was specified for the decimal property '{property}' on entity type '{entityType}'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'.
+﻿LogRecord.EventId:                 30000
+﻿LogRecord.EventName:               Microsoft.EntityFrameworkCore.Model.Validation.DecimalTypeDefaultWarning
+﻿
+﻿Resource associated with LogRecord:
+﻿service.name: LanguageLearnAssistantBackend.API
+﻿service.version: 1.0.0
+﻿service.instance.id: 09645806-4577-4110-9acc-951372a8f5c7
+﻿telemetry.sdk.name: opentelemetry
+﻿telemetry.sdk.language: dotnet
+﻿telemetry.sdk.version: 1.14.0
+﻿
+﻿LogRecord.Timestamp:               2026-02-09T17:23:18.4805643Z
+﻿LogRecord.TraceId:                 84c2d33482b7763919709e867814dbe5
+﻿LogRecord.SpanId:                  4afc43246c7206f3
+﻿LogRecord.TraceFlags:              Recorded
+﻿LogRecord.CategoryName:            Microsoft.EntityFrameworkCore.Model.Validation
+﻿LogRecord.Severity:                Warn
+﻿LogRecord.SeverityText:            Warning
+﻿LogRecord.Body:                    No store type was specified for the decimal property '{property}' on entity type '{entityType}'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'.
+﻿LogRecord.Attributes (Key:Value):
+﻿    property: Rate
+﻿    entityType: FlashcardOldSession
+﻿    OriginalFormat (a.k.a Body): No store type was specified for the decimal property '{property}' on entity type '{entityType}'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'.
+﻿LogRecord.EventId:                 30000
+﻿LogRecord.EventName:               Microsoft.EntityFrameworkCore.Model.Validation.DecimalTypeDefaultWarning
+﻿
+﻿Resource associated with LogRecord:
+﻿service.name: LanguageLearnAssistantBackend.API
+﻿service.version: 1.0.0
+﻿service.instance.id: 09645806-4577-4110-9acc-951372a8f5c7
+﻿telemetry.sdk.name: opentelemetry
+﻿telemetry.sdk.language: dotnet
+﻿telemetry.sdk.version: 1.14.0
+﻿
+﻿warn: Microsoft.EntityFrameworkCore.Model.Validation[30000]
+﻿      No store type was specified for the decimal property 'Rate' on entity type 'ListeningOldSession'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'.
+﻿LogRecord.Timestamp:               2026-02-09T17:23:18.4969388Z
+﻿LogRecord.TraceId:                 84c2d33482b7763919709e867814dbe5
+﻿LogRecord.SpanId:                  4afc43246c7206f3
+﻿LogRecord.TraceFlags:              Recorded
+﻿LogRecord.CategoryName:            Microsoft.EntityFrameworkCore.Model.Validation
+﻿LogRecord.Severity:                Warn
+﻿LogRecord.SeverityText:            Warning
+﻿LogRecord.Body:                    No store type was specified for the decimal property '{property}' on entity type '{entityType}'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'.
+﻿LogRecord.Attributes (Key:Value):
+﻿    property: Rate
+﻿    entityType: ListeningOldSession
+﻿    OriginalFormat (a.k.a Body): No store type was specified for the decimal property '{property}' on entity type '{entityType}'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'.
+﻿LogRecord.EventId:                 30000
+﻿LogRecord.EventName:               Microsoft.EntityFrameworkCore.Model.Validation.DecimalTypeDefaultWarning
+﻿
+﻿Resource associated with LogRecord:
+﻿service.name: LanguageLearnAssistantBackend.API
+﻿service.version: 1.0.0
+﻿service.instance.id: 09645806-4577-4110-9acc-951372a8f5c7
+﻿telemetry.sdk.name: opentelemetry
+﻿telemetry.sdk.language: dotnet
+﻿telemetry.sdk.version: 1.14.0
+﻿
+﻿LogRecord.Timestamp:               2026-02-09T17:23:18.4969388Z
+﻿LogRecord.TraceId:                 84c2d33482b7763919709e867814dbe5
+﻿LogRecord.SpanId:                  4afc43246c7206f3
+﻿LogRecord.TraceFlags:              Recorded
+﻿LogRecord.CategoryName:            Microsoft.EntityFrameworkCore.Model.Validation
+﻿LogRecord.Severity:                Warn
+﻿LogRecord.SeverityText:            Warning
+﻿LogRecord.Body:                    No store type was specified for the decimal property '{property}' on entity type '{entityType}'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'.
+﻿LogRecord.Attributes (Key:Value):
+﻿    property: Rate
+﻿    entityType: ListeningOldSession
+﻿    OriginalFormat (a.k.a Body): No store type was specified for the decimal property '{property}' on entity type '{entityType}'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'.
+﻿LogRecord.EventId:                 30000
+﻿LogRecord.EventName:               Microsoft.EntityFrameworkCore.Model.Validation.DecimalTypeDefaultWarning
+﻿
+﻿Resource associated with LogRecord:
+﻿service.name: LanguageLearnAssistantBackend.API
+﻿service.version: 1.0.0
+﻿service.instance.id: 09645806-4577-4110-9acc-951372a8f5c7
+﻿telemetry.sdk.name: opentelemetry
+﻿telemetry.sdk.language: dotnet
+﻿telemetry.sdk.version: 1.14.0
+﻿
+﻿warn: Microsoft.EntityFrameworkCore.Model.Validation[30000]
+﻿      No store type was specified for the decimal property 'Similarity' on entity type 'ListeningSessionRow'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'.
+﻿LogRecord.Timestamp:               2026-02-09T17:23:18.5114795Z
+﻿LogRecord.TraceId:                 84c2d33482b7763919709e867814dbe5
+﻿LogRecord.SpanId:                  4afc43246c7206f3
+﻿LogRecord.TraceFlags:              Recorded
+﻿LogRecord.CategoryName:            Microsoft.EntityFrameworkCore.Model.Validation
+﻿LogRecord.Severity:                Warn
+﻿LogRecord.SeverityText:            Warning
+﻿LogRecord.Body:                    No store type was specified for the decimal property '{property}' on entity type '{entityType}'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'.
+﻿LogRecord.Attributes (Key:Value):
+﻿    property: Similarity
+﻿    entityType: ListeningSessionRow
+﻿    OriginalFormat (a.k.a Body): No store type was specified for the decimal property '{property}' on entity type '{entityType}'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'.
+﻿LogRecord.EventId:                 30000
+﻿LogRecord.EventName:               Microsoft.EntityFrameworkCore.Model.Validation.DecimalTypeDefaultWarning
+﻿
+﻿Resource associated with LogRecord:
+﻿service.name: LanguageLearnAssistantBackend.API
+﻿service.version: 1.0.0
+﻿service.instance.id: 09645806-4577-4110-9acc-951372a8f5c7
+﻿telemetry.sdk.name: opentelemetry
+﻿telemetry.sdk.language: dotnet
+﻿telemetry.sdk.version: 1.14.0
+﻿
+﻿LogRecord.Timestamp:               2026-02-09T17:23:18.5114795Z
+﻿LogRecord.TraceId:                 84c2d33482b7763919709e867814dbe5
+﻿LogRecord.SpanId:                  4afc43246c7206f3
+﻿LogRecord.TraceFlags:              Recorded
+﻿LogRecord.CategoryName:            Microsoft.EntityFrameworkCore.Model.Validation
+﻿LogRecord.Severity:                Warn
+﻿LogRecord.SeverityText:            Warning
+﻿LogRecord.Body:                    No store type was specified for the decimal property '{property}' on entity type '{entityType}'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'.
+﻿LogRecord.Attributes (Key:Value):
+﻿    property: Similarity
+﻿    entityType: ListeningSessionRow
+﻿    OriginalFormat (a.k.a Body): No store type was specified for the decimal property '{property}' on entity type '{entityType}'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'.
+﻿LogRecord.EventId:                 30000
+﻿LogRecord.EventName:               Microsoft.EntityFrameworkCore.Model.Validation.DecimalTypeDefaultWarning
+﻿
+﻿Resource associated with LogRecord:
+﻿service.name: LanguageLearnAssistantBackend.API
+﻿service.version: 1.0.0
+﻿service.instance.id: 09645806-4577-4110-9acc-951372a8f5c7
+﻿telemetry.sdk.name: opentelemetry
+﻿telemetry.sdk.language: dotnet
+﻿telemetry.sdk.version: 1.14.0
+﻿
+﻿warn: Microsoft.EntityFrameworkCore.Model.Validation[30000]
+﻿      No store type was specified for the decimal property 'Rate' on entity type 'ReadingOldSession'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'.
+﻿LogRecord.Timestamp:               2026-02-09T17:23:18.5252546Z
+﻿LogRecord.TraceId:                 84c2d33482b7763919709e867814dbe5
+﻿LogRecord.SpanId:                  4afc43246c7206f3
+﻿LogRecord.TraceFlags:              Recorded
+﻿LogRecord.CategoryName:            Microsoft.EntityFrameworkCore.Model.Validation
+﻿LogRecord.Severity:                Warn
+﻿LogRecord.SeverityText:            Warning
+﻿LogRecord.Body:                    No store type was specified for the decimal property '{property}' on entity type '{entityType}'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'.
+﻿LogRecord.Attributes (Key:Value):
+﻿    property: Rate
+﻿    entityType: ReadingOldSession
+﻿    OriginalFormat (a.k.a Body): No store type was specified for the decimal property '{property}' on entity type '{entityType}'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'.
+﻿LogRecord.EventId:                 30000
+﻿LogRecord.EventName:               Microsoft.EntityFrameworkCore.Model.Validation.DecimalTypeDefaultWarning
+﻿
+﻿Resource associated with LogRecord:
+﻿service.name: LanguageLearnAssistantBackend.API
+﻿service.version: 1.0.0
+﻿service.instance.id: 09645806-4577-4110-9acc-951372a8f5c7
+﻿telemetry.sdk.name: opentelemetry
+﻿telemetry.sdk.language: dotnet
+﻿telemetry.sdk.version: 1.14.0
+﻿
+﻿LogRecord.Timestamp:               2026-02-09T17:23:18.5252546Z
+﻿LogRecord.TraceId:                 84c2d33482b7763919709e867814dbe5
+﻿LogRecord.SpanId:                  4afc43246c7206f3
+﻿LogRecord.TraceFlags:              Recorded
+﻿LogRecord.CategoryName:            Microsoft.EntityFrameworkCore.Model.Validation
+﻿LogRecord.Severity:                Warn
+﻿LogRecord.SeverityText:            Warning
+﻿LogRecord.Body:                    No store type was specified for the decimal property '{property}' on entity type '{entityType}'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'.
+﻿LogRecord.Attributes (Key:Value):
+﻿    property: Rate
+﻿    entityType: ReadingOldSession
+﻿    OriginalFormat (a.k.a Body): No store type was specified for the decimal property '{property}' on entity type '{entityType}'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'.
+﻿LogRecord.EventId:                 30000
+﻿LogRecord.EventName:               Microsoft.EntityFrameworkCore.Model.Validation.DecimalTypeDefaultWarning
+﻿
+﻿Resource associated with LogRecord:
+﻿service.name: LanguageLearnAssistantBackend.API
+﻿service.version: 1.0.0
+﻿service.instance.id: 09645806-4577-4110-9acc-951372a8f5c7
+﻿telemetry.sdk.name: opentelemetry
+﻿telemetry.sdk.language: dotnet
+﻿telemetry.sdk.version: 1.14.0
+﻿
+﻿warn: Microsoft.EntityFrameworkCore.Model.Validation[30000]
+﻿      No store type was specified for the decimal property 'Similarity' on entity type 'ReadingSessionRow'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'.
+﻿LogRecord.Timestamp:               2026-02-09T17:23:18.5602303Z
+﻿LogRecord.TraceId:                 84c2d33482b7763919709e867814dbe5
+﻿LogRecord.SpanId:                  4afc43246c7206f3
+﻿LogRecord.TraceFlags:              Recorded
+﻿LogRecord.CategoryName:            Microsoft.EntityFrameworkCore.Model.Validation
+﻿LogRecord.Severity:                Warn
+﻿LogRecord.SeverityText:            Warning
+﻿LogRecord.Body:                    No store type was specified for the decimal property '{property}' on entity type '{entityType}'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'.
+﻿LogRecord.Attributes (Key:Value):
+﻿    property: Similarity
+﻿    entityType: ReadingSessionRow
+﻿    OriginalFormat (a.k.a Body): No store type was specified for the decimal property '{property}' on entity type '{entityType}'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'.
+﻿LogRecord.EventId:                 30000
+﻿LogRecord.EventName:               Microsoft.EntityFrameworkCore.Model.Validation.DecimalTypeDefaultWarning
+﻿
+﻿Resource associated with LogRecord:
+﻿service.name: LanguageLearnAssistantBackend.API
+﻿service.version: 1.0.0
+﻿service.instance.id: 09645806-4577-4110-9acc-951372a8f5c7
+﻿telemetry.sdk.name: opentelemetry
+﻿telemetry.sdk.language: dotnet
+﻿telemetry.sdk.version: 1.14.0
+﻿
+﻿LogRecord.Timestamp:               2026-02-09T17:23:18.5602303Z
+﻿LogRecord.TraceId:                 84c2d33482b7763919709e867814dbe5
+﻿LogRecord.SpanId:                  4afc43246c7206f3
+﻿LogRecord.TraceFlags:              Recorded
+﻿LogRecord.CategoryName:            Microsoft.EntityFrameworkCore.Model.Validation
+﻿LogRecord.Severity:                Warn
+﻿LogRecord.SeverityText:            Warning
+﻿LogRecord.Body:                    No store type was specified for the decimal property '{property}' on entity type '{entityType}'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'.
+﻿LogRecord.Attributes (Key:Value):
+﻿    property: Similarity
+﻿    entityType: ReadingSessionRow
+﻿    OriginalFormat (a.k.a Body): No store type was specified for the decimal property '{property}' on entity type '{entityType}'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'.
+﻿LogRecord.EventId:                 30000
+﻿LogRecord.EventName:               Microsoft.EntityFrameworkCore.Model.Validation.DecimalTypeDefaultWarning
+﻿
+﻿Resource associated with LogRecord:
+﻿service.name: LanguageLearnAssistantBackend.API
+﻿service.version: 1.0.0
+﻿service.instance.id: 09645806-4577-4110-9acc-951372a8f5c7
+﻿telemetry.sdk.name: opentelemetry
+﻿telemetry.sdk.language: dotnet
+﻿telemetry.sdk.version: 1.14.0
+﻿
+﻿warn: Microsoft.EntityFrameworkCore.Model.Validation[30000]
+﻿      No store type was specified for the decimal property 'Rate' on entity type 'WritingOldSession'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'.
+﻿LogRecord.Timestamp:               2026-02-09T17:23:18.5746676Z
+﻿LogRecord.TraceId:                 84c2d33482b7763919709e867814dbe5
+﻿LogRecord.SpanId:                  4afc43246c7206f3
+﻿LogRecord.TraceFlags:              Recorded
+﻿LogRecord.CategoryName:            Microsoft.EntityFrameworkCore.Model.Validation
+﻿LogRecord.Severity:                Warn
+﻿LogRecord.SeverityText:            Warning
+﻿LogRecord.Body:                    No store type was specified for the decimal property '{property}' on entity type '{entityType}'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'.
+﻿LogRecord.Attributes (Key:Value):
+﻿    property: Rate
+﻿    entityType: WritingOldSession
+﻿    OriginalFormat (a.k.a Body): No store type was specified for the decimal property '{property}' on entity type '{entityType}'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'.
+﻿LogRecord.EventId:                 30000
+﻿LogRecord.EventName:               Microsoft.EntityFrameworkCore.Model.Validation.DecimalTypeDefaultWarning
+﻿
+﻿Resource associated with LogRecord:
+﻿service.name: LanguageLearnAssistantBackend.API
+﻿service.version: 1.0.0
+﻿service.instance.id: 09645806-4577-4110-9acc-951372a8f5c7
+﻿telemetry.sdk.name: opentelemetry
+﻿telemetry.sdk.language: dotnet
+﻿telemetry.sdk.version: 1.14.0
+﻿
+﻿LogRecord.Timestamp:               2026-02-09T17:23:18.5746676Z
+﻿LogRecord.TraceId:                 84c2d33482b7763919709e867814dbe5
+﻿LogRecord.SpanId:                  4afc43246c7206f3
+﻿LogRecord.TraceFlags:              Recorded
+﻿LogRecord.CategoryName:            Microsoft.EntityFrameworkCore.Model.Validation
+﻿LogRecord.Severity:                Warn
+﻿LogRecord.SeverityText:            Warning
+﻿LogRecord.Body:                    No store type was specified for the decimal property '{property}' on entity type '{entityType}'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'.
+﻿LogRecord.Attributes (Key:Value):
+﻿    property: Rate
+﻿    entityType: WritingOldSession
+﻿    OriginalFormat (a.k.a Body): No store type was specified for the decimal property '{property}' on entity type '{entityType}'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'.
+﻿LogRecord.EventId:                 30000
+﻿LogRecord.EventName:               Microsoft.EntityFrameworkCore.Model.Validation.DecimalTypeDefaultWarning
+﻿
+﻿Resource associated with LogRecord:
+﻿service.name: LanguageLearnAssistantBackend.API
+﻿service.version: 1.0.0
+﻿service.instance.id: 09645806-4577-4110-9acc-951372a8f5c7
+﻿telemetry.sdk.name: opentelemetry
+﻿telemetry.sdk.language: dotnet
+﻿telemetry.sdk.version: 1.14.0
+﻿
+﻿warn: Microsoft.EntityFrameworkCore.Model.Validation[30000]
+﻿      No store type was specified for the decimal property 'Similarity' on entity type 'WritingSessionRow'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'.
+﻿LogRecord.Timestamp:               2026-02-09T17:23:18.5848686Z
+﻿LogRecord.TraceId:                 84c2d33482b7763919709e867814dbe5
+﻿LogRecord.SpanId:                  4afc43246c7206f3
+﻿LogRecord.TraceFlags:              Recorded
+﻿LogRecord.CategoryName:            Microsoft.EntityFrameworkCore.Model.Validation
+﻿LogRecord.Severity:                Warn
+﻿LogRecord.SeverityText:            Warning
+﻿LogRecord.Body:                    No store type was specified for the decimal property '{property}' on entity type '{entityType}'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'.
+﻿LogRecord.Attributes (Key:Value):
+﻿    property: Similarity
+﻿    entityType: WritingSessionRow
+﻿    OriginalFormat (a.k.a Body): No store type was specified for the decimal property '{property}' on entity type '{entityType}'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'.
+﻿LogRecord.EventId:                 30000
+﻿LogRecord.EventName:               Microsoft.EntityFrameworkCore.Model.Validation.DecimalTypeDefaultWarning
+﻿
+﻿Resource associated with LogRecord:
+﻿service.name: LanguageLearnAssistantBackend.API
+﻿service.version: 1.0.0
+﻿service.instance.id: 09645806-4577-4110-9acc-951372a8f5c7
+﻿telemetry.sdk.name: opentelemetry
+﻿telemetry.sdk.language: dotnet
+﻿telemetry.sdk.version: 1.14.0
+﻿
+﻿LogRecord.Timestamp:               2026-02-09T17:23:18.5848686Z
+﻿LogRecord.TraceId:                 84c2d33482b7763919709e867814dbe5
+﻿LogRecord.SpanId:                  4afc43246c7206f3
+﻿LogRecord.TraceFlags:              Recorded
+﻿LogRecord.CategoryName:            Microsoft.EntityFrameworkCore.Model.Validation
+﻿LogRecord.Severity:                Warn
+﻿LogRecord.SeverityText:            Warning
+﻿LogRecord.Body:                    No store type was specified for the decimal property '{property}' on entity type '{entityType}'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'.
+﻿LogRecord.Attributes (Key:Value):
+﻿    property: Similarity
+﻿    entityType: WritingSessionRow
+﻿    OriginalFormat (a.k.a Body): No store type was specified for the decimal property '{property}' on entity type '{entityType}'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'.
+﻿LogRecord.EventId:                 30000
+﻿LogRecord.EventName:               Microsoft.EntityFrameworkCore.Model.Validation.DecimalTypeDefaultWarning
+﻿
+﻿Resource associated with LogRecord:
+﻿service.name: LanguageLearnAssistantBackend.API
+﻿service.version: 1.0.0
+﻿service.instance.id: 09645806-4577-4110-9acc-951372a8f5c7
+﻿telemetry.sdk.name: opentelemetry
+﻿telemetry.sdk.language: dotnet
+﻿telemetry.sdk.version: 1.14.0
+﻿
+﻿info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+﻿      Executed DbCommand (152ms) [Parameters=[@languageId='?' (DbType = Int32)], CommandType='Text', CommandTimeout='30']
+﻿      SELECT TOP(1) [p].[Id], [p].[LanguageId], [p].[Name]
+﻿      FROM [Practices] AS [p]
+﻿      WHERE [p].[LanguageId] = @languageId
+﻿LogRecord.Timestamp:               2026-02-09T17:23:20.5022746Z
+﻿LogRecord.TraceId:                 84c2d33482b7763919709e867814dbe5
+﻿LogRecord.SpanId:                  a9e12f6c36010a40
+﻿LogRecord.TraceFlags:              Recorded
+﻿LogRecord.CategoryName:            Microsoft.EntityFrameworkCore.Database.Command
+﻿LogRecord.Severity:                Info
+﻿LogRecord.SeverityText:            Information
+﻿LogRecord.Body:                    Executed DbCommand ({elapsed}ms) [Parameters=[{parameters}], CommandType='{commandType}', CommandTimeout='{commandTimeout}']{newLine}{commandText}
+﻿LogRecord.Attributes (Key:Value):
+﻿    elapsed: 152
+﻿    parameters: @languageId='?' (DbType = Int32)
+﻿    commandType: Text
+﻿    commandTimeout: 30
+﻿    newLine: 
+﻿
+﻿    commandText: SELECT TOP(1) [p].[Id], [p].[LanguageId], [p].[Name]
+﻿FROM [Practices] AS [p]
+﻿WHERE [p].[LanguageId] = @languageId
+﻿    OriginalFormat (a.k.a Body): Executed DbCommand ({elapsed}ms) [Parameters=[{parameters}], CommandType='{commandType}', CommandTimeout='{commandTimeout}']{newLine}{commandText}
+﻿LogRecord.EventId:                 20101
+﻿LogRecord.EventName:               Microsoft.EntityFrameworkCore.Database.Command.CommandExecuted
+﻿
+﻿Resource associated with LogRecord:
+﻿service.name: LanguageLearnAssistantBackend.API
+﻿service.version: 1.0.0
+﻿service.instance.id: 09645806-4577-4110-9acc-951372a8f5c7
+﻿telemetry.sdk.name: opentelemetry
+﻿telemetry.sdk.language: dotnet
+﻿telemetry.sdk.version: 1.14.0
+﻿
+﻿LogRecord.Timestamp:               2026-02-09T17:23:20.5022746Z
+﻿LogRecord.TraceId:                 84c2d33482b7763919709e867814dbe5
+﻿LogRecord.SpanId:                  a9e12f6c36010a40
+﻿LogRecord.TraceFlags:              Recorded
+﻿LogRecord.CategoryName:            Microsoft.EntityFrameworkCore.Database.Command
+﻿LogRecord.Severity:                Info
+﻿LogRecord.SeverityText:            Information
+﻿LogRecord.Body:                    Executed DbCommand ({elapsed}ms) [Parameters=[{parameters}], CommandType='{commandType}', CommandTimeout='{commandTimeout}']{newLine}{commandText}
+﻿LogRecord.Attributes (Key:Value):
+﻿    elapsed: 152
+﻿    parameters: @languageId='?' (DbType = Int32)
+﻿    commandType: Text
+﻿    commandTimeout: 30
+﻿    newLine: 
+﻿
+﻿    commandText: SELECT TOP(1) [p].[Id], [p].[LanguageId], [p].[Name]
+﻿FROM [Practices] AS [p]
+﻿WHERE [p].[LanguageId] = @languageId
+﻿    OriginalFormat (a.k.a Body): Executed DbCommand ({elapsed}ms) [Parameters=[{parameters}], CommandType='{commandType}', CommandTimeout='{commandTimeout}']{newLine}{commandText}
+﻿LogRecord.EventId:                 20101
+﻿LogRecord.EventName:               Microsoft.EntityFrameworkCore.Database.Command.CommandExecuted
+﻿
+﻿Resource associated with LogRecord:
+﻿service.name: LanguageLearnAssistantBackend.API
+﻿service.version: 1.0.0
+﻿service.instance.id: 09645806-4577-4110-9acc-951372a8f5c7
+﻿telemetry.sdk.name: opentelemetry
+﻿telemetry.sdk.language: dotnet
+﻿telemetry.sdk.version: 1.14.0
+﻿
+﻿info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+﻿      Executed DbCommand (9ms) [Parameters=[@practiceId='?' (DbType = Int32), @userId='?' (Size = 4000), @languageId='?' (DbType = Int32)], CommandType='Text', CommandTimeout='30']
+﻿      SELECT TOP(1) [f].[Id], [f].[LanguageId], [f].[PracticeId], [f].[UserId]
+﻿      FROM [Flashcards] AS [f]
+﻿      WHERE [f].[PracticeId] = @practiceId AND [f].[UserId] = @userId AND [f].[LanguageId] = @languageId
+﻿LogRecord.Timestamp:               2026-02-09T17:23:20.6628209Z
+﻿LogRecord.TraceId:                 84c2d33482b7763919709e867814dbe5
+﻿LogRecord.SpanId:                  1d1d8ac256597f6c
+﻿LogRecord.TraceFlags:              Recorded
+﻿LogRecord.CategoryName:            Microsoft.EntityFrameworkCore.Database.Command
+﻿LogRecord.Severity:                Info
+﻿LogRecord.SeverityText:            Information
+﻿LogRecord.Body:                    Executed DbCommand ({elapsed}ms) [Parameters=[{parameters}], CommandType='{commandType}', CommandTimeout='{commandTimeout}']{newLine}{commandText}
+﻿LogRecord.Attributes (Key:Value):
+﻿    elapsed: 9
+﻿    parameters: @practiceId='?' (DbType = Int32), @userId='?' (Size = 4000), @languageId='?' (DbType = Int32)
+﻿    commandType: Text
+﻿    commandTimeout: 30
+﻿    newLine: 
+﻿
+﻿    commandText: SELECT TOP(1) [f].[Id], [f].[LanguageId], [f].[PracticeId], [f].[UserId]
+﻿FROM [Flashcards] AS [f]
+﻿WHERE [f].[PracticeId] = @practiceId AND [f].[UserId] = @userId AND [f].[LanguageId] = @languageId
+﻿    OriginalFormat (a.k.a Body): Executed DbCommand ({elapsed}ms) [Parameters=[{parameters}], CommandType='{commandType}', CommandTimeout='{commandTimeout}']{newLine}{commandText}
+﻿LogRecord.EventId:                 20101
+﻿LogRecord.EventName:               Microsoft.EntityFrameworkCore.Database.Command.CommandExecuted
+﻿
+﻿Resource associated with LogRecord:
+﻿service.name: LanguageLearnAssistantBackend.API
+﻿service.version: 1.0.0
+﻿service.instance.id: 09645806-4577-4110-9acc-951372a8f5c7
+﻿telemetry.sdk.name: opentelemetry
+﻿telemetry.sdk.language: dotnet
+﻿telemetry.sdk.version: 1.14.0
+﻿
+﻿LogRecord.Timestamp:               2026-02-09T17:23:20.6628209Z
+﻿LogRecord.TraceId:                 84c2d33482b7763919709e867814dbe5
+﻿LogRecord.SpanId:                  1d1d8ac256597f6c
+﻿LogRecord.TraceFlags:              Recorded
+﻿LogRecord.CategoryName:            Microsoft.EntityFrameworkCore.Database.Command
+﻿LogRecord.Severity:                Info
+﻿LogRecord.SeverityText:            Information
+﻿LogRecord.Body:                    Executed DbCommand ({elapsed}ms) [Parameters=[{parameters}], CommandType='{commandType}', CommandTimeout='{commandTimeout}']{newLine}{commandText}
+﻿LogRecord.Attributes (Key:Value):
+﻿    elapsed: 9
+﻿    parameters: @practiceId='?' (DbType = Int32), @userId='?' (Size = 4000), @languageId='?' (DbType = Int32)
+﻿    commandType: Text
+﻿    commandTimeout: 30
+﻿    newLine: 
+﻿
+﻿    commandText: SELECT TOP(1) [f].[Id], [f].[LanguageId], [f].[PracticeId], [f].[UserId]
+﻿FROM [Flashcards] AS [f]
+﻿WHERE [f].[PracticeId] = @practiceId AND [f].[UserId] = @userId AND [f].[LanguageId] = @languageId
+﻿    OriginalFormat (a.k.a Body): Executed DbCommand ({elapsed}ms) [Parameters=[{parameters}], CommandType='{commandType}', CommandTimeout='{commandTimeout}']{newLine}{commandText}
+﻿LogRecord.EventId:                 20101
+﻿LogRecord.EventName:               Microsoft.EntityFrameworkCore.Database.Command.CommandExecuted
+﻿
+﻿Resource associated with LogRecord:
+﻿service.name: LanguageLearnAssistantBackend.API
+﻿service.version: 1.0.0
+﻿service.instance.id: 09645806-4577-4110-9acc-951372a8f5c7
+﻿telemetry.sdk.name: opentelemetry
+﻿telemetry.sdk.language: dotnet
+﻿telemetry.sdk.version: 1.14.0
+﻿
+﻿info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+﻿      Executed DbCommand (5ms) [Parameters=[@p0='?' (DbType = Int32), @p1='?' (Size = 4000)], CommandType='Text', CommandTimeout='30']
+﻿      SET IMPLICIT_TRANSACTIONS OFF;
+﻿      SET NOCOUNT ON;
+﻿      INSERT INTO [FlashcardCategories] ([FlashcardId], [Name])
+﻿      OUTPUT INSERTED.[Id]
+﻿      VALUES (@p0, @p1);
+﻿LogRecord.Timestamp:               2026-02-09T17:23:21.1559037Z
+﻿LogRecord.TraceId:                 84c2d33482b7763919709e867814dbe5
+﻿LogRecord.SpanId:                  fa7695d0625d5715
+﻿LogRecord.TraceFlags:              Recorded
+﻿LogRecord.CategoryName:            Microsoft.EntityFrameworkCore.Database.Command
+﻿LogRecord.Severity:                Info
+﻿LogRecord.SeverityText:            Information
+﻿LogRecord.Body:                    Executed DbCommand ({elapsed}ms) [Parameters=[{parameters}], CommandType='{commandType}', CommandTimeout='{commandTimeout}']{newLine}{commandText}
+﻿LogRecord.Attributes (Key:Value):
+﻿    elapsed: 5
+﻿    parameters: @p0='?' (DbType = Int32), @p1='?' (Size = 4000)
+﻿    commandType: Text
+﻿    commandTimeout: 30
+﻿    newLine: 
+﻿
+﻿    commandText: SET IMPLICIT_TRANSACTIONS OFF;
+﻿SET NOCOUNT ON;
+﻿INSERT INTO [FlashcardCategories] ([FlashcardId], [Name])
+﻿OUTPUT INSERTED.[Id]
+﻿VALUES (@p0, @p1);
+﻿    OriginalFormat (a.k.a Body): Executed DbCommand ({elapsed}ms) [Parameters=[{parameters}], CommandType='{commandType}', CommandTimeout='{commandTimeout}']{newLine}{commandText}
+﻿LogRecord.EventId:                 20101
+﻿LogRecord.EventName:               Microsoft.EntityFrameworkCore.Database.Command.CommandExecuted
+﻿
+﻿Resource associated with LogRecord:
+﻿service.name: LanguageLearnAssistantBackend.API
+﻿service.version: 1.0.0
+﻿service.instance.id: 09645806-4577-4110-9acc-951372a8f5c7
+﻿telemetry.sdk.name: opentelemetry
+﻿telemetry.sdk.language: dotnet
+﻿telemetry.sdk.version: 1.14.0
+﻿
+﻿LogRecord.Timestamp:               2026-02-09T17:23:21.1559037Z
+﻿LogRecord.TraceId:                 84c2d33482b7763919709e867814dbe5
+﻿LogRecord.SpanId:                  fa7695d0625d5715
+﻿LogRecord.TraceFlags:              Recorded
+﻿LogRecord.CategoryName:            Microsoft.EntityFrameworkCore.Database.Command
+﻿LogRecord.Severity:                Info
+﻿LogRecord.SeverityText:            Information
+﻿LogRecord.Body:                    Executed DbCommand ({elapsed}ms) [Parameters=[{parameters}], CommandType='{commandType}', CommandTimeout='{commandTimeout}']{newLine}{commandText}
+﻿LogRecord.Attributes (Key:Value):
+﻿    elapsed: 5
+﻿    parameters: @p0='?' (DbType = Int32), @p1='?' (Size = 4000)
+﻿    commandType: Text
+﻿    commandTimeout: 30
+﻿    newLine: 
+﻿
+﻿    commandText: SET IMPLICIT_TRANSACTIONS OFF;
+﻿SET NOCOUNT ON;
+﻿INSERT INTO [FlashcardCategories] ([FlashcardId], [Name])
+﻿OUTPUT INSERTED.[Id]
+﻿VALUES (@p0, @p1);
+﻿    OriginalFormat (a.k.a Body): Executed DbCommand ({elapsed}ms) [Parameters=[{parameters}], CommandType='{commandType}', CommandTimeout='{commandTimeout}']{newLine}{commandText}
+﻿LogRecord.EventId:                 20101
+﻿LogRecord.EventName:               Microsoft.EntityFrameworkCore.Database.Command.CommandExecuted
+﻿
+﻿Resource associated with LogRecord:
+﻿service.name: LanguageLearnAssistantBackend.API
+﻿service.version: 1.0.0
+﻿service.instance.id: 09645806-4577-4110-9acc-951372a8f5c7
+﻿telemetry.sdk.name: opentelemetry
+﻿telemetry.sdk.language: dotnet
+﻿telemetry.sdk.version: 1.14.0
+﻿
+﻿info: App.Application.Common.Behaviors.LoggingBehavior[0]
+﻿      HANDLED CreateFlashcardCategoryCommand IN 5475MS
+﻿LogRecord.Timestamp:               2026-02-09T17:23:21.2447597Z
+﻿LogRecord.TraceId:                 84c2d33482b7763919709e867814dbe5
+﻿LogRecord.SpanId:                  4afc43246c7206f3
+﻿LogRecord.TraceFlags:              Recorded
+﻿LogRecord.CategoryName:            App.Application.Common.Behaviors.LoggingBehavior
+﻿LogRecord.Severity:                Info
+﻿LogRecord.SeverityText:            Information
+﻿LogRecord.Body:                    HANDLED {RequestName} IN {ElapsedMilliseconds}MS
+﻿LogRecord.Attributes (Key:Value):
+﻿    RequestName: CreateFlashcardCategoryCommand
+﻿    ElapsedMilliseconds: 5475
+﻿    OriginalFormat (a.k.a Body): HANDLED {RequestName} IN {ElapsedMilliseconds}MS
+﻿
+﻿Resource associated with LogRecord:
+﻿service.name: LanguageLearnAssistantBackend.API
+﻿service.version: 1.0.0
+﻿service.instance.id: 09645806-4577-4110-9acc-951372a8f5c7
+﻿telemetry.sdk.name: opentelemetry
+﻿telemetry.sdk.language: dotnet
+﻿telemetry.sdk.version: 1.14.0
+﻿
+﻿LogRecord.Timestamp:               2026-02-09T17:23:21.2447597Z
+﻿LogRecord.TraceId:                 84c2d33482b7763919709e867814dbe5
+﻿LogRecord.SpanId:                  4afc43246c7206f3
+﻿LogRecord.TraceFlags:              Recorded
+﻿LogRecord.CategoryName:            App.Application.Common.Behaviors.LoggingBehavior
+﻿LogRecord.Severity:                Info
+﻿LogRecord.SeverityText:            Information
+﻿LogRecord.Body:                    HANDLED {RequestName} IN {ElapsedMilliseconds}MS
+﻿LogRecord.Attributes (Key:Value):
+﻿    RequestName: CreateFlashcardCategoryCommand
+﻿    ElapsedMilliseconds: 5475
+﻿    OriginalFormat (a.k.a Body): HANDLED {RequestName} IN {ElapsedMilliseconds}MS
+﻿
+﻿Resource associated with LogRecord:
+﻿service.name: LanguageLearnAssistantBackend.API
+﻿service.version: 1.0.0
+﻿service.instance.id: 09645806-4577-4110-9acc-951372a8f5c7
+﻿telemetry.sdk.name: opentelemetry
+﻿telemetry.sdk.language: dotnet
+﻿telemetry.sdk.version: 1.14.0
+﻿
+﻿info: App.Application.Common.Behaviors.LoggingBehavior[0]
+﻿      HANDLING UpdateFlashcardCategoryCommand
+﻿LogRecord.Timestamp:               2026-02-09T17:25:38.8342613Z
+﻿LogRecord.TraceId:                 0c6007785158dc6d160eb2c10f25b484
+﻿LogRecord.SpanId:                  42a5407a14a16c80
+﻿LogRecord.TraceFlags:              Recorded
+﻿LogRecord.CategoryName:            App.Application.Common.Behaviors.LoggingBehavior
+﻿LogRecord.Severity:                Info
+﻿LogRecord.SeverityText:            Information
+﻿LogRecord.Body:                    HANDLING {RequestName}
+﻿LogRecord.Attributes (Key:Value):
+﻿    RequestName: UpdateFlashcardCategoryCommand
+﻿    OriginalFormat (a.k.a Body): HANDLING {RequestName}
+﻿
+﻿Resource associated with LogRecord:
+﻿service.name: LanguageLearnAssistantBackend.API
+﻿service.version: 1.0.0
+﻿service.instance.id: 09645806-4577-4110-9acc-951372a8f5c7
+﻿telemetry.sdk.name: opentelemetry
+﻿telemetry.sdk.language: dotnet
+﻿telemetry.sdk.version: 1.14.0
+﻿
+﻿LogRecord.Timestamp:               2026-02-09T17:25:38.8342613Z
+﻿LogRecord.TraceId:                 0c6007785158dc6d160eb2c10f25b484
+﻿LogRecord.SpanId:                  42a5407a14a16c80
+﻿LogRecord.TraceFlags:              Recorded
+﻿LogRecord.CategoryName:            App.Application.Common.Behaviors.LoggingBehavior
+﻿LogRecord.Severity:                Info
+﻿LogRecord.SeverityText:            Information
+﻿LogRecord.Body:                    HANDLING {RequestName}
+﻿LogRecord.Attributes (Key:Value):
+﻿    RequestName: UpdateFlashcardCategoryCommand
+﻿    OriginalFormat (a.k.a Body): HANDLING {RequestName}
+﻿
+﻿Resource associated with LogRecord:
+﻿service.name: LanguageLearnAssistantBackend.API
+﻿service.version: 1.0.0
+﻿service.instance.id: 09645806-4577-4110-9acc-951372a8f5c7
+﻿telemetry.sdk.name: opentelemetry
+﻿telemetry.sdk.language: dotnet
+﻿telemetry.sdk.version: 1.14.0
+﻿
+﻿info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+﻿      Executed DbCommand (2ms) [Parameters=[@languageId='?' (DbType = Int32)], CommandType='Text', CommandTimeout='30']
+﻿      SELECT TOP(1) [p].[Id], [p].[LanguageId], [p].[Name]
+﻿      FROM [Practices] AS [p]
+﻿      WHERE [p].[LanguageId] = @languageId
+﻿LogRecord.Timestamp:               2026-02-09T17:25:38.8669158Z
+﻿LogRecord.TraceId:                 0c6007785158dc6d160eb2c10f25b484
+﻿LogRecord.SpanId:                  0bc514707f174bda
+﻿LogRecord.TraceFlags:              Recorded
+﻿LogRecord.CategoryName:            Microsoft.EntityFrameworkCore.Database.Command
+﻿LogRecord.Severity:                Info
+﻿LogRecord.SeverityText:            Information
+﻿LogRecord.Body:                    Executed DbCommand ({elapsed}ms) [Parameters=[{parameters}], CommandType='{commandType}', CommandTimeout='{commandTimeout}']{newLine}{commandText}
+﻿LogRecord.Attributes (Key:Value):
+﻿    elapsed: 2
+﻿    parameters: @languageId='?' (DbType = Int32)
+﻿    commandType: Text
+﻿    commandTimeout: 30
+﻿    newLine: 
+﻿
+﻿    commandText: SELECT TOP(1) [p].[Id], [p].[LanguageId], [p].[Name]
+﻿FROM [Practices] AS [p]
+﻿WHERE [p].[LanguageId] = @languageId
+﻿    OriginalFormat (a.k.a Body): Executed DbCommand ({elapsed}ms) [Parameters=[{parameters}], CommandType='{commandType}', CommandTimeout='{commandTimeout}']{newLine}{commandText}
+﻿LogRecord.EventId:                 20101
+﻿LogRecord.EventName:               Microsoft.EntityFrameworkCore.Database.Command.CommandExecuted
+﻿
+﻿Resource associated with LogRecord:
+﻿service.name: LanguageLearnAssistantBackend.API
+﻿service.version: 1.0.0
+﻿service.instance.id: 09645806-4577-4110-9acc-951372a8f5c7
+﻿telemetry.sdk.name: opentelemetry
+﻿telemetry.sdk.language: dotnet
+﻿telemetry.sdk.version: 1.14.0
+﻿
+﻿LogRecord.Timestamp:               2026-02-09T17:25:38.8669158Z
+﻿LogRecord.TraceId:                 0c6007785158dc6d160eb2c10f25b484
+﻿LogRecord.SpanId:                  0bc514707f174bda
+﻿LogRecord.TraceFlags:              Recorded
+﻿LogRecord.CategoryName:            Microsoft.EntityFrameworkCore.Database.Command
+﻿LogRecord.Severity:                Info
+﻿LogRecord.SeverityText:            Information
+﻿LogRecord.Body:                    Executed DbCommand ({elapsed}ms) [Parameters=[{parameters}], CommandType='{commandType}', CommandTimeout='{commandTimeout}']{newLine}{commandText}
+﻿LogRecord.Attributes (Key:Value):
+﻿    elapsed: 2
+﻿    parameters: @languageId='?' (DbType = Int32)
+﻿    commandType: Text
+﻿    commandTimeout: 30
+﻿    newLine: 
+﻿
+﻿    commandText: SELECT TOP(1) [p].[Id], [p].[LanguageId], [p].[Name]
+﻿FROM [Practices] AS [p]
+﻿WHERE [p].[LanguageId] = @languageId
+﻿    OriginalFormat (a.k.a Body): Executed DbCommand ({elapsed}ms) [Parameters=[{parameters}], CommandType='{commandType}', CommandTimeout='{commandTimeout}']{newLine}{commandText}
+﻿LogRecord.EventId:                 20101
+﻿LogRecord.EventName:               Microsoft.EntityFrameworkCore.Database.Command.CommandExecuted
+﻿
+﻿Resource associated with LogRecord:
+﻿service.name: LanguageLearnAssistantBackend.API
+﻿service.version: 1.0.0
+﻿service.instance.id: 09645806-4577-4110-9acc-951372a8f5c7
+﻿telemetry.sdk.name: opentelemetry
+﻿telemetry.sdk.language: dotnet
+﻿telemetry.sdk.version: 1.14.0
+﻿
+﻿info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+﻿      Executed DbCommand (4ms) [Parameters=[@id='?' (DbType = Int32)], CommandType='Text', CommandTimeout='30']
+﻿      SELECT TOP(1) [f].[Id], [f].[FlashcardId], [f].[Name]
+﻿      FROM [FlashcardCategories] AS [f]
+﻿      WHERE [f].[Id] = @id
+﻿LogRecord.Timestamp:               2026-02-09T17:25:38.8990584Z
+﻿LogRecord.TraceId:                 0c6007785158dc6d160eb2c10f25b484
+﻿LogRecord.SpanId:                  c13c3d2fa9a3bbb9
+﻿LogRecord.TraceFlags:              Recorded
+﻿LogRecord.CategoryName:            Microsoft.EntityFrameworkCore.Database.Command
+﻿LogRecord.Severity:                Info
+﻿LogRecord.SeverityText:            Information
+﻿LogRecord.Body:                    Executed DbCommand ({elapsed}ms) [Parameters=[{parameters}], CommandType='{commandType}', CommandTimeout='{commandTimeout}']{newLine}{commandText}
+﻿LogRecord.Attributes (Key:Value):
+﻿    elapsed: 4
+﻿    parameters: @id='?' (DbType = Int32)
+﻿    commandType: Text
+﻿    commandTimeout: 30
+﻿    newLine: 
+﻿
+﻿    commandText: SELECT TOP(1) [f].[Id], [f].[FlashcardId], [f].[Name]
+﻿FROM [FlashcardCategories] AS [f]
+﻿WHERE [f].[Id] = @id
+﻿    OriginalFormat (a.k.a Body): Executed DbCommand ({elapsed}ms) [Parameters=[{parameters}], CommandType='{commandType}', CommandTimeout='{commandTimeout}']{newLine}{commandText}
+﻿LogRecord.EventId:                 20101
+﻿LogRecord.EventName:               Microsoft.EntityFrameworkCore.Database.Command.CommandExecuted
+﻿
+﻿Resource associated with LogRecord:
+﻿service.name: LanguageLearnAssistantBackend.API
+﻿service.version: 1.0.0
+﻿service.instance.id: 09645806-4577-4110-9acc-951372a8f5c7
+﻿telemetry.sdk.name: opentelemetry
+﻿telemetry.sdk.language: dotnet
+﻿telemetry.sdk.version: 1.14.0
+﻿
+﻿LogRecord.Timestamp:               2026-02-09T17:25:38.8990584Z
+﻿LogRecord.TraceId:                 0c6007785158dc6d160eb2c10f25b484
+﻿LogRecord.SpanId:                  c13c3d2fa9a3bbb9
+﻿LogRecord.TraceFlags:              Recorded
+﻿LogRecord.CategoryName:            Microsoft.EntityFrameworkCore.Database.Command
+﻿LogRecord.Severity:                Info
+﻿LogRecord.SeverityText:            Information
+﻿LogRecord.Body:                    Executed DbCommand ({elapsed}ms) [Parameters=[{parameters}], CommandType='{commandType}', CommandTimeout='{commandTimeout}']{newLine}{commandText}
+﻿LogRecord.Attributes (Key:Value):
+﻿    elapsed: 4
+﻿    parameters: @id='?' (DbType = Int32)
+﻿    commandType: Text
+﻿    commandTimeout: 30
+﻿    newLine: 
+﻿
+﻿    commandText: SELECT TOP(1) [f].[Id], [f].[FlashcardId], [f].[Name]
+﻿FROM [FlashcardCategories] AS [f]
+﻿WHERE [f].[Id] = @id
+﻿    OriginalFormat (a.k.a Body): Executed DbCommand ({elapsed}ms) [Parameters=[{parameters}], CommandType='{commandType}', CommandTimeout='{commandTimeout}']{newLine}{commandText}
+﻿LogRecord.EventId:                 20101
+﻿LogRecord.EventName:               Microsoft.EntityFrameworkCore.Database.Command.CommandExecuted
+﻿
+﻿Resource associated with LogRecord:
+﻿service.name: LanguageLearnAssistantBackend.API
+﻿service.version: 1.0.0
+﻿service.instance.id: 09645806-4577-4110-9acc-951372a8f5c7
+﻿telemetry.sdk.name: opentelemetry
+﻿telemetry.sdk.language: dotnet
+﻿telemetry.sdk.version: 1.14.0
+﻿
+﻿info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+﻿      Executed DbCommand (9ms) [Parameters=[@practiceId='?' (DbType = Int32), @userId='?' (Size = 4000), @languageId='?' (DbType = Int32)], CommandType='Text', CommandTimeout='30']
+﻿      SELECT TOP(1) [f].[Id], [f].[LanguageId], [f].[PracticeId], [f].[UserId]
+﻿      FROM [Flashcards] AS [f]
+﻿      WHERE [f].[PracticeId] = @practiceId AND [f].[UserId] = @userId AND [f].[LanguageId] = @languageId
+﻿LogRecord.Timestamp:               2026-02-09T17:25:38.9218964Z
+﻿LogRecord.TraceId:                 0c6007785158dc6d160eb2c10f25b484
+﻿LogRecord.SpanId:                  03276e8e454e1841
+﻿LogRecord.TraceFlags:              Recorded
+﻿LogRecord.CategoryName:            Microsoft.EntityFrameworkCore.Database.Command
+﻿LogRecord.Severity:                Info
+﻿LogRecord.SeverityText:            Information
+﻿LogRecord.Body:                    Executed DbCommand ({elapsed}ms) [Parameters=[{parameters}], CommandType='{commandType}', CommandTimeout='{commandTimeout}']{newLine}{commandText}
+﻿LogRecord.Attributes (Key:Value):
+﻿    elapsed: 9
+﻿    parameters: @practiceId='?' (DbType = Int32), @userId='?' (Size = 4000), @languageId='?' (DbType = Int32)
+﻿    commandType: Text
+﻿    commandTimeout: 30
+﻿    newLine: 
+﻿
+﻿    commandText: SELECT TOP(1) [f].[Id], [f].[LanguageId], [f].[PracticeId], [f].[UserId]
+﻿FROM [Flashcards] AS [f]
+﻿WHERE [f].[PracticeId] = @practiceId AND [f].[UserId] = @userId AND [f].[LanguageId] = @languageId
+﻿    OriginalFormat (a.k.a Body): Executed DbCommand ({elapsed}ms) [Parameters=[{parameters}], CommandType='{commandType}', CommandTimeout='{commandTimeout}']{newLine}{commandText}
+﻿LogRecord.EventId:                 20101
+﻿LogRecord.EventName:               Microsoft.EntityFrameworkCore.Database.Command.CommandExecuted
+﻿
+﻿Resource associated with LogRecord:
+﻿service.name: LanguageLearnAssistantBackend.API
+﻿service.version: 1.0.0
+﻿service.instance.id: 09645806-4577-4110-9acc-951372a8f5c7
+﻿telemetry.sdk.name: opentelemetry
+﻿telemetry.sdk.language: dotnet
+﻿telemetry.sdk.version: 1.14.0
+﻿
+﻿LogRecord.Timestamp:               2026-02-09T17:25:38.9218964Z
+﻿LogRecord.TraceId:                 0c6007785158dc6d160eb2c10f25b484
+﻿LogRecord.SpanId:                  03276e8e454e1841
+﻿LogRecord.TraceFlags:              Recorded
+﻿LogRecord.CategoryName:            Microsoft.EntityFrameworkCore.Database.Command
+﻿LogRecord.Severity:                Info
+﻿LogRecord.SeverityText:            Information
+﻿LogRecord.Body:                    Executed DbCommand ({elapsed}ms) [Parameters=[{parameters}], CommandType='{commandType}', CommandTimeout='{commandTimeout}']{newLine}{commandText}
+﻿LogRecord.Attributes (Key:Value):
+﻿    elapsed: 9
+﻿    parameters: @practiceId='?' (DbType = Int32), @userId='?' (Size = 4000), @languageId='?' (DbType = Int32)
+﻿    commandType: Text
+﻿    commandTimeout: 30
+﻿    newLine: 
+﻿
+﻿    commandText: SELECT TOP(1) [f].[Id], [f].[LanguageId], [f].[PracticeId], [f].[UserId]
+﻿FROM [Flashcards] AS [f]
+﻿WHERE [f].[PracticeId] = @practiceId AND [f].[UserId] = @userId AND [f].[LanguageId] = @languageId
+﻿    OriginalFormat (a.k.a Body): Executed DbCommand ({elapsed}ms) [Parameters=[{parameters}], CommandType='{commandType}', CommandTimeout='{commandTimeout}']{newLine}{commandText}
+﻿LogRecord.EventId:                 20101
+﻿LogRecord.EventName:               Microsoft.EntityFrameworkCore.Database.Command.CommandExecuted
+﻿
+﻿Resource associated with LogRecord:
+﻿service.name: LanguageLearnAssistantBackend.API
+﻿service.version: 1.0.0
+﻿service.instance.id: 09645806-4577-4110-9acc-951372a8f5c7
+﻿telemetry.sdk.name: opentelemetry
+﻿telemetry.sdk.language: dotnet
+﻿telemetry.sdk.version: 1.14.0
+﻿
+﻿info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+﻿      Executed DbCommand (10ms) [Parameters=[@p2='?' (DbType = Int32), @p0='?' (DbType = Int32), @p1='?' (Size = 4000)], CommandType='Text', CommandTimeout='30']
+﻿      SET IMPLICIT_TRANSACTIONS OFF;
+﻿      SET NOCOUNT ON;
+﻿      UPDATE [FlashcardCategories] SET [FlashcardId] = @p0, [Name] = @p1
+﻿      OUTPUT 1
+﻿      WHERE [Id] = @p2;
+﻿LogRecord.Timestamp:               2026-02-09T17:25:38.9730379Z
+﻿LogRecord.TraceId:                 0c6007785158dc6d160eb2c10f25b484
+﻿LogRecord.SpanId:                  1f4aead67dda4bd0
+﻿LogRecord.TraceFlags:              Recorded
+﻿LogRecord.CategoryName:            Microsoft.EntityFrameworkCore.Database.Command
+﻿LogRecord.Severity:                Info
+﻿LogRecord.SeverityText:            Information
+﻿LogRecord.Body:                    Executed DbCommand ({elapsed}ms) [Parameters=[{parameters}], CommandType='{commandType}', CommandTimeout='{commandTimeout}']{newLine}{commandText}
+﻿LogRecord.Attributes (Key:Value):
+﻿    elapsed: 10
+﻿    parameters: @p2='?' (DbType = Int32), @p0='?' (DbType = Int32), @p1='?' (Size = 4000)
+﻿    commandType: Text
+﻿    commandTimeout: 30
+﻿    newLine: 
+﻿
+﻿    commandText: SET IMPLICIT_TRANSACTIONS OFF;
+﻿SET NOCOUNT ON;
+﻿UPDATE [FlashcardCategories] SET [FlashcardId] = @p0, [Name] = @p1
+﻿OUTPUT 1
+﻿WHERE [Id] = @p2;
+﻿    OriginalFormat (a.k.a Body): Executed DbCommand ({elapsed}ms) [Parameters=[{parameters}], CommandType='{commandType}', CommandTimeout='{commandTimeout}']{newLine}{commandText}
+﻿LogRecord.EventId:                 20101
+﻿LogRecord.EventName:               Microsoft.EntityFrameworkCore.Database.Command.CommandExecuted
+﻿
+﻿Resource associated with LogRecord:
+﻿service.name: LanguageLearnAssistantBackend.API
+﻿service.version: 1.0.0
+﻿service.instance.id: 09645806-4577-4110-9acc-951372a8f5c7
+﻿telemetry.sdk.name: opentelemetry
+﻿telemetry.sdk.language: dotnet
+﻿telemetry.sdk.version: 1.14.0
+﻿
+﻿LogRecord.Timestamp:               2026-02-09T17:25:38.9730379Z
+﻿LogRecord.TraceId:                 0c6007785158dc6d160eb2c10f25b484
+﻿LogRecord.SpanId:                  1f4aead67dda4bd0
+﻿LogRecord.TraceFlags:              Recorded
+﻿LogRecord.CategoryName:            Microsoft.EntityFrameworkCore.Database.Command
+﻿LogRecord.Severity:                Info
+﻿LogRecord.SeverityText:            Information
+﻿LogRecord.Body:                    Executed DbCommand ({elapsed}ms) [Parameters=[{parameters}], CommandType='{commandType}', CommandTimeout='{commandTimeout}']{newLine}{commandText}
+﻿LogRecord.Attributes (Key:Value):
+﻿    elapsed: 10
+﻿    parameters: @p2='?' (DbType = Int32), @p0='?' (DbType = Int32), @p1='?' (Size = 4000)
+﻿    commandType: Text
+﻿    commandTimeout: 30
+﻿    newLine: 
+﻿
+﻿    commandText: SET IMPLICIT_TRANSACTIONS OFF;
+﻿SET NOCOUNT ON;
+﻿UPDATE [FlashcardCategories] SET [FlashcardId] = @p0, [Name] = @p1
+﻿OUTPUT 1
+﻿WHERE [Id] = @p2;
+﻿    OriginalFormat (a.k.a Body): Executed DbCommand ({elapsed}ms) [Parameters=[{parameters}], CommandType='{commandType}', CommandTimeout='{commandTimeout}']{newLine}{commandText}
+﻿LogRecord.EventId:                 20101
+﻿LogRecord.EventName:               Microsoft.EntityFrameworkCore.Database.Command.CommandExecuted
+﻿
+﻿Resource associated with LogRecord:
+﻿service.name: LanguageLearnAssistantBackend.API
+﻿service.version: 1.0.0
+﻿service.instance.id: 09645806-4577-4110-9acc-951372a8f5c7
+﻿telemetry.sdk.name: opentelemetry
+﻿telemetry.sdk.language: dotnet
+﻿telemetry.sdk.version: 1.14.0
+﻿
+﻿info: App.Application.Common.Behaviors.LoggingBehavior[0]
+﻿      HANDLED UpdateFlashcardCategoryCommand IN 144MS
+﻿LogRecord.Timestamp:               2026-02-09T17:25:38.9939762Z
+﻿LogRecord.TraceId:                 0c6007785158dc6d160eb2c10f25b484
+﻿LogRecord.SpanId:                  42a5407a14a16c80
+﻿LogRecord.TraceFlags:              Recorded
+﻿LogRecord.CategoryName:            App.Application.Common.Behaviors.LoggingBehavior
+﻿LogRecord.Severity:                Info
+﻿LogRecord.SeverityText:            Information
+﻿LogRecord.Body:                    HANDLED {RequestName} IN {ElapsedMilliseconds}MS
+﻿LogRecord.Attributes (Key:Value):
+﻿    RequestName: UpdateFlashcardCategoryCommand
+﻿    ElapsedMilliseconds: 144
+﻿    OriginalFormat (a.k.a Body): HANDLED {RequestName} IN {ElapsedMilliseconds}MS
+﻿
+﻿Resource associated with LogRecord:
+﻿service.name: LanguageLearnAssistantBackend.API
+﻿service.version: 1.0.0
+﻿service.instance.id: 09645806-4577-4110-9acc-951372a8f5c7
+﻿telemetry.sdk.name: opentelemetry
+﻿telemetry.sdk.language: dotnet
+﻿telemetry.sdk.version: 1.14.0
+﻿
+﻿LogRecord.Timestamp:               2026-02-09T17:25:38.9939762Z
+﻿LogRecord.TraceId:                 0c6007785158dc6d160eb2c10f25b484
+﻿LogRecord.SpanId:                  42a5407a14a16c80
+﻿LogRecord.TraceFlags:              Recorded
+﻿LogRecord.CategoryName:            App.Application.Common.Behaviors.LoggingBehavior
+﻿LogRecord.Severity:                Info
+﻿LogRecord.SeverityText:            Information
+﻿LogRecord.Body:                    HANDLED {RequestName} IN {ElapsedMilliseconds}MS
+﻿LogRecord.Attributes (Key:Value):
+﻿    RequestName: UpdateFlashcardCategoryCommand
+﻿    ElapsedMilliseconds: 144
+﻿    OriginalFormat (a.k.a Body): HANDLED {RequestName} IN {ElapsedMilliseconds}MS
+﻿
+﻿Resource associated with LogRecord:
+﻿service.name: LanguageLearnAssistantBackend.API
+﻿service.version: 1.0.0
+﻿service.instance.id: 09645806-4577-4110-9acc-951372a8f5c7
+﻿telemetry.sdk.name: opentelemetry
+﻿telemetry.sdk.language: dotnet
+﻿telemetry.sdk.version: 1.14.0
+﻿

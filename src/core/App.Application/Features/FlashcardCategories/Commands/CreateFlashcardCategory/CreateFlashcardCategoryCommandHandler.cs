@@ -32,7 +32,7 @@ public class CreateFlashcardCategoryCommandHandler(
     {
 
         // GET PRACTICE
-        var practice = await practiceRepository.ExistsByLanguageIdAsync(request.Request.LanguageId)
+        var practice = await practiceRepository.ExistsByNameAndLanguageIdAsync(request.Request.Practice, request.Request.LanguageId)
             ?? throw new NotFoundException("PRACTICE NOT FOUND");
 
         // VERIFY OR CREATE FLASHCARD
@@ -52,9 +52,8 @@ public class CreateFlashcardCategoryCommandHandler(
         // CREATE FLASHCARD CATEGORY
         var flashcardCategory = new FlashcardCategory
         {
-            FlashcardId = flashcard.Id,
             Name = request.Request.CategoryName,
-            Flashcard = flashcard
+            FlashcardId = flashcard.Id
         };
 
         // ADD FLASHCARD CATEGORY TO DB AND COMMIT

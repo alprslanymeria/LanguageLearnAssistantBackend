@@ -36,15 +36,22 @@ public class FileStorageHelper(
 
         try
         {
-            var fileExists = await storageService.ExistsAsync(fileUrl);
+
+            // EXTRACT FILE PATH FROM URL
+            // Remove domain and bucket name to get relative path
+            // https://storage.googleapis.com/create-items/user/folder/file -> user/folder/file
+
+            var filePath = fileUrl.Replace("https://storage.googleapis.com/create-items/", "");
+
+            var fileExists = await storageService.ExistsAsync(filePath);
 
             if (!fileExists)
             {
                 return;
             }
 
-            await storageService.DeleteAsync(fileUrl);
-            logger.LogInformation("FileStorageHelper -> SUCCESSFULLY DELETED FILE FROM STORAGE: {FileUrl}", fileUrl);
+            await storageService.DeleteAsync(filePath);
+            logger.LogInformation("FileStorageHelper -> SUCCESSFULLY DELETED FILE FROM STORAGE: {FileUrl}", filePath);
         }
         catch (Exception ex)
         {

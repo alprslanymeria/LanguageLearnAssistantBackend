@@ -37,9 +37,7 @@ public class CreateLOSCommandHandler(
             ListeningId = request.Request.ListeningId,
             ListeningCategoryId = request.Request.ListeningCategoryId,
             Rate = request.Request.Rate,
-            CreatedAt = DateTime.UtcNow,
-            Listening = listening,
-            ListeningCategory = listeningCategory
+            CreatedAt = DateTime.UtcNow
         };
 
         await listeningOldSessionRepository.AddAsync(session);

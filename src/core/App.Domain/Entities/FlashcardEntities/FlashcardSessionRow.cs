@@ -1,4 +1,4 @@
-﻿namespace App.Domain.Entities.FlashcardEntities;
+namespace App.Domain.Entities.FlashcardEntities;
 
 public class FlashcardSessionRow : BaseEntity<int>
 {
@@ -8,5 +8,5 @@ public class FlashcardSessionRow : BaseEntity<int>
     public bool Status { get; set; }
 
     // REFERENCES (PARENTS)
-    public required FlashcardOldSession FlashcardOldSession { get; set; } // FOR FlashcardOldSessionId
+    public FlashcardOldSession? FlashcardOldSession { get; set; } // FOR FlashcardOldSessionId
 }

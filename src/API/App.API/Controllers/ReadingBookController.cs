@@ -58,7 +58,7 @@ public class ReadingBookController(ISender sender) : BaseController
     /// /api/v1.0/ReadingBook + FORM DATA
     /// </summary>
     [HttpPost]
-    public async Task<IActionResult> CreateReadingBook([FromBody] CreateReadingBookRequest request)
+    public async Task<IActionResult> CreateReadingBook([FromForm] CreateReadingBookRequest request)
         => ActionResultInstance(await sender.Send(new CreateReadingBookCommand(request)));
 
     /// <summary>
@@ -66,6 +66,6 @@ public class ReadingBookController(ISender sender) : BaseController
     /// /api/v1.0/ReadingBook + FORM DATA
     /// </summary>
     [HttpPut]
-    public async Task<IActionResult> UpdateReadingBook([FromBody] UpdateReadingBookRequest request)
+    public async Task<IActionResult> UpdateReadingBook([FromForm] UpdateReadingBookRequest request)
         => ActionResultInstance(await sender.Send(new UpdateReadingBookCommand(request)));
 }

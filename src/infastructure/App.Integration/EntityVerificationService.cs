@@ -1,5 +1,6 @@
 using System.Net;
 using App.Application.Common;
+using App.Application.Contracts.Persistence;
 using App.Application.Contracts.Persistence.Repositories;
 using App.Application.Contracts.Services;
 using App.Domain.Entities.FlashcardEntities;
@@ -19,6 +20,7 @@ public class EntityVerificationService(
     IWritingRepository writingRepository,
     ILanguageRepository languageRepository,
     IPracticeRepository practiceRepository,
+    IUnitOfWork unitOfWork,
     ILogger<EntityVerificationService> logger
 
     ) : IEntityVerificationService
@@ -42,7 +44,7 @@ public class EntityVerificationService(
             return ServiceResult<Flashcard>.Fail("LANGUAGE NOT FOUND", HttpStatusCode.NotFound);
         }
 
-        var practice = await practiceRepository.ExistsByLanguageIdAsync(languageId);
+        var practice = await practiceRepository.ExistsByNameAndLanguageIdAsync("flashcard", languageId);
 
         if (practice is null)
         {
@@ -54,12 +56,11 @@ public class EntityVerificationService(
         {
             UserId = userId,
             LanguageId = languageId,
-            PracticeId = practice.Id,
-            Language = language,
-            Practice = practice
+            PracticeId = practice.Id
         };
 
         await flashcardRepository.AddAsync(flashcard);
+        await unitOfWork.CommitAsync();
 
         logger.LogInformation("EntityVerificationService -> NEW FLASHCARD CREATED WITH ID: {FlashcardId}", flashcard.Id);
 
@@ -85,7 +86,7 @@ public class EntityVerificationService(
             return ServiceResult<Reading>.Fail("LANGUAGE NOT FOUND", HttpStatusCode.NotFound);
         }
 
-        var practice = await practiceRepository.ExistsByLanguageIdAsync(languageId);
+        var practice = await practiceRepository.ExistsByNameAndLanguageIdAsync("reading", languageId);
 
         if (practice is null)
         {
@@ -97,12 +98,11 @@ public class EntityVerificationService(
         {
             UserId = userId,
             LanguageId = languageId,
-            PracticeId = practice.Id,
-            Language = language,
-            Practice = practice
+            PracticeId = practice.Id
         };
 
         await readingRepository.AddAsync(reading);
+        await unitOfWork.CommitAsync();
 
         logger.LogInformation("EntityVerificationService -> NEW READING CREATED WITH ID: {ReadingId}", reading.Id);
 
@@ -128,7 +128,7 @@ public class EntityVerificationService(
             return ServiceResult<Writing>.Fail("LANGUAGE NOT FOUND", HttpStatusCode.NotFound);
         }
 
-        var practice = await practiceRepository.ExistsByLanguageIdAsync(languageId);
+        var practice = await practiceRepository.ExistsByNameAndLanguageIdAsync("writing", languageId);
 
         if (practice is null)
         {
@@ -140,12 +140,11 @@ public class EntityVerificationService(
         {
             UserId = userId,
             LanguageId = languageId,
-            PracticeId = practice.Id,
-            Language = language,
-            Practice = practice
+            PracticeId = practice.Id
         };
 
         await writingRepository.AddAsync(writing);
+        await unitOfWork.CommitAsync();
 
         logger.LogInformation("EntityVerificationService -> NEW WRITING CREATED WITH ID: {WritingId}", writing.Id);
 

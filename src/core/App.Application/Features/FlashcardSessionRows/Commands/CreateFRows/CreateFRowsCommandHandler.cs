@@ -28,11 +28,10 @@ public class CreateFRowsCommandHandler(
 
         var rows = request.Request.Rows.Select(r => new FlashcardSessionRow
         {
-            FlashcardOldSessionId = request.Request.FlashcardOldSessionId,
             Answer = r.Answer,
             Question = r.Question,
             Status = r.Status,
-            FlashcardOldSession = session
+            FlashcardOldSessionId = request.Request.FlashcardOldSessionId
 
         }).ToList();
 

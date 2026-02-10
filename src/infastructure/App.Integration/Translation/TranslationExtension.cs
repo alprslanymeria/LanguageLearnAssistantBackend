@@ -1,5 +1,6 @@
 using App.Application.Contracts.Infrastructure.Translation;
 using App.Domain.Options.Translation;
+using Google.Cloud.Translation.V2;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -40,6 +41,9 @@ public static class TranslationExtension
 
     private static void AddGoogleProvider(IServiceCollection services, IConfiguration configuration)
     {
+
+        services.AddSingleton<TranslationClient>(_ => TranslationClient.Create());
+
         services.AddSingleton<ITranslationProvider, GoogleTranslationProvider>();
     }
 }

@@ -37,12 +37,10 @@ public class CreateROSCommandHandler(
         var session = new ReadingOldSession
         {
             Id = request.Request.Id,
-            ReadingId = request.Request.ReadingId,
-            ReadingBookId = request.Request.ReadingBookId,
             Rate = request.Request.Rate,
             CreatedAt = DateTime.UtcNow,
-            Reading = reading,
-            ReadingBook = readingBook
+            ReadingId = request.Request.ReadingId,
+            ReadingBookId = request.Request.ReadingBookId
         };
 
         await readingOldSessionRepository.AddAsync(session);

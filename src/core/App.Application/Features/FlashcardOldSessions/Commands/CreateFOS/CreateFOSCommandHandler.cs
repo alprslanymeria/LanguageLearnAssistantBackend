@@ -37,9 +37,7 @@ public class CreateFOSCommandHandler(
             FlashcardId = request.Request.FlashcardId,
             FlashcardCategoryId = request.Request.FlashcardCategoryId,
             Rate = request.Request.Rate,
-            CreatedAt = DateTime.UtcNow,
-            Flashcard = flashcard,
-            FlashcardCategory = flashcardCategory
+            CreatedAt = DateTime.UtcNow
         };
 
         await flashcardOldSessionRepository.AddAsync(session);

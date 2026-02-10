@@ -34,12 +34,10 @@ public class CreateWOSCommandHandler(
         var session = new WritingOldSession
         {
             Id = request.Request.Id,
-            WritingId = request.Request.WritingId,
-            WritingBookId = request.Request.WritingBookId,
             Rate = request.Request.Rate,
             CreatedAt = DateTime.UtcNow,
-            Writing = writing,
-            WritingBook = writingBook
+            WritingId = request.Request.WritingId,
+            WritingBookId = request.Request.WritingBookId
         };
 
         await writingOldSessionRepository.AddAsync(session);

@@ -1,4 +1,4 @@
-﻿namespace App.Domain.Entities.ListeningEntities;
+namespace App.Domain.Entities.ListeningEntities;
 
 public class ListeningCategory : BaseEntity<int>
 {
@@ -6,7 +6,7 @@ public class ListeningCategory : BaseEntity<int>
     public string Name { get; set; } = null!;
 
     // REFERENCES (PARENTS)
-    public required Listening Listening { get; set; } // FOR ListeningId
+    public Listening? Listening { get; set; } // FOR ListeningId
 
     // THE REFERENCES THEY GAVE (THEIR CHILDREN)
     public ICollection<ListeningOldSession> ListeningOldSessions { get; set; } = [];

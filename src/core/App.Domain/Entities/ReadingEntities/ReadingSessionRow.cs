@@ -1,4 +1,4 @@
-﻿namespace App.Domain.Entities.ReadingEntities;
+namespace App.Domain.Entities.ReadingEntities;
 
 public class ReadingSessionRow : BaseEntity<int>
 {
@@ -9,5 +9,5 @@ public class ReadingSessionRow : BaseEntity<int>
     public decimal Similarity { get; set; }
 
     // REFERENCES (PARENTS)
-    public required ReadingOldSession ReadingOldSession { get; set; } // FOR ReadingOldSessionId
+    public ReadingOldSession? ReadingOldSession { get; set; } // FOR ReadingOldSessionId
 }

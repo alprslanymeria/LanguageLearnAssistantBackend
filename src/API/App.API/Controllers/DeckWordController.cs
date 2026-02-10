@@ -49,7 +49,7 @@ public class DeckWordController(ISender sender) : BaseController
     /// /api/v1.0/DeckWord + JSON BODY
     /// </summary>
     [HttpPost]
-    public async Task<IActionResult> CreateDeckWord([FromBody] CreateDeckWordRequest request)
+    public async Task<IActionResult> CreateDeckWord([FromForm] CreateDeckWordRequest request)
         => ActionResultInstance(await sender.Send(new CreateDeckWordCommand(request)));
 
     /// <summary>
@@ -57,6 +57,6 @@ public class DeckWordController(ISender sender) : BaseController
     /// /api/v1.0/DeckWord + JSON BODY
     /// </summary>
     [HttpPut]
-    public async Task<IActionResult> UpdateDeckWord([FromBody] UpdateDeckWordRequest request)
+    public async Task<IActionResult> UpdateDeckWord([FromForm] UpdateDeckWordRequest request)
         => ActionResultInstance(await sender.Send(new UpdateDeckWordCommand(request)));
 }

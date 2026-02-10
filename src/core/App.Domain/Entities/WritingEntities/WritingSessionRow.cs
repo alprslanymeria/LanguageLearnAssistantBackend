@@ -1,4 +1,4 @@
-﻿namespace App.Domain.Entities.WritingEntities;
+namespace App.Domain.Entities.WritingEntities;
 
 public class WritingSessionRow : BaseEntity<int>
 {
@@ -9,5 +9,5 @@ public class WritingSessionRow : BaseEntity<int>
     public decimal Similarity { get; set; }
 
     // REFERENCES (PARENTS)
-    public required WritingOldSession WritingOldSession { get; set; } // FOR WritingOldSessionId
+    public WritingOldSession? WritingOldSession { get; set; } // FOR WritingOldSessionId
 }

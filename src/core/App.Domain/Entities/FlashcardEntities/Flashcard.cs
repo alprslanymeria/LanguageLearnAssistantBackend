@@ -1,4 +1,4 @@
-﻿namespace App.Domain.Entities.FlashcardEntities;
+namespace App.Domain.Entities.FlashcardEntities;
 
 public class Flashcard : BaseEntity<int>
 {
@@ -7,8 +7,8 @@ public class Flashcard : BaseEntity<int>
     public int PracticeId { get; set; }
 
     // REFERENCES (PARENTS)
-    public required Language Language { get; set; } // FOR LanguageId
-    public required Practice Practice { get; set; } // FOR PracticeId
+    public Language? Language { get; set; } // FOR LanguageId
+    public Practice? Practice { get; set; } // FOR PracticeId
 
 
     // THE REFERENCES THEY GAVE (THEIR CHILDREN)

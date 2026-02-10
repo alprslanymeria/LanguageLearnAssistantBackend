@@ -32,7 +32,7 @@ public class CreateWritingBookCommandHandler(
         CreateWritingBookCommand request,
         CancellationToken cancellationToken)
     {
-        var practice = await practiceRepository.ExistsByLanguageIdAsync(request.Request.LanguageId)
+        var practice = await practiceRepository.ExistsByNameAndLanguageIdAsync(request.Request.Practice, request.Request.LanguageId)
             ?? throw new NotFoundException("PRACTICE NOT FOUND");
 
         // VERIFY OR CREATE WRITING
@@ -59,12 +59,11 @@ public class CreateWritingBookCommandHandler(
         // CREATE WRITING BOOK
         var writingBook = new WritingBook
         {
-            WritingId = writing.Id,
             Name = request.Request.BookName,
             ImageUrl = imageUrl,
             LeftColor = leftColor,
             SourceUrl = sourceUrl,
-            Writing = writing
+            WritingId = writing.Id
         };
 
         await writingBookRepository.AddAsync(writingBook);

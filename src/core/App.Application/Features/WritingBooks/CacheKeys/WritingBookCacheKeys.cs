@@ -13,11 +13,11 @@ public static class WritingBookCacheKeys
     private static string CreateItemsKey => $"{Prefix}.createItems.{{0}}.{{1}}.{{2}}";
 
     public static ICacheKey Paged(ICacheKeyFactory factory, int page, int pageSize) =>
-        factory.Create(_ => null!, AllBooksKey, page, pageSize);
+        factory.Create(x => x, AllBooksKey, page, pageSize);
 
     public static ICacheKey ById(ICacheKeyFactory factory, int id) =>
-        factory.Create(_ => null!, BookByIdKey, id);
+        factory.Create(x => x, BookByIdKey, id);
 
     public static ICacheKey CreateItems(ICacheKeyFactory factory, string userId, string language, string practice) =>
-        factory.Create(_ => null!, CreateItemsKey, userId, language, practice);
+        factory.Create(x => x, CreateItemsKey, userId, language, practice);
 }

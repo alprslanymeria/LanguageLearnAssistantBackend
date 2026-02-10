@@ -1,4 +1,4 @@
-﻿namespace App.Domain.Entities.FlashcardEntities;
+namespace App.Domain.Entities.FlashcardEntities;
 
 public class FlashcardCategory : BaseEntity<int>
 {
@@ -6,7 +6,7 @@ public class FlashcardCategory : BaseEntity<int>
     public string Name { get; set; } = null!;
 
     // REFERENCES (PARENTS)
-    public required Flashcard Flashcard { get; set; } // FOR FlashcardId
+    public Flashcard? Flashcard { get; set; } // FOR FlashcardId
 
     // THE REFERENCES THEY GAVE (THEIR CHILDREN)
     public ICollection<FlashcardOldSession> FlashcardOldSessions { get; set; } = [];

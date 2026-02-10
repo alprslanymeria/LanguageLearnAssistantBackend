@@ -35,10 +35,9 @@ public class CreateDeckWordCommandHandler(
         // CREATE DECK WORD
         var deckWord = new DeckWord
         {
-            FlashcardCategoryId = category.Id,
             Question = request.Request.Word,
             Answer = request.Request.Answer,
-            FlashcardCategory = category
+            FlashcardCategoryId = request.Request.CategoryId
         };
 
         // ADD DECK WORD TO DB AND COMMIT

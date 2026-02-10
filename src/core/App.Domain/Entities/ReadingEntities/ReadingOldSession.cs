@@ -1,4 +1,4 @@
-﻿namespace App.Domain.Entities.ReadingEntities;
+namespace App.Domain.Entities.ReadingEntities;
 
 public class ReadingOldSession : AuditableEntity<string>
 {
@@ -7,8 +7,8 @@ public class ReadingOldSession : AuditableEntity<string>
     public decimal Rate { get; set; }
 
     // REFERENCES (PARENTS)
-    public required Reading Reading { get; set; } // FOR ReadingId
-    public required ReadingBook ReadingBook { get; set; } // FOR ReadingBookId
+    public Reading? Reading { get; set; } // FOR ReadingId
+    public ReadingBook? ReadingBook { get; set; } // FOR ReadingBookId
 
     // THE REFERENCES THEY GAVE (THEIR CHILDREN)
     public ICollection<ReadingSessionRow> ReadingSessionRows { get; set; } = [];

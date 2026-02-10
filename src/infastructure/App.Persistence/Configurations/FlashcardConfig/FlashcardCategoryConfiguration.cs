@@ -8,6 +8,7 @@ public class FlashcardCategoryConfiguration : IEntityTypeConfiguration<Flashcard
 {
     public void Configure(EntityTypeBuilder<FlashcardCategory> builder)
     {
+
         // RELATIONS
         builder.HasMany(x => x.FlashcardOldSessions)
             .WithOne(y => y.FlashcardCategory)

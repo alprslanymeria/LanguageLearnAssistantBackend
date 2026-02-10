@@ -1,4 +1,4 @@
-﻿namespace App.Domain.Entities.ListeningEntities;
+namespace App.Domain.Entities.ListeningEntities;
 
 public class ListeningSessionRow : BaseEntity<int>
 {
@@ -8,5 +8,5 @@ public class ListeningSessionRow : BaseEntity<int>
     public decimal Similarity { get; set; }
 
     // REFERENCES (PARENTS)
-    public required ListeningOldSession ListeningOldSession { get; set; } // FOR ListeningOldSessionId
+    public ListeningOldSession? ListeningOldSession { get; set; } // FOR ListeningOldSessionId
 }

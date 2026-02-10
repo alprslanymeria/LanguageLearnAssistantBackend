@@ -1,4 +1,4 @@
-﻿namespace App.Domain.Entities.ReadingEntities;
+namespace App.Domain.Entities.ReadingEntities;
 
 public class Reading : BaseEntity<int>
 {
@@ -7,8 +7,8 @@ public class Reading : BaseEntity<int>
     public int PracticeId { get; set; }
 
     // REFERENCES (PARENTS)
-    public required Language Language { get; set; } // FOR LanguageId
-    public required Practice Practice { get; set; } // FOR PracticeId
+    public Language? Language { get; set; } // FOR LanguageId
+    public Practice? Practice { get; set; } // FOR PracticeId
 
     // THE REFERENCES THEY GAVE (THEIR CHILDREN)
     public ICollection<ReadingBook> ReadingBooks { get; set; } = [];

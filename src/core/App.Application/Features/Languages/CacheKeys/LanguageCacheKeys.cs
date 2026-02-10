@@ -12,8 +12,8 @@ public static class LanguageCacheKeys
     private static string LanguageByIdKey => $"{Prefix}.id.{{0}}";
 
     public static ICacheKey All(ICacheKeyFactory factory) =>
-        factory.Create(_ => null!, AllLanguagesKey);
+        factory.Create(x => x, AllLanguagesKey);
 
     public static ICacheKey ById(ICacheKeyFactory factory, int id) =>
-        factory.Create(_ => null!, LanguageByIdKey, id);
+        factory.Create(x => x, LanguageByIdKey, id);
 }

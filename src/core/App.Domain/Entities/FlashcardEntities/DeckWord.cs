@@ -7,5 +7,5 @@ public class DeckWord : BaseEntity<int>
     public string Answer { get; set; } = null!;
 
     // REFERENCES (PARENTS)
-    public required FlashcardCategory FlashcardCategory { get; set; } // FOR FlashcardCategoryId
+    public FlashcardCategory? FlashcardCategory { get; set; } // FOR FlashcardCategoryId
 }

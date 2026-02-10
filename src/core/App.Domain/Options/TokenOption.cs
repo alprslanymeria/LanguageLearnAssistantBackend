@@ -1,8 +1,8 @@
-﻿namespace App.Domain.Options;
+namespace App.Domain.Options;
 
 public class TokenOption
 {
-    public const string Key = "TokenOptions";
+    public const string Key = "TokenOption";
 
     /// <summary>
     /// WHO CAN USE THE TOKEN

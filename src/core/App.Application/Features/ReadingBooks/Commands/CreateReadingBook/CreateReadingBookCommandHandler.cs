@@ -34,7 +34,7 @@ public class CreateReadingBookCommandHandler(
     {
 
         // GET PRACTICE
-        var practice = await practiceRepository.ExistsByLanguageIdAsync(request.Request.LanguageId)
+        var practice = await practiceRepository.ExistsByNameAndLanguageIdAsync(request.Request.Practice, request.Request.LanguageId)
             ?? throw new NotFoundException("PRACTICE NOT FOUND");
 
         // VERIFY OR CREATE READING
@@ -61,12 +61,11 @@ public class CreateReadingBookCommandHandler(
         // CREATE READING BOOK
         var readingBook = new ReadingBook
         {
-            ReadingId = reading.Id,
             Name = request.Request.BookName,
             ImageUrl = imageUrl,
             LeftColor = leftColor,
             SourceUrl = sourceUrl,
-            Reading = reading
+            ReadingId = reading.Id
         };
 
         await readingBookRepository.AddAsync(readingBook);

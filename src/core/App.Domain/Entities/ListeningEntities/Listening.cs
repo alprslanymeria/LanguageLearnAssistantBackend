@@ -1,4 +1,4 @@
-﻿namespace App.Domain.Entities.ListeningEntities;
+namespace App.Domain.Entities.ListeningEntities;
 
 public class Listening : BaseEntity<int>
 {
@@ -7,8 +7,8 @@ public class Listening : BaseEntity<int>
     public int PracticeId { get; set; }
 
     // REFERENCES (PARENTS)
-    public required Language Language { get; set; } // FOR LanguageId
-    public required Practice Practice { get; set; } // FOR PracticeId
+    public Language? Language { get; set; } // FOR LanguageId
+    public Practice? Practice { get; set; } // FOR PracticeId
 
 
     // THE REFERENCES THEY GAVE (THEIR CHILDREN)

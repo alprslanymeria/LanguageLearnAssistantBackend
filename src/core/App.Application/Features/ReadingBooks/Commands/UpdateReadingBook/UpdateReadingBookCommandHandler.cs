@@ -32,10 +32,10 @@ public class UpdateReadingBookCommandHandler(
     {
 
         // GET PRACTICE
-        var practice = await practiceRepository.ExistsByLanguageIdAsync(request.Request.LanguageId)
+        var practice = await practiceRepository.ExistsByNameAndLanguageIdAsync(request.Request.Practice, request.Request.LanguageId)
             ?? throw new NotFoundException("PRACTICE NOT FOUND");
 
-        // VERIFY READING BOOK EXISTS
+        // VERIFY READING BOOK EXISTS7
         var existingBook = await readingBookRepository.GetByIdAsync(request.Request.ItemId)
             ?? throw new NotFoundException("READING BOOK NOT FOUND");
 

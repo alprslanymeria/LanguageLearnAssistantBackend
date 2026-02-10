@@ -8,6 +8,9 @@ public class FlashcardConfiguration : IEntityTypeConfiguration<Flashcard>
 {
     public void Configure(EntityTypeBuilder<Flashcard> builder)
     {
+        builder.Property(x => x.Id)
+            .ValueGeneratedOnAdd();
+
         // RELATIONS
         builder.HasMany(x => x.FlashcardCategories)
             .WithOne(y => y.Flashcard)

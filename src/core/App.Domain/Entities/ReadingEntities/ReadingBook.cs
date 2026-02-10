@@ -1,4 +1,4 @@
-﻿namespace App.Domain.Entities.ReadingEntities;
+namespace App.Domain.Entities.ReadingEntities;
 
 public class ReadingBook : BaseEntity<int>
 {
@@ -9,7 +9,7 @@ public class ReadingBook : BaseEntity<int>
     public string SourceUrl { get; set; } = null!;
 
     // REFERENCES (PARENTS)
-    public required Reading Reading { get; set; } // FOR ReadingId
+    public Reading? Reading { get; set; } // FOR ReadingId
 
     // THE REFERENCES THEY GAVE (THEIR CHILDREN)
     public ICollection<ReadingOldSession> ReadingOldSessions { get; set; } = [];

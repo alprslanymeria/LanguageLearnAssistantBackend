@@ -11,5 +11,5 @@ public static class ListeningCategoryCacheKeys
     private static string CreateItemsKey => $"{Prefix}.createItems.{{0}}.{{1}}.{{2}}";
 
     public static ICacheKey CreateItems(ICacheKeyFactory factory, string userId, string language, string practice) =>
-        factory.Create(_ => null!, CreateItemsKey, userId, language, practice);
+        factory.Create(x => x, CreateItemsKey, userId, language, practice);
 }

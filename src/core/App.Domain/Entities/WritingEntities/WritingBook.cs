@@ -1,4 +1,4 @@
-﻿namespace App.Domain.Entities.WritingEntities;
+namespace App.Domain.Entities.WritingEntities;
 
 public class WritingBook : BaseEntity<int>
 {
@@ -9,7 +9,7 @@ public class WritingBook : BaseEntity<int>
     public string SourceUrl { get; set; } = null!;
 
     // REFERENCES (PARENTS)
-    public required Writing Writing { get; set; } // FOR WritingId
+    public Writing? Writing { get; set; } // FOR WritingId
 
     // THE REFERENCES THEY GAVE (THEIR CHILDREN)
     public ICollection<WritingOldSession> WritingOldSessions { get; set; } = [];

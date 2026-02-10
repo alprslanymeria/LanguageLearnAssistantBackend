@@ -13,11 +13,11 @@ public static class PracticeCacheKeys
     private static string PracticesByLanguageKey => $"{Prefix}.language.{{0}}";
 
     public static ICacheKey All(ICacheKeyFactory factory) =>
-        factory.Create(_ => null!, AllPracticesKey);
+        factory.Create(x => x, AllPracticesKey);
 
     public static ICacheKey ById(ICacheKeyFactory factory, int id) =>
-        factory.Create(_ => null!, PracticeByIdKey, id);
+        factory.Create(x => x, PracticeByIdKey, id);
 
     public static ICacheKey ByLanguage(ICacheKeyFactory factory, string language) =>
-        factory.Create(_ => null!, PracticesByLanguageKey, language);
+        factory.Create(x => x, PracticesByLanguageKey, language);
 }

@@ -28,12 +28,11 @@ public class CreateWRowsCommandHandler(
 
         var rows = request.Request.Rows.Select(r => new WritingSessionRow
         {
-            WritingOldSessionId = request.Request.WritingOldSessionId,
             SelectedSentence = r.SelectedSentence,
             Answer = r.Answer,
             AnswerTranslate = r.AnswerTranslate,
             Similarity = r.Similarity,
-            WritingOldSession = session
+            WritingOldSessionId = request.Request.WritingOldSessionId
 
         }).ToList();
 

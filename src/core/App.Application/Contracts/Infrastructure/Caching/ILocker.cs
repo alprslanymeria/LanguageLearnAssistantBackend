@@ -1,4 +1,4 @@
-﻿namespace App.Application.Contracts.Infrastructure.Caching;
+namespace App.Application.Contracts.Infrastructure.Caching;
 
 public interface ILocker
 {

@@ -12,8 +12,8 @@ public static class DeckWordCacheKeys
     private static string WordByIdKey => $"{Prefix}.id.{{0}}";
 
     public static ICacheKey Paged(ICacheKeyFactory factory, int page, int pageSize) =>
-        factory.Create(_ => null!, AllWordsKey, page, pageSize);
+        factory.Create(x => x, AllWordsKey, page, pageSize);
 
     public static ICacheKey ById(ICacheKeyFactory factory, int id) =>
-        factory.Create(_ => null!, WordByIdKey, id);
+        factory.Create(x => x, WordByIdKey, id);
 }

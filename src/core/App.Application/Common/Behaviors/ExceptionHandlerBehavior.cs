@@ -62,7 +62,7 @@ public class ExceptionHandlerBehavior<TRequest, TResponse>(ILogger<ExceptionHand
 
             logger.LogError(ex, "{HandlerName} -> AN UNEXPECTED ERROR OCCURRED", handlerName);
 
-            return CreateFailResponse("AN UNEXPECTED ERROR OCCURRED", HttpStatusCode.InternalServerError);
+            return CreateFailResponse($"AN UNEXPECTED ERROR OCCURRED: {ex.Message}", HttpStatusCode.InternalServerError);
         }
     }
 }

@@ -1,5 +1,6 @@
 using System.Net.Http.Headers;
 using System.Net.Http.Json;
+using App.Application.Common;
 using App.Application.Contracts.Infrastructure.ExternalApi;
 using App.Domain.Options.ExternalAPI;
 using Microsoft.Extensions.Logging;
@@ -45,7 +46,9 @@ public class UserApiClient(
             }
 
             // WRITE RESPONSE TO USER DTO
-            var userDto = await response.Content.ReadFromJsonAsync<UserDto>(cancellationToken);
+            var responseWrapper = await response.Content.ReadFromJsonAsync<ServiceResult<UserDto>>(cancellationToken);
+
+            var userDto = responseWrapper?.Data;
 
             logger.LogInformation("UserApiClient:GetProfileInfos -> SUCCESSFULLY FETCHED USER INFO");
 

@@ -13,11 +13,11 @@ public static class FlashcardCategoryCacheKeys
     private static string CreateItemsKey => $"{Prefix}.createItems.{{0}}.{{1}}.{{2}}";
 
     public static ICacheKey Paged(ICacheKeyFactory factory, int page, int pageSize) =>
-        factory.Create(_ => null!, AllCategoriesKey, page, pageSize);
+        factory.Create(x => x, AllCategoriesKey, page, pageSize);
 
     public static ICacheKey ById(ICacheKeyFactory factory, int id) =>
-        factory.Create(_ => null!, CategoryByIdKey, id);
+        factory.Create(x => x, CategoryByIdKey, id);
 
     public static ICacheKey CreateItems(ICacheKeyFactory factory, string userId, string language, string practice) =>
-        factory.Create(_ => null!, CreateItemsKey, userId, language, practice);
+        factory.Create(x => x, CreateItemsKey, userId, language, practice);
 }

@@ -30,7 +30,7 @@ public class UpdateFlashcardCategoryCommandHandler(
     {
 
         // GET PRACTICE
-        var practice = await practiceRepository.ExistsByLanguageIdAsync(request.Request.LanguageId)
+        var practice = await practiceRepository.ExistsByNameAndLanguageIdAsync(request.Request.Practice, request.Request.LanguageId)
             ?? throw new NotFoundException("PRACTICE NOT FOUND");
 
         // VERIFY FLASHCARD CATEGORY EXISTS

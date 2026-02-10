@@ -68,7 +68,7 @@ public class FlashcardCategoryController(ISender sender) : BaseController
     /// /api/v1.0/FlashcardCategory + JSON BODY
     /// </summary>
     [HttpPost]
-    public async Task<IActionResult> CreateFlashcardCategory([FromBody] CreateFlashcardCategoryRequest request)
+    public async Task<IActionResult> CreateFlashcardCategory([FromForm] CreateFlashcardCategoryRequest request)
         => ActionResultInstance(await sender.Send(new CreateFlashcardCategoryCommand(request)));
 
     /// <summary>
@@ -76,6 +76,6 @@ public class FlashcardCategoryController(ISender sender) : BaseController
     /// /api/v1.0/FlashcardCategory + JSON BODY
     /// </summary>
     [HttpPut]
-    public async Task<IActionResult> UpdateFlashcardCategory([FromBody] UpdateFlashcardCategoryRequest request)
+    public async Task<IActionResult> UpdateFlashcardCategory([FromForm] UpdateFlashcardCategoryRequest request)
         => ActionResultInstance(await sender.Send(new UpdateFlashcardCategoryCommand(request)));
 }
