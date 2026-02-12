@@ -31,6 +31,40 @@ builder.Services.AddControllers(options =>
     options.ModelBinderProviders.Insert(0, new FileUploadModelBinderProvider());
 });
 builder.Services.AddOpenApi();
+
+// HEALTH CHECKS
+builder.Services.AddHealthChecks()
+    .AddSqlServer(
+        builder.Configuration.GetConnectionString("SqlServer")!,
+        name: "sqlserver",
+        tags: ["db", "ready"]);
+
+// CORS
+builder.Services.AddCors(options =>
+{
+    options.AddDefaultPolicy(policy =>
+    {
+        if (builder.Environment.IsDevelopment())
+        {
+            policy.AllowAnyOrigin()
+                  .AllowAnyMethod()
+                  .AllowAnyHeader();
+        }
+        else
+        {
+            var allowedOrigins = builder.Configuration
+                .GetSection("AllowedOrigins")
+                .Get<string[]>() ?? [];
+
+            policy.WithOrigins(allowedOrigins)
+                  .AllowAnyMethod()
+                  .AllowAnyHeader()
+                  .AllowCredentials();
+        }
+    });
+});
+
+
 builder.Services
     .AddPersistenceServicesExt(builder.Configuration)
     .AddOpenTelemetryServicesExt(builder.Configuration)
@@ -68,9 +102,23 @@ if (app.Environment.IsDevelopment())
     app.MapOpenApi();
 }
 
+// HEALTH CHECK ENDPOINTS
+app.MapHealthChecks("/health/live", new()
+{
+    Predicate = _ => false
+});
+
+app.MapHealthChecks("/health/ready", new()
+{
+    Predicate = check => check.Tags.Contains("ready")
+});
+
 // MIDDLEWARES
 app.UseExceptionHandler(x => { });
-app.UseHttpsRedirection();
+if (!app.Environment.IsDevelopment())
+{
+    app.UseHttpsRedirection();
+}
 app.UseRateLimiter();
 app.UseMiddleware<OpenTelemetryTraceIdMiddleware>();
 app.UseMiddleware<RequestAndResponseActivityMiddleware>();
