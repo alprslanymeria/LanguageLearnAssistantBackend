@@ -1,14 +1,12 @@
 using App.Application.Features.Practices.Queries.GetPracticesByLanguage;
 using Asp.Versioning;
 using MediatR;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace App.API.Controllers;
 
 [Route("api/v{version:apiVersion}/[controller]")]
 [ApiVersion("1.0")]
-[Authorize]
 public class PracticeController(ISender sender) : BaseController
 {
     /// <summary>
