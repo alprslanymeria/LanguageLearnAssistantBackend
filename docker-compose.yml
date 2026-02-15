@@ -1,51 +1,8 @@
 services:
-  app.api:
-    image: ${DOCKER_REGISTRY-}appapi
-    build:
-      context: .
-      dockerfile: src/API/App.API/Dockerfile
-      target: final
-    ports:
-      - "44344:8080"
-    environment:
-      - ASPNETCORE_ENVIRONMENT=Development
-      - ASPNETCORE_HTTP_PORTS=8080
-      - ASPNETCORE_URLS=http://+:8080
-      - GoogleCloudStorage__CredentialFilePath=/app/secrets/gcloud-credentials.json
-      - GoogleTranslate__CredentialFilePath=/app/secrets/gtranslate-credentials.json
-    volumes:
-      - ${GCLOUD_CREDENTIAL_PATH}:/app/secrets/gcloud-credentials.json:ro
-      - ${GTRANSLATE_CREDENTIAL_PATH}:/app/secrets/gtranslate-credentials.json:ro
-    depends_on:
-      app.sqlserver:
-        condition: service_healthy
-      app.migrations:
-        condition: service_completed_successfully
-    healthcheck:
-      test: ["CMD-SHELL", "curl -f http://localhost:8080/health/live || exit 1"]
-      interval: 30s
-      timeout: 10s
-      retries: 3
-      start_period: 15s
-    restart: unless-stopped
-
-
-  app.migrations:
-    image: ${DOCKER_REGISTRY-}app-migrations
-    build:
-      context: .
-      dockerfile: src/API/App.API/Dockerfile
-      target: migration
-    environment:
-      - ConnectionStrings__SqlServer=Server=app.sqlserver;Database=LanguageAssistantBackend;User Id=sa;Password=${MSSQL_SA_PASSWORD};Encrypt=True;Trust Server Certificate=True;
-    depends_on:
-      app.sqlserver:
-        condition: service_healthy
-    restart: "no"
-
-  app.sqlserver:
+  # SQL SERVER FOR DATABASE (OAUTH AND APP ONE INSTANCE)
+  sqlserver:
     image: mcr.microsoft.com/mssql/server:2022-latest
-    container_name: app-sqlserver
+    container_name: sqlserver
     ports:
       - "${MSSQL_PORT}:1433"
     environment:
@@ -59,5 +16,222 @@ services:
       timeout: 5s
       retries: 5
 
+  # APP
+  app.api:
+    image: ${DOCKER_REGISTRY-}appapi
+    build:
+      context: .
+      dockerfile: src/API/App.API/Dockerfile
+      target: final
+    ports:
+      - "44344:8080"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Production
+      - ASPNETCORE_HTTP_PORTS=8080
+      - ASPNETCORE_URLS=http://+:8080
+      - UserApi__BaseUrl=http://oauthserver:8080
+      - GOOGLE_APPLICATION_CREDENTIALS=/app/secrets/gcloud.json
+      - OTEL_EXPORTER_OTLP_ENDPOINT=http://otel-collector:4317
+    volumes:
+      - ${GOOGLE_APPLICATION_CREDENTIALS}:/app/secrets/gcloud.json:ro
+    depends_on:
+      sqlserver:
+        condition: service_healthy
+      app.migrations:
+        condition: service_completed_successfully
+      redis:
+        condition: service_healthy
+      elasticsearch:
+        condition: service_healthy
+      jaeger:
+        condition: service_healthy
+      otel-collector:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost:8080/health/live || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 15s
+    restart: unless-stopped
+
+
+  # APP MIGRATIONS
+  app.migrations:
+    image: ${DOCKER_REGISTRY-}app-migrations
+    build:
+      context: .
+      dockerfile: src/API/App.API/Dockerfile
+      target: migration
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Production
+      - ConnectionStrings__SqlServer=Server=sqlserver;Database=LanguageAssistantBackend;User Id=sa;Password=${MSSQL_SA_PASSWORD};Encrypt=True;TrustServerCertificate=True;
+    depends_on:
+      sqlserver:
+        condition: service_healthy
+    restart: "no"
+
+  
+  # OAUTH SERVER
+  oauthserver:
+    image: alparslanorgnl/apps:oauth-server
+    container_name: oauth-server
+    ports:
+      - "44343:8080"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Production
+      - ASPNETCORE_HTTP_PORTS=8080
+      - ASPNETCORE_URLS=http://+:8080
+      - OTEL_EXPORTER_OTLP_ENDPOINT=http://otel-collector:4317
+      - GOOGLE_APPLICATION_CREDENTIALS=/app/secrets/gcloud.json
+    volumes:
+      - ${GOOGLE_APPLICATION_CREDENTIALS}:/app/secrets/gcloud.json:ro
+    depends_on:
+      sqlserver:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost:8080/health/live || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 15s
+    restart: unless-stopped
+
+  # OAUTH SERVER MIGRATIONS
+  oauthserver.migrations:
+    image: alparslanorgnl/apps:oauth-server-migration
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Production
+      - ConnectionStrings__SqlServer=Server=sqlserver;Database=OAuthServer;User Id=sa;Password=${MSSQL_SA_PASSWORD};Encrypt=True;TrustServerCertificate=True;
+    depends_on:
+      sqlserver:
+        condition: service_healthy
+    restart: "no"
+
+  # NEXTJS FRONTEND
+  nextjs:
+    image: alparslanorgnl/apps:nextjs
+    container_name: nextjs
+    ports:
+      - "3000:3000"
+    environment:
+      - OAUTH_SERVER_URL=http://oauthserver:8080
+      - OAUTH_SERVER_PUBLIC_URL=http://localhost:44343  # IT'S NECESSARY FOR GOOGLE LOGIN
+      - BACKEND_SERVER_URL=http://app.api:8080
+      - APP_URL=http://localhost:3000                   # IT'S NECESSARY FOR GOOGLE LOGIN REDIRECT URI
+    depends_on:
+      app.api:
+        condition: service_healthy
+      oauthserver:
+        condition: service_healthy
+      sqlserver:
+        condition: service_healthy
+
+
+  # SOCKET SERVER FOR LIVE SESSIONS
+  socket-server:
+    image: alparslanorgnl/apps:socket-server
+    container_name: socket-server
+    restart: always
+    ports:
+      - "5000:5000"
+
+  # REDIS FOR CACHING
+  redis:
+    image: redis:latest
+    container_name: redis
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # ELASTICSEARCH & KIBANA FOR LOG MANAGEMENT
+  elasticsearch:
+    image: elasticsearch:9.2.4
+    container_name: elasticsearch
+    environment:
+      - discovery.type=single-node
+      - xpack.security.enabled=false
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost:9200/_cluster/health || exit 1"]
+      interval: 15s
+      timeout: 10s
+      retries: 5
+      start_period: 30s
+
+  kibana:
+    image: kibana:9.2.4
+    container_name: kibana
+    environment:
+      - ELASTICSEARCH_HOSTS=${ELASTIC_URL}
+    ports:
+      - "5601:5601"
+    depends_on:
+      elasticsearch:
+        condition: service_healthy
+
+# JAEGER FOR TRACE MANAGEMENT
+  jaeger:
+    image: jaegertracing/all-in-one:latest
+    container_name: jaeger
+    ports:
+      - "16686:16686" # UI
+    healthcheck:
+      test: ["CMD-SHELL", "wget --spider --quiet http://localhost:14269/ || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+
+# PROMETHEUS & GRAFANA FOR METRICS MANAGEMENT
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: prometheus
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+    depends_on:
+      - otel-collector
+
+  grafana:
+    image: grafana/grafana:latest
+    container_name: grafana
+    ports:
+      - "4000:3000"
+    environment:
+      - GF_SECURITY_ADMIN_USER=admin
+      - GF_SECURITY_ADMIN_PASSWORD=admin
+    volumes:
+      - grafana-data:/var/lib/grafana
+    depends_on:
+      - prometheus
+
+# OPENTELEMETRY COLLECTOR FOR COLLECTING & EXPORTING TRACES & METRICS
+  otel-collector:
+    image: otel/opentelemetry-collector-contrib
+    container_name: otel-collector
+    volumes:
+      - ./otel-collector-config.yaml:/etc/otelcol-contrib/config.yaml
+    environment:
+      - RECEIVER_OTLP_GRPC_ENDPOINT=${RECEIVER_OTLP_GRPC_ENDPOINT}
+      - RECEIVER_OTLP_HTTP_ENDPOINT=${RECEIVER_OTLP_HTTP_ENDPOINT}
+      - EXPORTER_OTLP_JAEGER_ENDPOINT=${EXPORTER_OTLP_JAEGER_ENDPOINT}
+      - EXPORTER_OTLP_ENDPOINT=${EXPORTER_OTLP_ENDPOINT}
+      - EXPORTER_PROMETHEUS_ENDPOINT=${EXPORTER_PROMETHEUS_ENDPOINT}
+      - ELASTIC_URL=${ELASTIC_URL}
+      - ELASTIC_INDEX=${ELASTIC_INDEX}
+    depends_on:
+      jaeger:
+        condition: service_healthy
+      elasticsearch:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD-SHELL", "wget --spider --quiet http://localhost:13133/ || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+
 volumes:
+  grafana-data:
   sqlserver-data:

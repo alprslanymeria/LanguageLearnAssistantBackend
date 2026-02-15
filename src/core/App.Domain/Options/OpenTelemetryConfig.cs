@@ -7,7 +7,7 @@ public class OpenTelemetryConfig
     /// <summary>
     /// ENABLE OR DISABLE OPENTELEMETRY
     /// </summary>
-    public bool Enabled { get; set; } = true;
+    public bool Enabled { get; set; } = false;
 
     /// <summary>
     /// THE NAME OF THE APPLICATION/SERVICE THAT COLLECTS TELEMETRY DATA
@@ -27,15 +27,15 @@ public class OpenTelemetryConfig
     /// <summary>
     /// LOG EXPORTERS TO USE
     /// </summary>
-    public string[] LogExporters { get; set; } = ["console", "elasticsearch"];
+    public string[] LogExporters { get; set; } = [];
 
     /// <summary>
     /// TRACE EXPORTERS TO USE
     /// </summary>
-    public string[] TraceExporters { get; set; } = ["jaeger"];
+    public string[] TraceExporters { get; set; } = [];
 
     /// <summary>
     /// METRICS EXPORTERS TO USE
     /// </summary>
-    public string[] MetricsExporters { get; set; } = ["prometheus"];
+    public string[] MetricsExporters { get; set; } = [];
 }

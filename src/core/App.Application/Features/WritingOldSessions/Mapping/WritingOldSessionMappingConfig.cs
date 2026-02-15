@@ -11,7 +11,7 @@ public class WritingOldSessionMappingConfig : IRegister
 {
     public void Register(TypeAdapterConfig config)
     {
-        config.NewConfig<WritingOldSession, WritingOldSessionDto>();
-        config.NewConfig<List<WritingOldSession>, List<WritingOldSessionDto>>();
+        config.NewConfig<WritingOldSession, WritingOldSessionDto>()
+            .Map(dest => dest.OldSessionId, src => src.Id);
     }
 }

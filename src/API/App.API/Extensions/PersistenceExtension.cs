@@ -1,6 +1,5 @@
 using App.Application.Contracts.Persistence;
 using App.Application.Contracts.Persistence.Repositories;
-using App.Domain.Options.Database;
 using App.Persistence;
 using App.Persistence.Interceptors;
 using App.Persistence.Repositories;
@@ -11,13 +10,9 @@ public static class PersistenceExtension
 {
     public static IServiceCollection AddPersistenceServicesExt(this IServiceCollection services, IConfiguration configuration)
     {
-        // GET DATABASE OPTIONS
-        var databaseOptions = configuration.GetSection(DatabaseConfig.Key).Get<DatabaseConfig>() ?? new DatabaseConfig();
 
-        // CONNECTION STRING BASED ON ENVIRONMENT (LOCAL OR REMOTE)
-        var connectionStringKey = databaseOptions.Environment == DatabaseType.Local ? "SqlServer:Local" : "SqlServer:Remote";
-
-        var connString = configuration.GetConnectionString(connectionStringKey);
+        // CONNECTION STRING
+        var connString = configuration.GetConnectionString("SqlServer");
 
         // HTTP CONTEXT ACCESSOR (REQUIRED FOR AUDIT INTERCEPTOR)
         services.AddHttpContextAccessor();

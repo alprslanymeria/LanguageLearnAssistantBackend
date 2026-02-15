@@ -11,7 +11,7 @@ public class FlashcardOldSessionMappingConfig : IRegister
 {
     public void Register(TypeAdapterConfig config)
     {
-        config.NewConfig<FlashcardOldSession, FlashcardOldSessionDto>();
-        config.NewConfig<List<FlashcardOldSession>, List<FlashcardOldSessionDto>>();
+        config.NewConfig<FlashcardOldSession, FlashcardOldSessionDto>()
+            .Map(dest => dest.OldSessionId, src => src.Id);
     }
 }

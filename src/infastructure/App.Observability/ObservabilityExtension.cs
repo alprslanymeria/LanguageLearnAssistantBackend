@@ -115,8 +115,13 @@ public static class ObservabilityExtension
                 options.AddMeter("metric.meter.api");
                 options.ConfigureResource(resource =>
                 {
-                    resource.AddService("Metric.API", serviceVersion: "1.0.0");
+                    resource.AddService(openTelemetryConstants.ServiceName, serviceVersion: openTelemetryConstants.ServiceVersion);
                 });
+
+                // BUILT-IN METRIC INSTRUMENTATION
+                options.AddAspNetCoreInstrumentation();
+                options.AddHttpClientInstrumentation();
+                options.AddRuntimeInstrumentation();
 
                 // METRICS EXPORTERS FROM APPSETTINGS
                 ConfigureMetricsExporters(options, openTelemetryConstants);

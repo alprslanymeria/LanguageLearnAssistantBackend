@@ -11,7 +11,7 @@ public class ReadingOldSessionMappingConfig : IRegister
 {
     public void Register(TypeAdapterConfig config)
     {
-        config.NewConfig<ReadingOldSession, ReadingOldSessionDto>();
-        config.NewConfig<List<ReadingOldSession>, List<ReadingOldSessionDto>>();
+        config.NewConfig<ReadingOldSession, ReadingOldSessionDto>()
+            .Map(dest => dest.OldSessionId, src => src.Id);
     }
 }

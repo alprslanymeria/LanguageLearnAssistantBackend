@@ -6,6 +6,7 @@ using App.Domain.Options.Caching;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using StackExchange.Redis;
 
 namespace App.Caching;
 
@@ -62,6 +63,10 @@ public static class CachingExtension
         {
             throw new InvalidOperationException("Redis ConnectionString is required");
         }
+
+        // REDIS CONNECTION MULTIPLEXER (LAZY - CONNECTS ON FIRST USE)
+        services.AddSingleton<IConnectionMultiplexer>(sp =>
+            ConnectionMultiplexer.Connect(redisConfig.ConnectionString));
 
         // REDIS SPECIFIC SERVICES
         services.AddSingleton<IRedisConnectionWrapper, RedisConnectionWrapper>();

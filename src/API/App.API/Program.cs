@@ -1,5 +1,6 @@
 using App.API.ExceptionHandlers;
 using App.API.Extensions;
+using App.API.Filters;
 using App.API.Middlewares;
 using App.API.ModelBinding;
 using App.Application;
@@ -11,16 +12,9 @@ using App.Integration.Translation;
 using App.Observability;
 using App.Storage;
 using FluentValidation;
+using SharpGrip.FluentValidation.AutoValidation.Mvc.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
-
-// ADD APPSETTINGS JSON FILES
-builder.Configuration
-    .AddJsonFile("appsettings.observability.json", optional: false, reloadOnChange: true)
-    .AddJsonFile("appsettings.caching.json", optional: false, reloadOnChange: true)
-    .AddJsonFile("appsettings.Translation.json", optional: false, reloadOnChange: true)
-    .AddJsonFile("appsettings.storage.json", optional: false, reloadOnChange: true)
-    .AddJsonFile("appsettings.database.json", optional: false, reloadOnChange: true);
 
 // OPEN TELEMETRY
 builder.AddOpenTelemetryLogExt();
@@ -70,7 +64,7 @@ builder.Services
     .AddOpenTelemetryServicesExt(builder.Configuration)
     .AddCachingServicesExt(builder.Configuration)
     .AddStorageServicesExt(builder.Configuration)
-    .AddMappingServicesExt()
+    .AddMappingServicesExt(assembliesToScan: [typeof(ApplicationAssembly).Assembly])
     .AddCustomTokenAuthExt(builder.Configuration)
     .AddApplicationServicesExt()
     .AddExternalApiServicesExt(builder.Configuration)
@@ -93,6 +87,11 @@ builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
 
 // FLUENT VALIDATION
 builder.Services.AddValidatorsFromAssembly(typeof(ApplicationAssembly).Assembly);
+builder.Services.AddFluentValidationAutoValidation(cfg =>
+{
+
+    cfg.OverrideDefaultResultFactoryWith<FluentValidationFilter>();
+});
 
 
 var app = builder.Build();

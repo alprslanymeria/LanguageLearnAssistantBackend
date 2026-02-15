@@ -1,4 +1,4 @@
-﻿namespace App.Domain.Options;
+namespace App.Domain.Options;
 
 public class ConnectionStringOption
 {

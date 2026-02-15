@@ -21,7 +21,6 @@ public static class TranslationExtension
 
         // CONFIGURATION BINDINGS
         services.Configure<TranslationConfig>(configuration.GetSection(TranslationConfig.Key));
-        services.Configure<GoogleTranslateConfig>(configuration.GetSection(GoogleTranslateConfig.Key));
 
         // COMMON TRANSLATION SERVICES
 

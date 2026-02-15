@@ -11,7 +11,7 @@ public class ListeningOldSessionMappingConfig : IRegister
 {
     public void Register(TypeAdapterConfig config)
     {
-        config.NewConfig<ListeningOldSession, ListeningOldSessionDto>();
-        config.NewConfig<List<ListeningOldSession>, List<ListeningOldSessionDto>>();
+        config.NewConfig<ListeningOldSession, ListeningOldSessionDto>()
+            .Map(dest => dest.OldSessionId, src => src.Id);
     }
 }

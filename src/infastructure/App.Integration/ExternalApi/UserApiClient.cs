@@ -31,7 +31,7 @@ public class UserApiClient(
         {
 
             // PREPARE REQUEST
-            var requestUri = $"{_options.UserInfoEndpoint}/{userId}";
+            var requestUri = $"{_options.UserInfoEndpoint}";
 
             using var request = new HttpRequestMessage(HttpMethod.Get, requestUri);
             request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
