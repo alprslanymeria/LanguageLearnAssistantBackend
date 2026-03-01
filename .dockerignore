@@ -21,6 +21,11 @@
 **/obj
 **/secrets.dev.yaml
 **/values.dev.yaml
+**/gcp-key.json
+**/gcp-key-oauth.json
+**/appsettings.Development.json
+**/.env
+**/.env.*
 LICENSE
 README.md
 !**/.gitignore

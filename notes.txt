@@ -226,76 +226,10 @@ MEDIATR AND CQRS IMPLEMENTATION
 
 _______________________________________________________________________________________________________________________
 
-CONTROLLERS
+DOCKER PUSH
 
-- LanguageController
-	GetLanguages										(+) GetLanguages
+docker build -f OAuthServer.API/Dockerfile -t alparslanorgnl/oauth:oauthserver-v1 .
+docker push alparslanorgnl/oauth:oauthserver-v1
 
-- PracticeController
-	GetPractices										(+) GetPracticesByLanguage
-
-- ReadingBookController
-	GetReadingBookItemById								(+) GetReadingBookItemById
-	GetAllRBooksWithPaging								(+) GetAllRBooksWithPaging
-	GetReadingBookCreateItems							(+) GetRBookCreateItems
-	DeleteReadingBookItemById							(+) DeleteRBookItemById
-	ReadingBookAdd										(+) ReadingBookAdd
-	ReadingBookUpdate									(+) ReadingBookUpdate	
-
-- WritingBookController
-	GetWritingBookItemById								(+) GetWritingBookItemById
-	GetAllWBooksWithPaging								(+) GetAllWBooksWithPaging
-	GetWritingBookCreateItems							(+) GetWritingBookCreateItems
-	DeleteWritingBookItemById							(+) DeleteWritingBookItemById
-	WritingBookAdd										(+) WritingBookAdd
-	WritingBookUpdate									(+) WritingBookUpdate
-
-- FlashcardCategoryController
-	GetFlashcardCategoryItemById						(+) GetFlashcardCategoryItemById
-	GetAllFCategoriesWithPaging							(+) GetAllFCategoriesWithPaging
-	GetFlashcardCategoryCreateItems						(+) GetFlashcardCategoryCreateItems
-	DeleteFlashcardCategoryItemById						(+) DeleteFlashcardCategoryItemById
-	FlashcardCategoryAdd								(+) FlashcardCategoryAdd
-	FlashcardCategoryUpdate								(+) FlashcardCategoryUpdate
-
-- DeckWordController
-	GetDeckWordItemById									(+) GetDeckWordItemById
-	GetAllDWordsWithPaging								(+) GetAllDWordsWithPaging
-	DeleteDeckWordItemById								(+) DeleteDeckWordItemById
-	DeckWordAdd											(+) DeckWordAdd
-	DeckWordUpdate										(+) DeckWordUpdate
-
-- ReadingOldSessionController
-	GetReadingOldSessions								(+) GetReadingOldSessionsWithPaging
-	SaveReadingOldSession								(+) SaveReadingOldSession
-
-- FlashcardOldSessionController
-	GetFlashcardOldSessions								(+) GetFlashcardOldSessionsWithPaging
-	SaveFlashcardOldSession								(+) SaveFlashcardOldSession
-
-- WritingOldSessionController
-	GetWritingOldSessions								(+) GetWritingOldSessionsWithPaging
-	SaveWritingOldSession								(+) SaveWritingOldSession
-
-- ListeningOldSessionController
-	GetListeningOldSessions								(+) GetListeningOldSessionsWithPaging
-	SaveListeningOldSession								(+) SaveListeningOldSession
-
-- ReadingSessionRowController
-	GetReadingRowsById									(+) GetReadingRowsByIdWithPaging
-	SaveReadingRows										(+) SaveReadingRows
-
-- WritingSessionRowController
-	GetWritingRowsById									(+) GetWritingRowsByIdWithPaging
-	SaveWritingRows										(+) SaveWritingRows
-
-- FlashcardSessionRowController
-	GetFlashcardRowsById								(+) GetFlashcardRowsByIdWithPaging
-	SaveFlashcardRows									(+) SaveFlashcardRows
-
-- ListeningSessionRowController
-	GetListeningRowsById								(+) GetListeningRowsByIdWithPaging
-	SaveListeningRows									(+) SaveListeningRows
-
-
-COMPARE LANGUAGE ID  --> OAUTH SERVER
+docker build -f OAuthServer.API/Dockerfile --target migration -t alparslanorgnl/migration:oauthserver-v1-migration .
+docker push alparslanorgnl/migration:oauthserver-v1-migration

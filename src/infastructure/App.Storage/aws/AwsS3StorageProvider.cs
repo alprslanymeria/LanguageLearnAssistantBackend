@@ -204,4 +204,6 @@ public class AwsS3StorageProvider(
 
         GC.SuppressFinalize(this);
     }
+
+    public string ExtractFilePath(string fileUrl) => throw new NotImplementedException();
 }

@@ -91,6 +91,14 @@ public class GoogleCloudStorageProvider(
 
     public string GetPublicUrl(string filePath) => $"https://storage.googleapis.com/{_config.BucketName}/{filePath}";
 
+    public string ExtractFilePath(string fileUrl)
+    {
+        var baseUrl = $"https://storage.googleapis.com/{_config.BucketName}/";
+        return fileUrl.StartsWith(baseUrl, StringComparison.OrdinalIgnoreCase)
+            ? fileUrl[baseUrl.Length..]
+            : fileUrl;
+    }
+
     public async Task<string> GetSignedUrlAsync(string filePath, int expirationMinutes = 60, CancellationToken cancellationToken = default)
     {
         var expiration = TimeSpan.FromMinutes(expirationMinutes);

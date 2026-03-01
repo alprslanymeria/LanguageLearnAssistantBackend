@@ -24,16 +24,25 @@ services:
       dockerfile: src/API/App.API/Dockerfile
       target: final
     ports:
-      - "44344:8080"
+      - "${API_PORT}:8080"
     environment:
       - ASPNETCORE_ENVIRONMENT=Production
       - ASPNETCORE_HTTP_PORTS=8080
       - ASPNETCORE_URLS=http://+:8080
-      - UserApi__BaseUrl=http://oauthserver:8080
-      - GOOGLE_APPLICATION_CREDENTIALS=/app/secrets/gcloud.json
-      - OTEL_EXPORTER_OTLP_ENDPOINT=http://otel-collector:4317
-    volumes:
-      - ${GOOGLE_APPLICATION_CREDENTIALS}:/app/secrets/gcloud.json:ro
+      # OVERRIDE SECRETS
+      - ConnectionStrings__SqlServer=Server=sqlserver;Database=${DB_NAME};User Id=sa;Password=${MSSQL_SA_PASSWORD};Encrypt=True;TrustServerCertificate=True;
+      - TokenOption__Audience__0=${TOKEN_AUDIENCE}
+      - TokenOption__Issuer=${TOKEN_ISSUER}
+      - TokenOption__SecurityKey=${TOKEN_SECURITY_KEY}
+      - UserApi__BaseUrl=${USER_API_BASE_URL}
+      - CacheConfig__CacheType=${CACHE_TYPE} 
+      - RedisCache__ConnectionString=${REDIS_CONN_STRING}
+      - GoogleSecretManager__ProjectId=${GCP_PROJECT_ID}
+      - GoogleSecretManager__CredentialBase64=${GCP_CREDENTIAL_BASE64}
+      - GoogleCloudStorage__BucketName=${GCS_BUCKET_NAME}     
+      - OpenTelemetryConfig__Enabled=${OTEL_ENABLED}
+      - AllowedOrigins__0=${ALLOWED_ORIGIN_0}
+      - AllowedOrigins__1=${ALLOWED_ORIGIN_1}
     depends_on:
       sqlserver:
         condition: service_healthy
@@ -65,7 +74,7 @@ services:
       target: migration
     environment:
       - ASPNETCORE_ENVIRONMENT=Production
-      - ConnectionStrings__SqlServer=Server=sqlserver;Database=LanguageAssistantBackend;User Id=sa;Password=${MSSQL_SA_PASSWORD};Encrypt=True;TrustServerCertificate=True;
+      - ConnectionStrings__SqlServer=Server=sqlserver;Database=${DB_NAME};User Id=sa;Password=${MSSQL_SA_PASSWORD};Encrypt=True;TrustServerCertificate=True;
     depends_on:
       sqlserver:
         condition: service_healthy
@@ -74,18 +83,15 @@ services:
   
   # OAUTH SERVER
   oauthserver:
-    image: alparslanorgnl/apps:oauth-server
+    image: alparslanorgnl/oauth:oauthserver-v1
     container_name: oauth-server
     ports:
-      - "44343:8080"
+      - "${OAUTH_PORT}:8080"
     environment:
       - ASPNETCORE_ENVIRONMENT=Production
       - ASPNETCORE_HTTP_PORTS=8080
       - ASPNETCORE_URLS=http://+:8080
-      - OTEL_EXPORTER_OTLP_ENDPOINT=http://otel-collector:4317
-      - GOOGLE_APPLICATION_CREDENTIALS=/app/secrets/gcloud.json
-    volumes:
-      - ${GOOGLE_APPLICATION_CREDENTIALS}:/app/secrets/gcloud.json:ro
+      - GCP_CREDENTIAL_BASE64=${GCP_OAUTH_CREDENTIAL_BASE64}
     depends_on:
       sqlserver:
         condition: service_healthy
@@ -98,27 +104,27 @@ services:
     restart: unless-stopped
 
   # OAUTH SERVER MIGRATIONS
-  oauthserver.migrations:
-    image: alparslanorgnl/apps:oauth-server-migration
-    environment:
-      - ASPNETCORE_ENVIRONMENT=Production
-      - ConnectionStrings__SqlServer=Server=sqlserver;Database=OAuthServer;User Id=sa;Password=${MSSQL_SA_PASSWORD};Encrypt=True;TrustServerCertificate=True;
-    depends_on:
-      sqlserver:
-        condition: service_healthy
-    restart: "no"
+  # oauthserver.migrations:
+  #   image: alparslanorgnl/oauth:oauthserver-v1-migration
+  #   environment:
+  #     - ASPNETCORE_ENVIRONMENT=Production
+  #     - ConnectionStrings__SqlServer=Server=sqlserver;Database=OAuthServer;User Id=sa;Password=${MSSQL_SA_PASSWORD};Encrypt=True;TrustServerCertificate=True;
+  #   depends_on:
+  #     sqlserver:
+  #       condition: service_healthy
+  #   restart: "no"
 
   # NEXTJS FRONTEND
   nextjs:
-    image: alparslanorgnl/apps:nextjs
+    image: alparslanorgnl/frontend:language-assistant-asp
     container_name: nextjs
     ports:
-      - "3000:3000"
+      - "${NEXTJS_PORT}:3000"
     environment:
       - OAUTH_SERVER_URL=http://oauthserver:8080
-      - OAUTH_SERVER_PUBLIC_URL=http://localhost:44343  # IT'S NECESSARY FOR GOOGLE LOGIN
+      - OAUTH_SERVER_PUBLIC_URL=http://localhost:${OAUTH_PORT}  # IT'S NECESSARY FOR GOOGLE LOGIN
       - BACKEND_SERVER_URL=http://app.api:8080
-      - APP_URL=http://localhost:3000                   # IT'S NECESSARY FOR GOOGLE LOGIN REDIRECT URI
+      - APP_URL=http://localhost:${NEXTJS_PORT}                 # IT'S NECESSARY FOR GOOGLE LOGIN REDIRECT URI
     depends_on:
       app.api:
         condition: service_healthy
@@ -130,7 +136,7 @@ services:
 
   # SOCKET SERVER FOR LIVE SESSIONS
   socket-server:
-    image: alparslanorgnl/apps:socket-server
+    image: alparslanorgnl/backend:socket-server
     container_name: socket-server
     restart: always
     ports:

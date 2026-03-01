@@ -6,29 +6,18 @@ namespace App.Storage.google;
 /// <summary>
 /// FACTORY IMPLEMENTATION FOR CREATING GOOGLE CLOUD STORAGE CLIENTS
 /// </summary>
-public class GoogleCloudStorageClientFactory : IGoogleCloudStorageClientFactory
+public class GoogleCloudStorageClientFactory(GoogleCredential credential) : IGoogleCloudStorageClientFactory
 {
-    // FIELDS
-    private readonly GoogleCredential _credential;
-
-    public GoogleCloudStorageClientFactory()
-    {
-        _credential = GoogleCredential.GetApplicationDefault();
-    }
-
 
     // IMPLEMENTATION OF IGoogleCloudStorageClientFactory
-    public StorageClient CreateStorageClient()
-    {
-        return StorageClient.Create(_credential);
-    }
+    public StorageClient CreateStorageClient() => StorageClient.Create(credential);
 
     public UrlSigner CreateUrlSigner()
     {
-        return _credential.UnderlyingCredential switch
+        return credential.UnderlyingCredential switch
         {
             ServiceAccountCredential serviceAccountCredential => UrlSigner.FromCredential(serviceAccountCredential),
-            _ => UrlSigner.FromCredential(_credential)
+            _ => UrlSigner.FromCredential(credential)
         };
     }
 }

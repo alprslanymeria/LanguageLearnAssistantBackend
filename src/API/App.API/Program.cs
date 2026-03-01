@@ -10,6 +10,7 @@ using App.Integration.ExternalApi;
 using App.Integration.Mapping;
 using App.Integration.Translation;
 using App.Observability;
+using App.Security;
 using App.Storage;
 using FluentValidation;
 using SharpGrip.FluentValidation.AutoValidation.Mvc.Extensions;
@@ -63,6 +64,7 @@ builder.Services
     .AddPersistenceServicesExt(builder.Configuration)
     .AddOpenTelemetryServicesExt(builder.Configuration)
     .AddCachingServicesExt(builder.Configuration)
+    .AddSecurity(builder.Configuration)
     .AddStorageServicesExt(builder.Configuration)
     .AddMappingServicesExt(assembliesToScan: [typeof(ApplicationAssembly).Assembly])
     .AddCustomTokenAuthExt(builder.Configuration)

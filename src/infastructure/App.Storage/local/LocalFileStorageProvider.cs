@@ -174,4 +174,6 @@ public class LocalFileStorageProvider(
         _disposed = true;
         GC.SuppressFinalize(this);
     }
+
+    public string ExtractFilePath(string fileUrl) => throw new NotImplementedException();
 }

@@ -72,9 +72,6 @@ public static class ObservabilityExtension
                     // FOR SEE EXCEPTION DETAILS IN TRACE TAG'S "otel.status_code" & "otel.status_description"
                     httpClientOptions.RecordException = true;
 
-
-                    httpClientOptions.FilterHttpRequestMessage = (request) => request.RequestUri!.AbsoluteUri.Contains("9200", StringComparison.InvariantCulture);
-
                     // ADD REQUEST BODY AS TAG TO ACTIVITY
                     httpClientOptions.EnrichWithHttpRequestMessage = async (activity, request) =>
                     {
@@ -112,7 +109,7 @@ public static class ObservabilityExtension
             })
             .WithMetrics(options =>
             {
-                options.AddMeter("metric.meter.api");
+                options.AddMeter(openTelemetryConstants.ActivitySourceName);
                 options.ConfigureResource(resource =>
                 {
                     resource.AddService(openTelemetryConstants.ServiceName, serviceVersion: openTelemetryConstants.ServiceVersion);
